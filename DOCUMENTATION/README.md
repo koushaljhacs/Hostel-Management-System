@@ -3,33 +3,44 @@ Hostel Management System
 
 A comprehensive software system for college hostels to manage bookings, allocations, fees, and student services.
 
-About This Project
-------------------
-This system will help manage:
-- Student hostel bookings and room allocations
-- Payments and fee management
-- Staff operations and maintenance
-- Food services and parent portal
+Quick Start
+-----------
+1. Read PROJECT_INFO.md to understand the project
+2. Follow SETUP_GUIDE.md to setup locally
+3. Read CONTRIBUTING.md for development workflow
 
 Current Status
 --------------
-PROJECT DOCUMENTATION IS BEING SETUP
+- Development in progress
+- Student Registration System is current priority
+- Local development: localhost:3000
+- Testing server available during daytime
 
-Available Documentation
------------------------
-PROJECT_INFO.md - Detailed project scope and features
-README.md - Project introduction and overview
+Documentation Index
+-------------------
 
-Next Update Coming
-------------------
-SETUP_GUIDE.md - Installation and setup instructions
+Essential Reading:
+- PROJECT_INFO.md - Project scope and current status
+- SETUP_GUIDE.md - Local installation guide
+- CONTRIBUTING.md - Development workflow and rules
 
-More documentation including contribution guidelines and development roadmap will be added progressively.
+Reference Guides:
+- FOLDER_GUIDE.md - Repository structure
+- TEAM.md - Team information
+- SECURITY.md - Security rules
+- SERVER_USAGE_RULES.md - Testing server rules
+- DEVELOPMENT_TESTING_GUIDE.md - Testing procedures
+- NEXT_STEPS.md - Development priorities
+
+Testing Information
+-------------------
+Local Development: http://localhost:3000
+Shared Testing Server: https://technical-jeana-papaveraceous.ngrok-free.dev
+Server Schedule: 9:00 AM to 11:45 PM daily
 
 Team
 ----
-- Project Lead: Koushal Jha
-- Development Team: Backend, Frontend, and Testing specialists
+Project Lead: Koushal Jha
+Development Team: Backend, Frontend, and Testing specialists
 
----
-Stay tuned for daily documentation updates.
+Start with PROJECT_INFO.md to understand what we're building.

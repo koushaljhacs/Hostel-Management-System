@@ -32,6 +32,12 @@ What We Are Building Next
 - Payment processing
 - Room allocation system
 
+Testing Server Information
+--------------------------
+URL: https://technical-jeana-papaveraceous.ngrok-free.dev
+Available: 9:00 AM to 11:45 PM daily
+Purpose: Final testing and demonstrations only
+
 Important Notes
 ---------------
 - This is a development project
@@ -44,3 +50,12 @@ System Requirements
 - Needs computer with Node.js and PostgreSQL
 - Internet connection for some features
 - Modern web browser like Chrome or Firefox
+
+Documentation Reading Order
+---------------------------
+1. SETUP_GUIDE.md - Install and setup project locally
+2. CONTRIBUTING.md - Development workflow and rules
+3. FOLDER_GUIDE.md - Project structure explanation
+4. TEAM.md - Team information and contacts
+
+NEXT: Read SETUP_GUIDE.md to begin local setup.
