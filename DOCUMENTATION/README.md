@@ -15,11 +15,16 @@ Current Status
 --------------
 PROJECT DOCUMENTATION IS BEING SETUP
 
-Documentation Updates
----------------------
-Next update coming: PROJECT_INFO.md - Detailed project scope and features
+Available Documentation
+-----------------------
+PROJECT_INFO.md - Detailed project scope and features
+README.md - Project introduction and overview
 
-More documentation including setup guide, contribution guidelines, and development roadmap will be added progressively.
+Next Update Coming
+------------------
+SETUP_GUIDE.md - Installation and setup instructions
+
+More documentation including contribution guidelines and development roadmap will be added progressively.
 
 Team
 ----
