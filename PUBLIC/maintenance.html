@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Maintenance - Hostel Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #720026;
+            --secondary-color: #ffc400;
+            --text-dark: #1f1f1f;
+            --text-light: #f5f5f5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: linear-gradient(135deg, #e0e6ed 0%, #c8d3e0 100%);
+            margin: 0;
+            padding: 20px;
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .maintenance-container {
+            max-width: 700px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .maintenance-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #4f0019 100%);
+            color: white;
+            padding: 40px 30px;
+        }
+        
+        .maintenance-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .maintenance-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+        
+        .maintenance-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .maintenance-content {
+            padding: 40px 30px;
+        }
+        
+        .maintenance-message {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .countdown-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .countdown-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .countdown-timer {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin: 15px 0;
+        }
+        
+        .transaction-alert {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .transaction-alert i {
+            color: #856404;
+            margin-right: 10px;
+        }
+        
+        .contact-section {
+            background: #e9ecef;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .contact-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #666;
+        }
+        
+        .contact-item i {
+            color: var(--primary-color);
+        }
+        
+        .auto-refresh-note {
+            font-size: 0.9rem;
+            color: #999;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .maintenance-title {
+                font-size: 2rem;
+            }
+            
+            .countdown-timer {
+                font-size: 1.5rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="maintenance-container">
+        <div class="maintenance-header">
+            <div class="maintenance-icon">
+                <i class="fas fa-tools"></i>
+            </div>
+            <h1 class="maintenance-title">System Under Maintenance</h1>
+            <p class="maintenance-subtitle">We're working hard to improve your experience</p>
+        </div>
+        
+        <div class="maintenance-content">
+            <div class="maintenance-message">
+                The Hostel Management System is currently undergoing scheduled maintenance as part of our regular system updates. 
+                This ensures we continue to provide you with the best possible service.
+            </div>
+            
+            <div class="countdown-section">
+                <div class="countdown-title">Estimated Completion Time</div>
+                <div class="countdown-timer" id="countdownTimer">00:30:00</div>
+                <div>We expect to be back online by <strong id="completionTime">00:30 hours</strong></div>
+            </div>
+            
+            <div class="transaction-alert">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Important:</strong> Please do not attempt any transactions during maintenance hours. 
+                Any login attempts or form submissions made during this time will be automatically blocked. 
+                Please try again after 00:30 hours.
+            </div>
+            
+            <div class="contact-section">
+                <div class="contact-title">Need Immediate Assistance?</div>
+                <p>For urgent issues that cannot wait until maintenance completes:</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>+91 8298163299</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>koushaljha.cs@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-user-shield"></i>
+                        <span>Team Lead: Koushal Jha</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="auto-refresh-note">
+                This page will automatically refresh when maintenance is complete
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/maintenance.js"></script>
+</body>
+</html>
