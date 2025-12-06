@@ -1,0 +1,79 @@
+/* Common styles shared across all admin pages */
+:root {
+    --primary-color: #720026;
+    --primary-light: #8c0030;
+    --primary-dark: #4f0019;
+    --primary-gradient: linear-gradient(135deg, #720026 0%, #8c0030 100%);
+    --primary-glow: 0 0 20px rgba(114, 0, 38, 0.3);
+
+    --secondary-color: #ffc400;
+    --secondary-light: #ffd54f;
+    --secondary-dark: #ffab00;
+    --secondary-gradient: linear-gradient(135deg, #ffc400 0%, #ffd54f 100%);
+    --secondary-glow: 0 0 15px rgba(255, 196, 0, 0.4);
+
+    --accent-color: #3a86ff;
+    --success-color: #4caf50;
+    --warning-color: #ff9800;
+    --error-color: #f44336;
+
+    --text-dark: #1a1a1a;
+    --text-medium: #4a4a4a;
+    --text-light: #f8f9fa;
+    --text-muted: #6c757d;
+
+    --bg-page: #f5f7fa;
+    --bg-card: #ffffff;
+    --bg-hover: rgba(114, 0, 38, 0.05);
+    --bg-active: rgba(114, 0, 38, 0.1);
+
+    --border-light: #e9ecef;
+    --border-medium: #dee2e6;
+    --border-dark: #ced4da;
+
+    --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.06);
+    --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.1);
+    --shadow-deep: 0 15px 40px rgba(0, 0, 0, 0.15);
+    --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.04);
+
+    --transition-speed: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --border-radius: 12px;
+    --border-radius-medium: 8px;
+    --border-radius-small: 6px;
+    --border-radius-pill: 50px;
+
+    --sidebar-width: 260px;
+    --header-height: 60px;
+    --nav-height: 48px;
+    --footer-height: 45px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    list-style: none;
+    text-decoration: none;
+}
+
+body {
+    background-color: var(--bg-page);
+    color: var(--text-dark);
+    line-height: 1.5;
+    font-size: 14px;
+    overflow: hidden;
+    padding: 8px;
+    min-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(114, 0, 38, 0.03) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(255, 196, 0, 0.03) 0%, transparent 20%);
+}
+
+/* Add other common styles from your original CSS here */
+/* ... (copy all the common styles from your original CSS) */

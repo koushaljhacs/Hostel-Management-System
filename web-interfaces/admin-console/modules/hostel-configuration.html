@@ -1,0 +1,276 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-building"></i> Hostel Configuration</h2>
+    <div class="quick-actions">
+        <button class="btn" id="saveConfig"><i class="fas fa-save"></i> Save Configuration</button>
+        <button class="btn" id="resetConfig"><i class="fas fa-undo"></i> Reset to Default</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-building"></i>
+            </div>
+            <h3>Total Hostels</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-bed"></i>
+            </div>
+            <h3>Total Rooms</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Total Capacity</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-cog"></i>
+            </div>
+            <h3>Active Config</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<!-- Hostel Selection -->
+<div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Select Hostel</h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Hostel</label>
+            <select class="btn" id="hostelSelect" style="width: 100%; padding: 8px;">
+                <option value="">Select Hostel</option>
+                <option value="bh-a">Boys Hostel A</option>
+                <option value="bh-b">Boys Hostel B</option>
+                <option value="gh-a">Girls Hostel A</option>
+                <option value="gh-b">Girls Hostel B</option>
+            </select>
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Configuration Type</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>Basic Settings</option>
+                <option>Room Configuration</option>
+                <option>Fee Structure</option>
+                <option>Security Settings</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Configuration Sections -->
+<div id="configContent" style="display: none;">
+    <!-- Basic Settings -->
+    <div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+        <h3 style="color: var(--primary-color); margin-bottom: 20px;">Basic Hostel Settings</h3>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Hostel Name</label>
+                    <input type="text" class="form-input" value="Boys Hostel A" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Hostel Code</label>
+                    <input type="text" class="form-input" value="BH-A" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Contact Number</label>
+                    <input type="tel" class="form-input" value="+91 9876543210" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+            </div>
+            
+            <div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Warden Name</label>
+                    <input type="text" class="form-input" value="Dr. Rajesh Kumar" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Email Address</label>
+                    <input type="email" class="form-input" value="warden.bha@college.edu" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Emergency Contact</label>
+                    <input type="tel" class="form-input" value="+91 9876543211" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Room Configuration -->
+    <div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+        <h3 style="color: var(--primary-color); margin-bottom: 20px;">Room Configuration</h3>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Total Floors</label>
+                    <input type="number" class="form-input" value="4" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Rooms per Floor</label>
+                    <input type="number" class="form-input" value="25" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Students per Room</label>
+                    <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                        <option>1 (Single)</option>
+                        <option selected>2 (Double)</option>
+                        <option>3 (Triple)</option>
+                        <option>4 (Quad)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Room Numbering Pattern</label>
+                    <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                        <option selected>Floor + Sequence (101, 102...)</option>
+                        <option>Alphabet + Number (A1, A2...)</option>
+                        <option>Wing + Number (W1, W2...)</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Room Types</label>
+                    <div style="display: grid; gap: 8px;">
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                            <span>AC Rooms</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                            <span>Non-AC Rooms</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" style="accent-color: var(--primary-color);">
+                            <span>Premium Rooms</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fee Structure -->
+    <div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid var(--border-light);">
+        <h3 style="color: var(--primary-color); margin-bottom: 20px;">Fee Structure Configuration</h3>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Hostel Fee (Annual)</label>
+                    <input type="number" class="form-input" value="35000" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Security Deposit</label>
+                    <input type="number" class="form-input" value="5000" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Mess Fee (Monthly)</label>
+                    <input type="number" class="form-input" value="3500" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+            </div>
+            
+            <div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Laundry Charges</label>
+                    <input type="number" class="form-input" value="500" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Maintenance Fee</label>
+                    <input type="number" class="form-input" value="1000" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Late Fee Penalty</label>
+                    <input type="number" class="form-input" value="100" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Empty State -->
+<div id="emptyState" style="background: white; border-radius: 8px; padding: 60px; text-align: center; border: 1px solid var(--border-light);">
+    <i class="fas fa-building fa-3x" style="color: var(--border-light); margin-bottom: 15px;"></i>
+    <p style="color: var(--text-muted); font-size: 16px;">Select a hostel to configure its settings</p>
+    <p style="color: var(--text-muted); font-size: 12px; margin-top: 10px;">You can modify basic information, room configuration, and fee structure</p>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Hostel Configuration module loaded');
+    
+    // BACKEND INTEGRATION: Load hostel configuration data
+    // TODO: Fetch hostel configuration from backend API
+    
+    const hostelSelect = document.getElementById('hostelSelect');
+    const configContent = document.getElementById('configContent');
+    const emptyState = document.getElementById('emptyState');
+    
+    hostelSelect.addEventListener('change', function() {
+        if (this.value) {
+            configContent.style.display = 'block';
+            emptyState.style.display = 'none';
+            
+            // BACKEND INTEGRATION: Load specific hostel configuration
+            // TODO: Fetch configuration for selected hostel
+            console.log('Loading configuration for:', this.value);
+        } else {
+            configContent.style.display = 'none';
+            emptyState.style.display = 'block';
+        }
+    });
+    
+    document.getElementById('saveConfig').addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Saving...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-save"></i> Save Configuration';
+            alert('Hostel configuration saved successfully!');
+        }, 2000);
+    });
+    
+    document.getElementById('resetConfig').addEventListener('click', function() {
+        if (confirm('Are you sure you want to reset all configuration to default values?')) {
+            this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Resetting...';
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-undo"></i> Reset to Default';
+                alert('Configuration reset to default values!');
+            }, 1500);
+        }
+    });
+});
+</script>

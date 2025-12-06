@@ -1,0 +1,172 @@
+<!-- modules/stop-management.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-map-marker-alt"></i> Stop Management</h2>
+    <div class="quick-actions">
+        <button class="btn" id="addStopBtn"><i class="fas fa-plus"></i> Add Stop</button>
+        <button class="btn" id="optimizeStopsBtn"><i class="fas fa-magic"></i> Optimize Stops</button>
+        <button class="btn" id="exportStopsBtn"><i class="fas fa-file-export"></i> Export</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h3>Total Stops</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-route"></i>
+            </div>
+            <h3>Routes Covered</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Students Served</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Average Wait Time</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Stop List -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Transport Stops</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshStops" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <select class="btn" style="background: var(--bg-card); border: 1px solid var(--border-medium); font-size: 11px;">
+                    <option value="">All Routes</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="stopList" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading transport stops...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Stop -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Add Transport Stop</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Stop Name
+                </label>
+                <input type="text" class="form-input" placeholder="Enter stop name" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Address
+                </label>
+                <input type="text" class="form-input" placeholder="Enter stop address" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Route
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select route...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Stop Sequence
+                </label>
+                <input type="number" class="form-input" placeholder="Enter sequence number" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-plus"></i> Add Stop
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Stop Map -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Stop Locations Map</h3>
+        <button class="btn" id="viewFullMap" style="font-size: 11px;">
+            <i class="fas fa-expand"></i> Full Map
+        </button>
+    </div>
+    
+    <div style="padding: 20px; text-align: center;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading stop locations map...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Stop Management module loaded');
+    
+    // BACKEND INTEGRATION: Load stop management data
+    // TODO: Fetch stops and map data from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/transport-stops</code> - Fetch transport stops</li>
+            <li><code>POST /api/transport-stops</code> - Add transport stop</li>
+            <li><code>POST /api/stops/optimize</code> - Optimize stop sequences</li>
+            <li><code>GET /api/stop-map</code> - Stop locations map data</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>transport:stops:write</code></p>
+    </div>
+</div>

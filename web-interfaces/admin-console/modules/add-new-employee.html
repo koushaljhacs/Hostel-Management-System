@@ -1,0 +1,213 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-user-plus"></i> Add New Employee</h2>
+    <div class="quick-actions">
+        <button class="btn" id="saveEmployee" style="background: var(--success-color); color: white;">
+            <i class="fas fa-save"></i> Save Employee
+        </button>
+        <button class="btn" id="clearForm">
+            <i class="fas fa-times"></i> Clear Form
+        </button>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+    <!-- Employee Details Form -->
+    <div>
+        <!-- Personal Information -->
+        <div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+            <h3 style="color: var(--primary-color); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-user-circle"></i> Personal Information
+            </h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">First Name *</label>
+                    <input type="text" class="form-input" placeholder="Enter first name" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Last Name *</label>
+                    <input type="text" class="form-input" placeholder="Enter last name" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Email Address *</label>
+                    <input type="email" class="form-input" placeholder="employee@hostel.com" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Phone Number *</label>
+                    <input type="tel" class="form-input" placeholder="+91 9876543210" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 600;">Address</label>
+                <textarea class="form-input" placeholder="Enter complete address" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px; min-height: 80px; resize: vertical;"></textarea>
+            </div>
+        </div>
+
+        <!-- Employment Details -->
+        <div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+            <h3 style="color: var(--primary-color); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-briefcase"></i> Employment Details
+            </h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Employee ID *</label>
+                    <input type="text" class="form-input" placeholder="EMP001" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Designation *</label>
+                    <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                        <option value="">Select Designation</option>
+                        <option value="warden">Warden</option>
+                        <option value="supervisor">Supervisor</option>
+                        <option value="housekeeping">Housekeeping Staff</option>
+                        <option value="security">Security Guard</option>
+                        <option value="maintenance">Maintenance Staff</option>
+                        <option value="mess">Mess Staff</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Department *</label>
+                    <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                        <option value="">Select Department</option>
+                        <option value="administration">Administration</option>
+                        <option value="housekeeping">Housekeeping</option>
+                        <option value="security">Security</option>
+                        <option value="maintenance">Maintenance</option>
+                        <option value="mess">Mess</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Hostel Assignment *</label>
+                    <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                        <option value="">Select Hostel</option>
+                        <option value="boys_a">Boys Hostel A</option>
+                        <option value="boys_b">Boys Hostel B</option>
+                        <option value="girls_a">Girls Hostel A</option>
+                        <option value="girls_b">Girls Hostel B</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Join Date *</label>
+                    <input type="date" class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Salary</label>
+                    <input type="number" class="form-input" placeholder="Monthly salary" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary & Actions -->
+    <div>
+        <!-- Summary Card -->
+        <div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+            <h3 style="color: var(--primary-color); margin-bottom: 15px;">Employee Summary</h3>
+            
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+                <div style="display: flex; justify-content: between; margin-bottom: 8px;">
+                    <span style="font-weight: 600;">Status:</span>
+                    <span style="color: var(--text-muted);">New Employee</span>
+                </div>
+                <div style="display: flex; justify-content: between; margin-bottom: 8px;">
+                    <span style="font-weight: 600;">Employee ID:</span>
+                    <span style="color: var(--text-muted);">Auto-generated</span>
+                </div>
+                <div style="display: flex; justify-content: between;">
+                    <span style="font-weight: 600;">System Access:</span>
+                    <span style="color: var(--text-muted);">Not created</span>
+                </div>
+            </div>
+            
+            <button class="btn" id="createEmployeeBtn" style="width: 100%; background: var(--success-color); color: white; padding: 12px;">
+                <i class="fas fa-user-plus"></i> Create Employee Record
+            </button>
+        </div>
+
+        <!-- Quick Actions -->
+        <div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid var(--border-light);">
+            <h3 style="color: var(--primary-color); margin-bottom: 15px;">Quick Actions</h3>
+            
+            <div style="display: grid; gap: 10px;">
+                <button class="btn" style="text-align: left; justify-content: flex-start; padding: 10px;">
+                    <i class="fas fa-copy"></i> Duplicate Employee
+                </button>
+                <button class="btn" style="text-align: left; justify-content: flex-start; padding: 10px;">
+                    <i class="fas fa-file-import"></i> Bulk Import
+                </button>
+                <button class="btn" style="text-align: left; justify-content: flex-start; padding: 10px;">
+                    <i class="fas fa-id-card"></i> Generate ID Card
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Add New Employee module loaded');
+    
+    // BACKEND INTEGRATION: Employee creation form
+    // TODO: Implement employee creation API integration
+    
+    document.getElementById('createEmployeeBtn').addEventListener('click', async function() {
+        const originalText = this.innerHTML;
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Creating...';
+        this.disabled = true;
+
+        // BACKEND INTEGRATION: Collect form data and send to API
+        // const employeeData = {
+        //     firstName: document.getElementById('firstName').value,
+        //     lastName: document.getElementById('lastName').value,
+        //     // ... collect all form data
+        // };
+        
+        // TODO: Replace with actual API call
+        // const response = await fetch('/api/employees/create', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify(employeeData)
+        // });
+
+        // Simulate API call
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-check"></i> Created!';
+            this.style.background = 'var(--success-color)';
+            
+            alert('Employee record created successfully!');
+            
+            setTimeout(() => {
+                document.getElementById('clearForm').click();
+                this.innerHTML = originalText;
+                this.disabled = false;
+                this.style.background = 'var(--success-color)';
+            }, 2000);
+        }, 2000);
+    });
+    
+    document.getElementById('clearForm').addEventListener('click', function() {
+        const formInputs = document.querySelectorAll('.form-input');
+        formInputs.forEach(input => {
+            if (input.type === 'text' || input.type === 'email' || input.type === 'tel' || input.type === 'number') {
+                input.value = '';
+            } else if (input.tagName === 'SELECT') {
+                input.selectedIndex = 0;
+            } else if (input.tagName === 'TEXTAREA') {
+                input.value = '';
+            }
+        });
+        alert('Form cleared!');
+    });
+});
+</script>

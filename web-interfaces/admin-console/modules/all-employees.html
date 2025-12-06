@@ -1,0 +1,138 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-users"></i> All Employees</h2>
+    <div class="quick-actions">
+        <button class="btn" id="addEmployee"><i class="fas fa-user-plus"></i> Add Employee</button>
+        <button class="btn" id="exportEmployees"><i class="fas fa-download"></i> Export List</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Total Employees</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-user-check"></i>
+            </div>
+            <h3>Active Today</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-user-clock"></i>
+            </div>
+            <h3>On Leave</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-building"></i>
+            </div>
+            <h3>By Hostel</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<!-- Employee Filters -->
+<div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Employee Filters</h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Department</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>All Departments</option>
+                <option>Administration</option>
+                <option>Housekeeping</option>
+                <option>Security</option>
+                <option>Maintenance</option>
+                <option>Mess Staff</option>
+            </select>
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Designation</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>All Designations</option>
+                <option>Warden</option>
+                <option>Supervisor</option>
+                <option>Staff</option>
+                <option>Security Guard</option>
+            </select>
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Status</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>All Status</option>
+                <option>Active</option>
+                <option>On Leave</option>
+                <option>Inactive</option>
+            </select>
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Hostel</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>All Hostels</option>
+                <option>Boys Hostel A</option>
+                <option>Boys Hostel B</option>
+                <option>Girls Hostel A</option>
+                <option>Girls Hostel B</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Employees Table -->
+<div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Employee Directory</h3>
+    
+    <div style="text-align: center; padding: 60px;">
+        <i class="fas fa-users fa-3x" style="color: var(--border-light); margin-bottom: 15px;"></i>
+        <p style="color: var(--text-muted);">Employee directory loading...</p>
+        <p style="color: var(--text-muted); font-size: 12px; margin-top: 10px;">View and manage all hostel employees</p>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('All Employees module loaded');
+    
+    // BACKEND INTEGRATION: Load employee data with filters
+    // TODO: Fetch employees from backend API
+    
+    document.getElementById('addEmployee')?.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Opening...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-user-plus"></i> Add Employee';
+            // TODO: Open employee creation form
+        }, 1000);
+    });
+    
+    document.getElementById('exportEmployees')?.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Exporting...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-download"></i> Export List';
+            alert('Employee list exported successfully!');
+        }, 2000);
+    });
+});
+</script>

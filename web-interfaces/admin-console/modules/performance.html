@@ -1,0 +1,159 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-chart-line"></i> Performance</h2>
+    <div class="quick-actions">
+        <button class="btn" id="addReview"><i class="fas fa-plus"></i> Add Review</button>
+        <button class="btn" id="exportPerformance"><i class="fas fa-download"></i> Export Data</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <h3>Avg. Rating</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-user-check"></i>
+            </div>
+            <h3>Top Performers</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>Needs Improvement</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-calendar"></i>
+            </div>
+            <h3>Reviews This Month</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<!-- Performance Metrics -->
+<div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 20px;">Performance Metrics</h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+        <div style="text-align: center; padding: 20px; border: 1px solid var(--border-light); border-radius: 8px;">
+            <div style="font-size: 32px; font-weight: bold; color: var(--primary-color);">4.2</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Work Quality</div>
+            <div style="font-size: 11px; color: var(--success-color); margin-top: 5px;">+0.3 from last month</div>
+        </div>
+        
+        <div style="text-align: center; padding: 20px; border: 1px solid var(--border-light); border-radius: 8px;">
+            <div style="font-size: 32px; font-weight: bold; color: var(--primary-color);">4.5</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Attendance</div>
+            <div style="font-size: 11px; color: var(--success-color); margin-top: 5px;">+0.1 from last month</div>
+        </div>
+        
+        <div style="text-align: center; padding: 20px; border: 1px solid var(--border-light); border-radius: 8px;">
+            <div style="font-size: 32px; font-weight: bold; color: var(--primary-color);">4.0</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Teamwork</div>
+            <div style="font-size: 11px; color: var(--warning-color); margin-top: 5px;">No change</div>
+        </div>
+        
+        <div style="text-align: center; padding: 20px; border: 1px solid var(--border-light); border-radius: 8px;">
+            <div style="font-size: 32px; font-weight: bold; color: var(--primary-color);">3.8</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Initiative</div>
+            <div style="font-size: 11px; color: var(--error-color); margin-top: 5px;">-0.2 from last month</div>
+        </div>
+    </div>
+</div>
+
+<!-- Performance Reviews -->
+<div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Recent Performance Reviews</h3>
+    
+    <div style="text-align: center; padding: 40px;">
+        <i class="fas fa-sync fa-spin fa-2x" style="color: var(--primary-color); margin-bottom: 15px;"></i>
+        <p style="color: var(--text-muted);">Loading performance reviews...</p>
+    </div>
+</div>
+
+<!-- Rating Scale -->
+<div style="background: white; border-radius: 8px; padding: 20px; margin-top: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Performance Rating Scale</h3>
+    
+    <div style="display: grid; gap: 10px;">
+        <div style="display: flex; align-items: center; gap: 15px; padding: 10px; border: 1px solid var(--border-light); border-radius: 6px;">
+            <div style="background: var(--success-color); color: white; width: 40px; height: 40px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: bold;">5</div>
+            <div style="flex: 1;">
+                <div style="font-weight: 600; color: var(--text-dark);">Excellent</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Consistently exceeds expectations</div>
+            </div>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 15px; padding: 10px; border: 1px solid var(--border-light); border-radius: 6px;">
+            <div style="background: var(--primary-color); color: white; width: 40px; height: 40px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: bold;">4</div>
+            <div style="flex: 1;">
+                <div style="font-weight: 600; color: var(--text-dark);">Good</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Meets and sometimes exceeds expectations</div>
+            </div>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 15px; padding: 10px; border: 1px solid var(--border-light); border-radius: 6px;">
+            <div style="background: var(--warning-color); color: white; width: 40px; height: 40px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: bold;">3</div>
+            <div style="flex: 1;">
+                <div style="font-weight: 600; color: var(--text-dark);">Satisfactory</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Meets basic job requirements</div>
+            </div>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 15px; padding: 10px; border: 1px solid var(--border-light); border-radius: 6px;">
+            <div style="background: var(--error-color); color: white; width: 40px; height: 40px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: bold;">2</div>
+            <div style="flex: 1;">
+                <div style="font-weight: 600; color: var(--text-dark);">Needs Improvement</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Below expectations, requires development</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Performance module loaded');
+    
+    // BACKEND INTEGRATION: Load performance data and reviews
+    // TODO: Fetch performance data from backend API
+    
+    document.getElementById('addReview').addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Opening...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-plus"></i> Add Review';
+            // TODO: Open performance review form
+        }, 1000);
+    });
+    
+    document.getElementById('exportPerformance').addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Exporting...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-download"></i> Export Data';
+            alert('Performance data exported successfully!');
+        }, 2000);
+    });
+});
+</script>

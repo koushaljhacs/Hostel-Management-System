@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2FA Verification - HMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 400px;
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .otp-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .verify-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .verify-btn:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2><i class="fas fa-shield-alt"></i> Two-Factor Authentication</h2>
+        <p>Please check your email and enter the 64-character security token sent to you.</p>
+        
+        <form id="verify2faForm">
+            <input type="text" class="otp-input" placeholder="Enter 64-character token" maxlength="64" required>
+            <button type="submit" class="verify-btn">Verify Token</button>
+        </form>
+        
+        <p style="margin-top: 20px; font-size: 12px; color: #999;">
+            <i class="fas fa-info-circle"></i> Token expires in 2 minutes
+        </p>
+    </div>
+
+    <script>
+        document.getElementById('verify2faForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const token = document.querySelector('.otp-input').value;
+            const pendingAuth = JSON.parse(localStorage.getItem('pendingAuth') || '{}');
+            
+            try {
+                const response = await fetch('/api/verify-2fa', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        userId: pendingAuth.userId,
+                        token: token
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('Authentication successful! Redirecting...');
+                    window.location.href = '/admin-dashboard';
+                } else {
+                    alert('Invalid token: ' + data.message);
+                }
+            } catch (error) {
+                alert('Error verifying token');
+            }
+        });
+    </script>
+</body>
+</html>

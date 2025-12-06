@@ -1,0 +1,175 @@
+<!-- modules/refund-processing.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-receipt"></i> Refund Processing</h2>
+    <div class="quick-actions">
+        <button class="btn" id="initiateRefundBtn"><i class="fas fa-undo"></i> Initiate Refund</button>
+        <button class="btn" id="approveRefundBtn"><i class="fas fa-check"></i> Approve Refunds</button>
+        <button class="btn" id="exportRefundsBtn"><i class="fas fa-file-export"></i> Export</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Pending Refunds</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Approved</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-times-circle"></i>
+            </div>
+            <h3>Rejected</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <h3>Total Refunded</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Refund Requests -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Refund Requests</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshRefunds" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <select class="btn" style="background: var(--bg-card); border: 1px solid var(--border-medium); font-size: 11px;">
+                    <option value="">All Status</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="refundRequests" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading refund requests...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Initiate Refund -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Initiate Refund</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Student
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select student...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Original Payment
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select payment...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Refund Amount
+                </label>
+                <input type="number" class="form-input" placeholder="Enter refund amount" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Refund Reason
+                </label>
+                <textarea class="form-input" placeholder="Enter refund reason..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px; min-height: 60px; resize: vertical;"></textarea>
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-paper-plane"></i> Submit Refund Request
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Refund History -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Refund History</h3>
+        <button class="btn" id="viewFullHistory" style="font-size: 11px;">
+            <i class="fas fa-history"></i> Full History
+        </button>
+    </div>
+    
+    <div class="activity-list" id="refundHistory" style="max-height: 190px;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading refund history...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Refund Processing module loaded');
+    
+    // BACKEND INTEGRATION: Load refund processing data
+    // TODO: Fetch refund requests and history from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/refund-requests</code> - Fetch refund requests</li>
+            <li><code>POST /api/refund-requests</code> - Create refund request</li>
+            <li><code>PUT /api/refund-requests/{id}/approve</code> - Approve refund</li>
+            <li><code>PUT /api/refund-requests/{id}/reject</code> - Reject refund</li>
+            <li><code>GET /api/refund-history</code> - Refund history</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>financial:refunds:execute</code></p>
+    </div>
+</div>

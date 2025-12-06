@@ -1,0 +1,204 @@
+<!-- modules/schedule-management.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-calendar-alt"></i> Schedule Management</h2>
+    <div class="quick-actions">
+        <button class="btn" id="addScheduleBtn"><i class="fas fa-plus"></i> Add Schedule</button>
+        <button class="btn" id="bulkScheduleBtn"><i class="fas fa-copy"></i> Bulk Schedule</button>
+        <button class="btn" id="exportScheduleBtn"><i class="fas fa-file-export"></i> Export</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-calendar"></i>
+            </div>
+            <h3>Active Schedules</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-route"></i>
+            </div>
+            <h3>Routes Covered</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Today's Trips</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>Delays</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Schedule List -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Transport Schedules</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshSchedules" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <select class="btn" style="background: var(--bg-card); border: 1px solid var(--border-medium); font-size: 11px;">
+                    <option value="">All Routes</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="scheduleList" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading transport schedules...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Schedule -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Create Schedule</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Route
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select route...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Vehicle
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select vehicle...</option>
+                </select>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+                <div>
+                    <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                        Start Time
+                    </label>
+                    <input type="time" class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                <div>
+                    <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                        End Time
+                    </label>
+                    <input type="time" class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Days of Operation
+                </label>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+                    <label style="display: flex; align-items: center; gap: 5px; font-size: 11px;">
+                        <input type="checkbox" style="accent-color: var(--primary-color);"> Mon
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px; font-size: 11px;">
+                        <input type="checkbox" style="accent-color: var(--primary-color);"> Tue
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px; font-size: 11px;">
+                        <input type="checkbox" style="accent-color: var(--primary-color);"> Wed
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px; font-size: 11px;">
+                        <input type="checkbox" style="accent-color: var(--primary-color);"> Thu
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px; font-size: 11px;">
+                        <input type="checkbox" style="accent-color: var(--primary-color);"> Fri
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px; font-size: 11px;">
+                        <input type="checkbox" style="accent-color: var(--primary-color);"> Sat
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px; font-size: 11px;">
+                        <input type="checkbox" style="accent-color: var(--primary-color);"> Sun
+                    </label>
+                </div>
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-save"></i> Create Schedule
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Schedule Calendar -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Schedule Calendar</h3>
+        <button class="btn" id="viewFullCalendar" style="font-size: 11px;">
+            <i class="fas fa-calendar"></i> Full Calendar
+        </button>
+    </div>
+    
+    <div class="activity-list" id="scheduleCalendar" style="max-height: 190px;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading schedule calendar...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Schedule Management module loaded');
+    
+    // BACKEND INTEGRATION: Load schedule management data
+    // TODO: Fetch schedules and calendar from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/transport-schedules</code> - Fetch transport schedules</li>
+            <li><code>POST /api/transport-schedules</code> - Create schedule</li>
+            <li><code>POST /api/schedules/bulk</code> - Bulk schedule creation</li>
+            <li><code>GET /api/schedule-calendar</code> - Schedule calendar data</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>transport:schedule:write</code></p>
+    </div>
+</div>

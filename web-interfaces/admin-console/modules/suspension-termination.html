@@ -1,0 +1,175 @@
+<!-- modules/suspension-termination.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-ban"></i> Suspension/Termination</h2>
+    <div class="quick-actions">
+        <button class="btn" id="suspendStudentBtn"><i class="fas fa-pause"></i> Suspend Student</button>
+        <button class="btn" id="terminateStudentBtn"><i class="fas fa-times"></i> Terminate Student</button>
+        <button class="btn" id="reinstateStudentBtn"><i class="fas fa-undo"></i> Reinstate Student</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-pause-circle"></i>
+            </div>
+            <h3>Suspended Students</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-times-circle"></i>
+            </div>
+            <h3>Terminated Students</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>Pending Actions</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-history"></i>
+            </div>
+            <h3>Recent Actions</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Suspension/Termination Actions -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Student Status Management</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshStatus" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="studentStatusList" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading student status data...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Form -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Take Action</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Select Student
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Choose student...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Action Type
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select action...</option>
+                    <option value="suspend">Suspend</option>
+                    <option value="terminate">Terminate</option>
+                    <option value="reinstate">Reinstate</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Duration (for suspension)
+                </label>
+                <input type="text" class="form-input" placeholder="e.g., 7 days, 1 month" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Reason
+                </label>
+                <textarea class="form-input" placeholder="Enter reason for action..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px; min-height: 60px; resize: vertical;"></textarea>
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--error-color); color: white; justify-content: center;">
+                <i class="fas fa-exclamation-triangle"></i> Execute Action
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Action History -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Action History</h3>
+        <button class="btn" id="viewFullHistory" style="font-size: 11px;">
+            <i class="fas fa-history"></i> Full History
+        </button>
+    </div>
+    
+    <div class="activity-list" id="actionHistory" style="max-height: 190px;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading action history...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Suspension/Termination module loaded');
+    
+    // BACKEND INTEGRATION: Load suspension/termination data
+    // TODO: Fetch student status and action history from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>POST /api/student-actions/suspend</code> - Suspend student</li>
+            <li><code>POST /api/student-actions/terminate</code> - Terminate student</li>
+            <li><code>POST /api/student-actions/reinstate</code> - Reinstate student</li>
+            <li><code>GET /api/student-status</code> - Student status data</li>
+            <li><code>GET /api/action-history</code> - Action history</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>student:terminate:write</code></p>
+    </div>
+</div>

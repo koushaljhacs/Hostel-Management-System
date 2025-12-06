@@ -1,0 +1,185 @@
+<!-- modules/visitor-logs.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-history"></i> Visitor Logs</h2>
+    <div class="quick-actions">
+        <button class="btn" id="searchLogsBtn"><i class="fas fa-search"></i> Search</button>
+        <button class="btn" id="filterLogsBtn"><i class="fas fa-filter"></i> Filter</button>
+        <button class="btn" id="exportLogsBtn"><i class="fas fa-file-export"></i> Export</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-history"></i>
+            </div>
+            <h3>Total Logs</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-user-check"></i>
+            </div>
+            <h3>Today's Entries</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-user-times"></i>
+            </div>
+            <h3>Today's Exits</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Avg. Visit Time</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Visitor Logs List -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Visitor Logs</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshLogs" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <select class="btn" style="background: var(--bg-card); border: 1px solid var(--border-medium); font-size: 11px;">
+                    <option value="">All Activities</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Search and Filter -->
+        <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+            <div class="search-box" style="flex: 1; min-width: 200px;">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchLogs" placeholder="Search visitor logs...">
+            </div>
+            <input type="date" class="btn" style="background: var(--bg-card); border: 1px solid var(--border-medium);">
+            <input type="date" class="btn" style="background: var(--bg-card); border: 1px solid var(--border-medium);">
+        </div>
+
+        <div class="activity-list" id="visitorLogs" style="max-height: 180px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading visitor logs...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Log Statistics -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Visitor Statistics</h3>
+        </div>
+        
+        <div class="quick-stats-grid">
+            <div class="quick-stats-item">
+                <span class="quick-stats-label">Peak Hours</span>
+                <span class="quick-stats-value">
+                    <i class="fas fa-sync fa-spin"></i>
+                </span>
+            </div>
+            <div class="quick-stats-item">
+                <span class="quick-stats-label">Most Visited</span>
+                <span class="quick-stats-value">
+                    <i class="fas fa-sync fa-spin"></i>
+                </span>
+            </div>
+            <div class="quick-stats-item">
+                <span class="quick-stats-label">Repeat Visitors</span>
+                <span class="quick-stats-value">
+                    <i class="fas fa-sync fa-spin"></i>
+                </span>
+            </div>
+            <div class="quick-stats-item">
+                <span class="quick-stats-label">Security Alerts</span>
+                <span class="quick-stats-value">
+                    <i class="fas fa-sync fa-spin"></i>
+                </span>
+            </div>
+            <div class="quick-stats-item">
+                <span class="quick-stats-label">Avg. Duration</span>
+                <span class="quick-stats-value">
+                    <i class="fas fa-sync fa-spin"></i>
+                </span>
+            </div>
+            <div class="quick-stats-item">
+                <span class="quick-stats-label">Monthly Trend</span>
+                <span class="quick-stats-value">
+                    <i class="fas fa-sync fa-spin"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Security Alerts -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Security Alerts</h3>
+        <button class="btn" id="viewAllAlerts" style="font-size: 11px;">
+            <i class="fas fa-bell"></i> All Alerts
+        </button>
+    </div>
+    
+    <div class="activity-list" id="securityAlerts" style="max-height: 190px;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading security alerts...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Visitor Logs module loaded');
+    
+    // BACKEND INTEGRATION: Load visitor logs data
+    // TODO: Fetch visitor logs and security alerts from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/visitor-logs</code> - Fetch visitor logs</li>
+            <li><code>GET /api/visitor-statistics</code> - Visitor statistics</li>
+            <li><code>GET /api/security-alerts</code> - Security alerts</li>
+            <li><code>POST /api/logs/export</code> - Export visitor logs</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>security:visitor:read_logs</code></p>
+    </div>
+</div>

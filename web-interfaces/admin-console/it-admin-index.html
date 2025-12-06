@@ -1,0 +1,2157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOSTEL MS - System Administrator Console</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- 1. REVERTED TO ORIGINAL BRAND THEME --- */
+        :root {
+            /* Project Brand Colors */
+            --primary-color: #720026;
+            /* Deep Crimson/Maroon */
+            --primary-light: #8c0030;
+            --primary-dark: #4f0019;
+            --primary-gradient: linear-gradient(135deg, #720026 0%, #8c0030 100%);
+
+            --secondary-color: #ffc400;
+            /* Vibrant Gold/Yellow */
+            --secondary-light: #ffd54f;
+            --secondary-dark: #ffab00;
+
+            /* AWS-Style Professional Palette */
+            --accent-color: #0d6efd; /* AWS Blue */
+            --success-color: #1d8102;
+            --warning-color: #ff9900;
+            --error-color: #d13212;
+
+            /* Light Content Theme */
+            --text-dark-content: #16191f;
+            --text-medium-content: #545b66;
+            --bg-page: #eaeded;
+            /* AWS light gray page background */
+            --bg-card: #ffffff;
+            /* AWS white card background */
+            --border-light: #d5dbdb;
+            --border-medium: #aab7b8;
+            --text-link: #0073bb; /* AWS Link Blue */
+            
+            /* REVERTED: Light Sidebar/Header Theme */
+            --bg-header: var(--primary-gradient); /* CHANGED: Back to brand */
+            --bg-sidebar: var(--bg-card);     /* CHANGED: Back to light */
+            --text-header: #ffffff;
+            --text-sidebar: var(--text-medium-content);    /* CHANGED: Back to dark */
+            --text-sidebar-muted: var(--text-medium-content);
+            --border-sidebar: var(--border-light);
+            --bg-hover: rgba(0, 0, 0, 0.03);
+            --bg-active: rgba(114, 0, 38, 0.1); /* CHANGED: Back to brand active */
+
+            --bg-terminal: #1e1e1e;
+            --text-terminal: #d4d4d4;
+
+            --shadow-soft: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+            --shadow-deep: 0 10px 20px 0 rgba(0, 0, 0, 0.1);
+
+            /* --- CONTROLS SIDEBAR SIZE --- */
+            --sidebar-width: 240px; 
+            
+            --header-height: 40px;
+            --footer-height: 40px; 
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+            list-style: none;
+            text-decoration: none;
+        }
+
+        /* SCROLLBAR STYLES (Light) */
+        .sidebar::-webkit-scrollbar,
+        .body-content::-webkit-scrollbar,
+        .activity-list::-webkit-scrollbar,
+        .db-results table::-webkit-scrollbar,
+        .terminal-output::-webkit-scrollbar,
+        .tab-content-container::-webkit-scrollbar,
+        .sidebar-nav-container::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+            background: var(--bg-page);
+        }
+
+        .sidebar::-webkit-scrollbar-thumb,
+        .body-content::-webkit-scrollbar-thumb,
+        .activity-list::-webkit-scrollbar-thumb,
+        .db-results table::-webkit-scrollbar-thumb,
+        .terminal-output::-webkit-scrollbar-thumb,
+        .tab-content-container::-webkit-scrollbar-thumb,
+        .sidebar-nav-container::-webkit-scrollbar-thumb {
+            background: var(--border-medium);
+            border-radius: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover,
+        .body-content::-webkit-scrollbar-thumb:hover,
+        .sidebar-nav-container::-webkit-scrollbar-thumb:hover {
+            background: var(--border-dark);
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-dark-content);
+            line-height: 1.5;
+            font-size: 13px; 
+            overflow: hidden;
+            padding: 0;
+            min-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .header {
+            background: var(--bg-header); 
+            color: var(--text-header);
+            height: var(--header-height);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            box-shadow: var(--shadow-medium);
+            border-radius: 0;
+            margin-bottom: 0;
+            min-width: 100%;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1000;
+            border-bottom: 1px solid var(--primary-dark);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            z-index: 1;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 10px;
+        }
+
+        .logo i {
+            font-size: 20px;
+            color: var(--secondary-color);
+            filter: drop-shadow(0 0 5px rgba(255, 196, 0, 0.5));
+        }
+
+        .logo h1 {
+            font-size: 18px;
+            color: var(--text-light);
+            font-weight: 700;
+        }
+
+        .admin-title {
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            padding-left: 14px;
+            border-left: 1px solid var(--primary-light); 
+            color: var(--text-header);
+        }
+
+        .admin-title i {
+            margin-right: 8px;
+            font-size: 16px;
+            color: var(--secondary-color);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+
+        .user-info img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid var(--secondary-color);
+            object-fit: cover;
+            content: url(My_Profile_Photo-removebg.png);
+        }
+
+        .user-details {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+            gap: 0;
+            min-width: 100%;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-sidebar); 
+            height: 100%;
+            box-shadow: none;
+            border-radius: 0;
+            padding: 0;
+            overflow-y: hidden;
+            flex-shrink: 0;
+            border-right: 1px solid var(--border-light); 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-container {
+            padding: 12px 14px 10px 14px;
+            margin-bottom: 0;
+            border-bottom: 1px solid var(--border-light); 
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: var(--bg-sidebar); 
+            flex-shrink: 0;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 8px 12px 8px 36px; 
+            border: 1px solid var(--border-medium); 
+            border-radius: var(--border-radius-medium);
+            font-size: 13px;
+            background-color: var(--bg-page); 
+            color: var(--text-dark-content);
+        }
+        .search-box input:focus {
+            background-color: var(--bg-card);
+            border-color: var(--text-link);
+            box-shadow: 0 0 0 1px var(--text-link);
+            outline: none;
+        }
+        .search-box i {
+            position: absolute;
+            left: 12px; 
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+        
+        .search-results {
+            display: none; 
+            position: absolute;
+            top: 100%;
+            left: 0; 
+            right: 0; 
+            background: var(--bg-card); 
+            border: 1px solid var(--border-medium); 
+            border-top: none;
+            border-radius: 0 0 var(--border-radius-medium) var(--border-radius-medium);
+            box-shadow: var(--shadow-medium);
+            z-index: 9;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .search-box input:focus + .search-results,
+        .search-results:hover {
+            display: block;
+        }
+        .search-result-item {
+            padding: 8px 12px;
+            font-size: 13px;
+            color: var(--text-dark-content); 
+            cursor: pointer;
+        }
+        .search-result-item:hover {
+            background: var(--bg-hover);
+            color: var(--primary-color); 
+        }
+
+        .sidebar-nav-container {
+            overflow-y: auto;
+            flex-grow: 1;
+            padding: 12px 0;
+        }
+
+        .nav-section {
+            margin: 10px 0;
+        }
+
+        .nav-section-title {
+            padding: 0 12px 6px 12px;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--text-muted); 
+            font-weight: 600;
+        }
+
+        .nav-subsection-title {
+            padding: 8px 12px 4px 12px;
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--primary-color); 
+            font-weight: 700;
+            background: var(--bg-hover); 
+            margin-top: 8px;
+        }
+
+        .nav-links li {
+            padding: 4px 12px; 
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 12px; 
+            color: var(--text-dark-content); 
+            margin: 1px 0;
+            border-radius: 4px;
+            margin: 1px 6px;
+        }
+
+        .nav-links li:hover {
+            background: var(--bg-hover);
+            color: var(--primary-color); 
+        }
+
+        .nav-links li.active {
+            background: var(--bg-active);
+            color: var(--primary-color); 
+            font-weight: 600;
+        }
+
+        .nav-links li i {
+            margin-right: 8px;
+            width: 14px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted); 
+        }
+
+        .nav-links li:hover i,
+        .nav-links li.active i {
+            color: var(--primary-color); 
+        }
+
+        .body-content {
+            flex: 1;
+            padding: 0;
+            overflow: hidden;
+            background-color: var(--bg-page);
+            border-radius: 0;
+            box-shadow: none;
+            min-width: 0;
+            border: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .swarm-threat-banner {
+            display: none;
+            background: var(--error-color);
+            color: white;
+            padding: 10px 18px;
+            margin: 15px 20px 0 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: var(--shadow-medium);
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        .swarm-threat-banner.active {
+            display: block;
+        }
+
+        .swarm-health-wrapper {
+            margin: 15px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 16px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .swarm-health-wrapper h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .swarm-health-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .swarm-card {
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 10px;
+            background: var(--bg-hover);
+        }
+
+        .swarm-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .swarm-card-body {
+            font-size: 12px;
+            color: var(--text-medium-content);
+            margin-top: 6px;
+        }
+
+        .swarm-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--success-color);
+        }
+
+        .swarm-dot.offline {
+            background: var(--error-color);
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.55; }
+            100% { opacity: 1; }
+        }
+
+        .red-phone-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .red-phone-modal.active {
+            display: flex;
+        }
+
+        .red-phone-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+        }
+
+        .red-phone-content {
+            position: relative;
+            background: #fff5f5;
+            border: 4px solid var(--error-color);
+            border-radius: 12px;
+            padding: 24px;
+            width: 420px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            animation: pulse 1s linear infinite;
+        }
+
+        .red-phone-content h2 {
+            color: var(--error-color);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .red-phone-content p {
+            margin: 6px 0;
+            color: var(--text-dark-content);
+        }
+
+        .red-phone-content input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-medium);
+            margin: 12px 0;
+            font-size: 14px;
+        }
+
+        .red-phone-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .red-phone-actions button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        #redPhoneAuthorize {
+            background: var(--error-color);
+            color: #fff;
+        }
+
+        #redPhoneDeny {
+            background: var(--border-light);
+            color: var(--text-dark-content);
+        }
+
+        .modal-status {
+            margin-top: 8px;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .modal-status.success {
+            color: var(--success-color);
+        }
+
+        .modal-status.error {
+            color: var(--error-color);
+        }
+
+        .research-lab-panel {
+            margin: 0 20px 20px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 16px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .research-lab-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .research-lab-header button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            background: var(--primary-color);
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .research-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .research-table th,
+        .research-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .research-table th {
+            background: var(--bg-hover);
+            font-weight: 600;
+        }
+
+        .teach-btn {
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            background: var(--success-color);
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .teach-btn.success {
+            background: var(--secondary-color);
+        }
+
+        .teach-btn.error {
+            background: var(--error-color);
+        }
+
+        .empty-cell {
+            text-align: center;
+            color: var(--text-medium-content);
+            padding: 20px 0;
+        }
+
+        .dashboard-header {
+            margin: 0;
+            padding: 14px 20px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .dashboard-header h2 {
+            color: var(--text-dark-content);
+            font-weight: 700;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dashboard-header h2 i {
+            color: var(--primary-color);
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-medium);
+            border-radius: var(--border-radius-small);
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-dark-content);
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            background: var(--bg-hover);
+            border-color: var(--border-dark);
+        }
+
+        .btn.btn-primary {
+            background: var(--text-link);
+            color: white;
+            border-color: var(--text-link);
+        }
+
+        .btn.btn-primary:hover {
+            background: #005a9e;
+        }
+
+        .btn.btn-danger {
+            background: var(--error-color);
+            color: white;
+            border-color: var(--error-color);
+        }
+
+        .btn.btn-danger:hover {
+            background: #b92c0e;
+        }
+
+        .btn.btn-warning {
+            background: var(--warning-color);
+            color: var(--text-dark-content);
+            border-color: var(--warning-color);
+        }
+
+        .btn.btn-warning:hover {
+            background: #dd8900;
+        }
+
+        .module-tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid var(--border-light);
+            background: var(--bg-card);
+            padding: 0 20px; 
+            flex-shrink: 0;
+        }
+
+        .tab-button {
+            padding: 12px 18px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 3px solid transparent;
+            margin-bottom: -1px;
+        }
+
+        .tab-button.active {
+            color: var(--text-link);
+            font-weight: 600;
+            border-bottom-color: var(--text-link);
+        }
+
+        .tab-button i {
+            margin-right: 6px;
+        }
+
+        .tab-content-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            min-height: 0;
+            padding: 20px; 
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        .dashboard-welcome {
+            margin-bottom: 24px;
+        }
+        .dashboard-welcome h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark-content);
+        }
+        .dashboard-welcome p {
+            font-size: 14px;
+            color: var(--text-medium-content);
+        }
+
+        .dashboard-widget-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 14px; 
+        }
+        
+        .widget-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-small);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .widget-card-header {
+            padding: 12px 16px; 
+            border-bottom: 1px solid var(--border-light);
+        }
+        .widget-card-header h3 {
+            font-size: 14px; 
+            font-weight: 700;
+            color: var(--text-dark-content);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .widget-card-header h3 i {
+            color: var(--primary-color);
+        }
+
+        .widget-card-body {
+            padding: 16px; 
+            flex-grow: 1;
+        }
+        
+        .widget-stat-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px; 
+        }
+        
+        .widget-stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .widget-stat-item .label {
+            font-size: 12px; 
+            color: var(--text-medium-content);
+        }
+        
+        .widget-stat-item .value {
+            font-size: 15px; 
+            font-weight: 600;
+            color: var(--text-dark-content);
+        }
+        .widget-stat-item .value .fas {
+            margin-right: 5px;
+        }
+        
+        .value-success { color: var(--success-color); }
+        .value-error { color: var(--error-color); }
+        .value-warning { color: var(--warning-color); }
+        .value-link { color: var(--text-link); cursor: pointer; }
+        
+        .widget-card-footer {
+            padding: 10px 18px; 
+            background: var(--bg-page);
+            border-top: 1px solid var(--border-light);
+        }
+        .widget-card-footer .btn {
+            padding: 4px 10px;
+            font-size: 12px;
+        }
+
+        .widget-console-feed {
+            padding: 10px;
+            background: var(--bg-terminal);
+            color: var(--text-terminal);
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 11px;
+            height: 180px;
+            overflow-y: scroll;
+            border-radius: var(--border-radius-small);
+        }
+        
+        .loading-spinner {
+            font-size: 24px;
+            color: var(--text-muted);
+            animation: spin 1.5s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .widget-stat-item .value .loading-spinner {
+            font-size: 16px;
+        }
+        .widget-card-body .loading-spinner {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        .footer .loading-spinner {
+            font-size: 12px;
+            color: var(--text-muted);
+            animation: spin 2s linear infinite; 
+        }
+
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 16px;
+        }
+        
+        .activity-panel, .system-panel {
+            background: var(--bg-card);
+            border-radius: var(--border-radius-small);
+            padding: 0; 
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-soft);
+            height: 420px; 
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0;
+            padding: 16px;
+            border-bottom: 1px solid var(--border-light);
+            flex-shrink: 0; 
+        }
+        
+        .panel-header h3 {
+            font-size: 16px;
+            color: var(--text-dark-content);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .activity-list {
+            list-style: none;
+            overflow-y: auto;
+            flex-grow: 1;
+            padding: 8px 16px;
+        }
+        .activity-item {
+            padding: 12px 0;
+            display: flex;
+            gap: 12px;
+            border-bottom: 1px dashed var(--border-light);
+            align-items: flex-start;
+        }
+        .activity-details {
+            flex: 1;
+            min-width: 0;
+        }
+        .activity-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-dark-content);
+        }
+        .activity-time {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .advanced-stat-box {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .advanced-stat-box:last-child {
+            border-bottom: none;
+        }
+        .advanced-stat-box span.label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-medium-content);
+        }
+        .advanced-stat-box span.value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark-content);
+        }
+        
+        .footer {
+            background: var(--bg-card);
+            height: var(--footer-height);
+            display: flex;
+            align-items: center;
+            padding: 0 24px; 
+            border-radius: 0; 
+            margin: 0; 
+            min-width: 100%;
+            flex-shrink: 0;
+            border-top: 1px solid var(--border-light);
+            z-index: 1001; 
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; 
+            width: 100%;
+            font-size: 10px; 
+            color: var(--text-muted);
+            flex-wrap: wrap;
+            gap: 16px; 
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+        }
+        .status-item .fas {
+            font-size: 12px; 
+        }
+        
+        .status-value {
+             color: var(--text-dark-content); 
+             font-weight: 600;
+        }
+
+        #liveConsolePanel, #liveConsolePanelDashboard, #liveConsolePanelFull {
+            background: var(--bg-terminal);
+            color: var(--text-terminal);
+            height: 100%;
+            border-radius: var(--border-radius-small);
+            padding: 10px;
+            overflow-y: scroll;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 12px;
+            border: 1px solid var(--border-dark);
+            min-height: 500px;
+        }
+        #liveConsolePanelDashboard {
+            height: 300px;
+            min-height: 300px;
+            border: 1px solid var(--border-light);
+        }
+
+        .console-line {
+            white-space: pre-wrap;
+            margin-bottom: 2px;
+        }
+        .log-error { color: var(--error-color); font-weight: bold; }
+        .log-warning { color: var(--warning-color); }
+        .log-info { color: var(--accent-color); }
+        .log-success { color: var(--success-color); }
+        .log-system { color: #808080; }
+        .log-firewall { color: var(--error-color); font-weight: bold; }
+        .log-critical { color: var(--error-color); font-weight: bold; text-decoration: underline; }
+
+        .db-workspace {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - var(--header-height) - var(--footer-height) - 140px); 
+            min-height: 500px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-small);
+            background: var(--bg-card);
+            overflow: hidden;
+        }
+        .db-query-editor {
+            flex: 1; 
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid var(--border-light);
+            overflow: hidden; 
+        }
+        .db-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 8px;
+            background: var(--bg-page);
+            border-bottom: 1px solid var(--border-light);
+            flex-shrink: 0;
+        }
+        .db-toolbar .btn {
+            padding: 4px 8px;
+            font-size: 12px;
+        }
+        .db-toolbar .btn i {
+            font-size: 14px;
+            margin-right: 4px;
+        }
+        .db-toolbar .btn.run-btn {
+            background: var(--success-color);
+            color: white;
+            border-color: var(--success-color);
+        }
+        .db-toolbar .btn.stop-btn {
+            background: var(--error-color);
+            color: white;
+            border-color: var(--error-color);
+        }
+        .db-toolbar .btn:disabled {
+            background: var(--border-light);
+            color: var(--text-muted);
+            border-color: var(--border-light);
+            opacity: 0.7;
+        }
+        .db-toolbar-separator {
+            width: 1px;
+            height: 20px;
+            background: var(--border-medium);
+            margin: 0 4px;
+        }
+
+        .db-query-editor textarea {
+            flex-grow: 1;
+            resize: none;
+            border: none;
+            padding: 10px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+            color: var(--text-dark-content);
+            line-height: 1.6;
+        }
+        .db-query-editor textarea:focus {
+            outline: none;
+        }
+        .query-status {
+            font-size: 12px;
+            color: var(--text-muted);
+            padding: 4px 12px;
+            background: var(--bg-page);
+            border-top: 1px solid var(--border-light);
+            flex-shrink: 0;
+        }
+        .db-results {
+            flex: 2; 
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .db-results .panel-header {
+            padding: 12px 16px;
+        }
+        .db-results-container {
+            overflow: auto;
+            flex-grow: 1;
+        }
+        .db-results-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .db-results-table th, .db-results-table td {
+            padding: 8px 12px;
+            border: 1px solid var(--border-light);
+            text-align: left;
+            font-size: 12px;
+            white-space: nowrap; 
+        }
+        .db-results-table th {
+            background: var(--bg-page);
+            color: var(--text-dark-content);
+            position: sticky;
+            top: 0;
+        }
+        .db-results-table tbody tr:nth-child(even) {
+            background-color: var(--bg-page);
+        }
+
+        .terminal-workspace {
+            background: var(--bg-terminal);
+            color: var(--text-terminal);
+            height: 600px;
+            border-radius: var(--border-radius-small);
+            padding: 10px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+            border: 1px solid var(--border-dark);
+            display: flex;
+            flex-direction: column;
+        }
+        .terminal-output {
+            flex-grow: 1;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        .terminal-line {
+            margin-bottom: 2px;
+        }
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+            background: #2a2a2a;
+            padding: 5px;
+            margin-top: 5px;
+        }
+        .terminal-prompt {
+            color: var(--secondary-color);
+            font-weight: 700;
+            margin-right: 8px;
+        }
+        .terminal-input {
+            flex-grow: 1;
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--text-terminal);
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+        }
+        
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="header-left">
+            <div class="logo">
+                <i class="fas fa-network-wired"></i>
+                <h1>HOSTEL MS</h1> 
+            </div>
+            <div class="admin-title">
+                <i class="fas fa-crown"></i>
+                System Administrator 
+            </div>
+        </div>
+
+        <div class="user-info">
+            <img src="My_Profile_Photo-removebg.png" alt="IT Admin" id="profileToggle">
+            <div class="user-details">
+                <div>Koushal Jha</div>
+                <div style="font-size: 11px; color: rgba(255,255,255,0.8);">Root Access - Global Scope</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+
+        <div class="sidebar" id="mainSidebar">
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i> 
+                    <input type="text" id="sidebarSearch" placeholder="Search 300+ services & operations...">
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar-nav-container">
+            
+                <div class="nav-section">
+                    <div class="nav-section-title">Central Command & Monitoring</div>
+                    <ul class="nav-links">
+                        <li class="active" data-tab-target="#dashboard-panel" id="nav-global-dashboard"><i class="fas fa-tachometer-alt"></i> <span>Global System Dashboard</span></li>
+                        <li data-tab-target="#diagnostics-panel" id="nav-api-performance"><i class="fas fa-chart-line"></i> <span>API Performance Analytics</span></li>
+                        <li data-tab-target="#diagnostics-panel" id="nav-system-alerts"><i class="fas fa-bell"></i> <span>System Alerts (Critical)</span></li>
+                        <li data-tab-target="#diagnostics-panel" id="nav-data-sync"><i class="fas fa-sync-alt"></i> <span>Data Synchronization Status</span></li>
+                        <li data-tab-target="#diagnostics-panel" id="nav-traffic-trends"><i class="fas fa-chart-area"></i> <span>High Load Traffic Trends</span></li>
+                        <li data-tab-target="#diagnostics-panel" id="nav-session-scanner"><i class="fas fa-users-cog"></i> <span>Global User Session Scanner</span></li>
+                        <li data-tab-target="#terminal-panel" id="nav-maintenance-mode"><i class="fas fa-power-off"></i> <span>Maintenance Mode Control</span></li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title" style="color: var(--error-color); font-weight: 700;"><i class="fas fa-bug"></i> ROOT DEBUGGING & DIAGNOSTICS</div>
+                    <ul class="nav-links">
+                        <li data-tab-target="#console-panel" id="nav-live-console"><i class="fas fa-terminal"></i> <span>Live Console Logs</span></li>
+                        <li data-tab-target="#db-panel" id="nav-db-workspace"><i class="fas fa-database"></i> <span>Database Workspace (SQL)</span></li>
+                        <li data-tab-target="#terminal-panel" id="nav-server-terminal"><i class="fas fa-keyboard"></i> <span>Live Server Terminal</span></li>
+                        <li data-tab-target="#diagnostics-panel" id="nav-service-health"><i class="fas fa-wrench"></i> <span>Service Health & Restart</span></li>
+                        <li data-tab-target="#diagnostics-panel" id="nav-load-balancer"><i class="fas fa-microchip"></i> <span>CPU/Memory Load Balancer</span></li>
+                        <li data-tab-target="#diagnostics-panel" id="nav-network-monitoring"><i class="fas fa-network-wired"></i> <span>Network Monitoring</span></li>
+                        <li data-tab-target="#diagnostics-panel" id="nav-network-test"><i class="fas fa-plug"></i> <span>Run Network Latency Test</span></li>
+                        <li data-tab-target="#diagnostics-panel" id="nav-traffic-map"><i class="fas fa-map-marked-alt"></i> <span>View Live Traffic Map</span></li>
+                        <li data-tab-target="#diagnostics-panel" id="nav-system-scanner"><i class="fas fa-crosshairs"></i> <span>System-Wide Scanner</span></li>
+                        <li data-tab-target="#diagnostics-panel" id="nav-user-scanner"><i class="fas fa-user-secret"></i> <span>User Account Scanner</span></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Autonomous Security Engine (ASE)</div>
+                    <ul class="nav-links">
+                        <li id="nav-firewall-detection"><i class="fas fa-shield-alt"></i> <span>Firewall & Threat Detection (L0)</span></li>
+                        <li id="nav-firewall-test"><i class="fas fa-fire"></i> <span>Run Firewall Test</span></li>
+                        <li id="nav-gateguard"><i class="fas fa-user-shield"></i> <span>GateGuard (L1) - IP Reputation</span></li>
+                        <li id="nav-buildingwatchman"><i class="fas fa-eye"></i> <span>BuildingWatchman (L2) - Behavior</span></li>
+                        <li id="nav-bridgegate"><i class="fas fa-check-double"></i> <span>BridgeGate (L3) - Data Validation</span></li>
+                        <li id="nav-trust-analytics"><i class="fas fa-exclamation-triangle"></i> <span>Trust System Analytics</span></li>
+                        <li id="nav-access-control"><i class="fas fa-lock"></i> <span>Access Control (Global)</span></li>
+                        <li id="nav-access-logs"><i class="fas fa-door-closed"></i> <span>Complete Access Logs</span></li>
+                        <li id="nav-block-list"><i class="fas fa-ban"></i> <span>Global Block List (IPs/Users)</span></li>
+                        <li id="nav-attack-monitor"><i class="fas fa-fire-extinguisher"></i> <span>Attack Vector Monitor</span></li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Database Cluster (Root)</div>
+                    <ul class="nav-links">
+                        <li id="nav-db-primary-status"><i class="fas fa-server"></i> <span>Primary DB (OLTP) Status</span></li>
+                        <li id="nav-db-replica-status"><i class="fas fa-copy"></i> <span>Read Replica (AI/Reporting)</span></li>
+                        <li id="nav-db-backup-status"><i class="fas fa-ambulance"></i> <span>Backup DB (DR) Status</span></li>
+                        <li id="nav-db-schema"><i class="fas fa-database"></i> <span>Schema Management (Migrations)</span></li>
+                        <li id="nav-db-tx-logs"><i class="fas fa-history"></i> <span>Transaction Log Viewer</span></li>
+                        <li id="nav-db-query-analyzer"><i class="fas fa-bolt"></i> <span>Query Performance Analyzer</span></li>
+                        <li id="nav-db-export"><i class="fas fa-file-export"></i> <span>Global Data Export (Full Dump)</span></li>
+                        <li id="nav-db-cleanup"><i class="fas fa-trash-alt"></i> <span>Data Retention & Cleanup</span></li>
+                        <li id="nav-db-replication"><i class="fas fa-sync"></i> <span>Manage Replication & Sync</span></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title" style="color: var(--primary-color); font-weight: 700;"><i class="fas fa-globe-asia"></i> GLOBAL OPERATIONS (ALL HOSTELS)</div>
+
+                    <div class="nav-subsection-title">User & Permission (Global)</div>
+                    <ul class="nav-links">
+                        <li id="nav-view-all-users"><i class="fas fa-users-cog"></i> <span>View All User Accounts</span></li>
+                        <li id="nav-create-user"><i class="fas fa-user-plus"></i> <span>Create New User</span></li>
+                        <li id="nav-edit-user"><i class="fas fa-user-edit"></i> <span>Edit User Profile (Root)</span></li>
+                        <li id="nav-manage-roles"><i class="fas fa-user-lock"></i> <span>Manage User Roles</span></li>
+                        <li id="nav-set-permissions"><i class="fas fa-tasks"></i> <span>Set Role Permissions</span></li>
+                        <li id="nav-user-activity-logs"><i class="fas fa-history"></i> <span>View User Activity Logs</span></li>
+                        <li id="nav-admin-activity-logs"><i class="fas fa-history"></i> <span>View Admin Activity Logs</span></li>
+                        <li id="nav-suspend-user"><i class="fas fa-user-slash"></i> <span>Suspend/Unsuspend User</span></li>
+                        <li id="nav-delete-user"><i class="fas fa-user-times"></i> <span>Delete User (Root)</span></li>
+                        <li id="nav-password-reset"><i class="fas fa-key"></i> <span>Global Password Reset</span></li>
+                        <li id="nav-admin-privileges"><i class="fas fa-shield-alt"></i> <span>Manage Admin Privileges</span></li>
+                        <li id="nav-scan-sessions"><i class="fas fa-user-clock"></i> <span>Scan Active Sessions</span></li>
+                        <li id="nav-terminate-session"><i class="fas fa-times-circle"></i> <span>Terminate User Session</span></li>
+                        <li id="nav-impersonate-user"><i class="fas fa-user-secret"></i> <span>Impersonate User (Root)</span></li>
+                    </ul>
+                    
+                    <div class="nav-subsection-title">Student & Hostel (Global)</div>
+                    <ul class="nav-links">
+                        <li id="nav-view-all-hostels"><i class="fas fa-building"></i> <span>View All Hostels</span></li>
+                        <li id="nav-create-hostel"><i class="fas fa-plus-circle"></i> <span>Create New Hostel</span></li>
+                        <li id="nav-edit-hostel"><i class="fas fa-edit"></i> <span>Edit Hostel Details</span></li>
+                        <li id="nav-hostel-occupancy"><i class="fas fa-chart-pie"></i> <span>View Hostel Occupancy</span></li>
+                        <li id="nav-manage-floors"><i class="fas fa-layer-group"></i> <span>Manage Hostel Floors</span></li>
+                        <li id="nav-manage-rooms"><i class="fas fa-bed"></i> <span>Manage Hostel Rooms</span></li>
+                        <li id="nav-room-types"><i class="fas fa-tags"></i> <span>Create/Edit Room Types</span></li>
+                        <li id="nav-manage-amenities"><i class="fas fa-couch"></i> <span>Manage Hostel Amenities</span></li>
+                        <li id="nav-manage-services"><i class="fas fa-wifi"></i> <span>Manage Hostel Services</span></li>
+                        <li style="border-top: 1px dashed var(--border-light); margin-top: 5px;" id="nav-student-admissions"><i class="fas fa-user-graduate"></i> <span>View Student Admissions</span></li>
+                        <li id="nav-approve-admission"><i class="fas fa-check-circle"></i> <span>Approve/Reject Admission</span></li>
+                        <li id="nav-manual-admission"><i class="fas fa-user-plus"></i> <span>Manually Admit Student</span></li>
+                        <li id="nav-run-allocation"><i class="fas fa-magic"></i> <span>Run Room Allocation</span></li>
+                        <li id="nav-manual-allocation"><i class="fas fa-hand-point-up"></i> <span>Manually Allocate Room</span></li>
+                        <li id="nav-room-transfers"><i class="fas fa-exchange-alt"></i> <span>View Room Transfers</span></li>
+                        <li id="nav-approve-transfers"><i class="fas fa-check-double"></i> <span>Approve/Reject Transfers</span></li>
+                        <li id="nav-check-in-out"><i class="fas fa-user-check"></i> <span>Manage Check-in/Check-out</span></li>
+                        <li id="nav-student-leave"><i class="fas fa-calendar-alt"></i> <span>View Student Leave</span></li>
+                        <li id="nav-approve-leave"><i class="fas fa-calendar-check"></i> <span>Approve/Reject Leave</span></li>
+                        <li id="nav-suspend-student"><i class="fas fa-ban"></i> <span>Suspend/Terminate Student</span></li>
+                        <li id="nav-id-cards"><i class="fas fa-id-card"></i> <span>Manage ID Cards (Global)</span></li>
+                        <li id="nav-print-id-cards"><i class="fas fa-print"></i> <span>Print/Revoke ID Cards</span></li>
+                        <li id="nav-academic-records"><i class="fas fa-graduation-cap"></i> <span>View Academic Records</span></li>
+                    </ul>
+                    
+                    <div class="nav-subsection-title">Employee Management (Global)</div>
+                    <ul class="nav-links">
+                        <li id="nav-all-employees"><i class="fas fa-users"></i> <span>View All Employees</span></li>
+                        <li id="nav-add-employee"><i class="fas fa-user-plus"></i> <span>Add New Employee</span></li>
+                        <li id="nav-edit-employee"><i class="fas fa-id-badge"></i> <span>Edit Employee Profiles</span></li>
+                        <li id="nav-manage-designations"><i class="fas fa-user-tag"></i> <span>Manage Designations & Roles</span></li>
+                        <li id="nav-duty-allocation"><i class="fas fa-tasks"></i> <span>Manage Duty Allocation</span></li>
+                        <li id="nav-staff-attendance"><i class="fas fa-calendar-check"></i> <span>View Staff Attendance</span></li>
+                        <li id="nav-approve-attendance"><i class="fas fa-user-clock"></i> <span>Approve Staff Attendance</span></li>
+                        <li id="nav-shift-schedules"><i class="fas fa-clock"></i> <span>Manage Shift Schedules</span></li>
+                        <li id="nav-salary-structures"><i class="fas fa-money-bill-wave"></i> <span>Manage Salary Structures</span></li>
+                        <li id="nav-run-payroll"><i class="fas fa-file-invoice-dollar"></i> <span>Run Payroll Processing</span></li>
+                        <li id="nav-payroll-history"><i class="fas fa-history"></i> <span>View Payroll History</span></li>
+                        <li id="nav-manage-incentives"><i class="fas fa-award"></i> <span>Manage Incentives</span></li>
+                        <li id="nav-staff-performance"><i class="fas fa-chart-line"></i> <span>View Staff Performance</span></li>
+                        <li id="nav-suspend-staff"><i class="fas fa-user-times"></i> <span>Suspension/Termination (Staff)</span></li>
+                    </ul>
+
+                    <div class="nav-subsection-title">Financial & Billing (Global)</div>
+                    <ul class="nav-links">
+                        <li id="nav-fee-structures"><i class="fas fa-money-bill-wave"></i> <span>Manage Fee Structures</span></li>
+                        <li id="nav-fee-collection"><i class="fas fa-hand-holding-usd"></i> <span>View Fee Collection</span></li>
+                        <li id="nav-manual-payment"><i class="fas fa-plus-circle"></i> <span>Record Manual Payment</span></li>
+                        <li id="nav-payment-records"><i class="fas fa-file-invoice-dollar"></i> <span>View Payment Records</span></li>
+                        <li id="nav-refund-processing"><i class="fas fa-receipt"></i> <span>Manage Refund Processing</span></li>
+                        <li id="nav-financial-reports"><i class="fas fa-chart-bar"></i> <span>Generate Financial Reports</span></li>
+                        <li id="nav-expense-categories"><i class="fas fa-coins"></i> <span>Manage Expense Categories</span></li>
+                        <li id="nav-log-expense"><i class="fas fa-plus-circle"></i> <span>Log New Expense</span></li>
+                        <li id="nav-generate-invoices"><i class="fas fa-file-contract"></i> <span>Generate Invoices</span></li>
+                        <li id="nav-payment-gateway"><i class="fas fa-credit-card"></i> <span>Payment Gateway Config</span></li>
+                        <li id="nav-manage-discounts"><i class="fas fa-percentage"></i> <span>Manage Discounts</span></li>
+                        <li id="nav-financial-audits"><i class="fas fa-clipboard-check"></i> <span>Run Financial Audits</span></li>
+                    </ul>
+
+                    <div class="nav-subsection-title">Mess & Dining (Global)</div>
+                    <ul class="nav-links">
+                        <li id="nav-create-mess"><i class="fas fa-plus-circle"></i> <span>Create New Mess</span></li>
+                        <li id="nav-mess-config"><i class="fas fa-utensils"></i> <span>Manage Mess Configuration</span></li>
+                        <li id="nav-menu-planning"><i class="fas fa-book"></i> <span>Manage Menu Planning</span></li>
+                        <li id="nav-set-daily-menu"><i class="fas fa-calendar-alt"></i> <span>Set Daily Menu</span></li>
+                        <li id="nav-mess-inventory"><i class="fas fa-warehouse"></i> <span>Manage Mess Inventory</span></li>
+                        <li id="nav-add-inventory"><i class="fas fa-plus-circle"></i> <span>Add Inventory Stock</span></li>
+                        <li id="nav-meal-timings"><i class="fas fa-clock"></i> <span>Manage Meal Timings</span></li>
+                        <li id="nav-mess-fees"><i class="fas fa-money-bill-wave"></i> <span>Manage Mess Fee</span></li>
+                        <li id="nav-mess-staff"><i class="fas fa-users-cog"></i> <span>Manage Mess Staff</span></li>
+                        <li id="nav-special-diets"><i class="fas fa-utensil-spoon"></i> <span>Manage Special Diets</span></li>
+                        <li id="nav-mess-suppliers"><i class="fas fa-truck"></i> <span>Manage Suppliers</span></li>
+                    </ul>
+
+                    <div class="nav-subsection-title">Laundry Services (Global)</div>
+                    <ul class="nav-links">
+                        <li id="nav-laundry-orders"><i class="fas fa-tshirt"></i> <span>View Laundry Orders</span></li>
+                        <li id="nav-laundry-billing"><i class="fas fa-receipt"></i> <span>View Billing & Payments</span></li>
+                        <li id="nav-laundry-pickup"><i class="fas fa-truck"></i> <span>Manage Pickup/Delivery</span></li>
+                        <li id="nav-laundry-tracking"><i class="fas fa-clipboard-list"></i> <span>Track Service Status</span></li>
+                        <li id="nav-laundry-inventory"><i class="fas fa-boxes"></i> <span>Manage Laundry Inventory</span></li>
+                        <li id="nav-laundry-analytics"><i class="fas fa-chart-line"></i> <span>View Service Analytics</span></li>
+                        <li id="nav-laundry-settings"><i class="fas fa-cog"></i> <span>Configure Laundry Settings</span></li>
+                        <li id="nav-laundry-add-service"><i class="fas fa-plus-circle"></i> <span>Add Laundry Service</span></li>
+                    </ul>
+
+                    <div class="nav-subsection-title">Transport Services (Global)</div>
+                    <ul class="nav-links">
+                        <li id="nav-transport-vehicles"><i class="fas fa-bus"></i> <span>View All Vehicles</span></li>
+                        <li id="nav-transport-add-vehicle"><i class="fas fa-plus-circle"></i> <span>Add New Vehicle</span></li>
+                        <li id="nav-transport-routes"><i class="fas fa-route"></i> <span>Manage Routes</span></li>
+                        <li id="nav-transport-drivers"><i class="fas fa-users"></i> <span>Manage Drivers</span></li>
+                        <li id="nav-transport-fuel"><i class="fas fa-gas-pump"></i> <span>Manage Fuel Logs</span></li>
+                        <li id="nav-transport-schedules"><i class="fas fa-calendar-alt"></i> <span>Manage Schedules</span></li>
+                        <li id="nav-transport-stops"><i class="fas fa-map-marker-alt"></i> <span>Manage Stops</span></li>
+                        <li id="nav-transport-passes"><i class="fas fa-ticket-alt"></i> <span>Manage Transport Passes</span></li>
+                        <li id="nav-transport-fees"><i class="fas fa-money-bill-wave"></i> <span>Manage Transport Fees</span></li>
+                        <li id="nav-transport-maintenance"><i class="fas fa-wrench"></i> <span>Vehicle Maintenance Logs</span></li>
+                    </ul>
+                    
+                    <div class="nav-subsection-title">Visitor & Gate (Global)</div>
+                    <ul class="nav-links">
+                        <li id="nav-visitor-registration"><i class="fas fa-user-friends"></i> <span>Register New Visitor</span></li>
+                        <li id="nav-gate-pass"><i class="fas fa-id-card"></i> <span>Manage Gate Pass System</span></li>
+                        <li id="nav-visitor-logs"><i class="fas fa-history"></i> <span>View Visitor Logs</span></li>
+                        <li id="nav-visitor-approval"><i class="fas fa-shield-alt"></i> <span>Approve/Deny Visitors</span></li>
+                        <li id="nav-visitor-scheduling"><i class="fas fa-clock"></i> <span>Manage Visit Scheduling</span></li>
+                        <li id="nav-visitor-analytics"><i class="fas fa-chart-bar"></i> <span>View Visitor Analytics</span></li>
+                        <li id="nav-visitor-policies"><i class="fas fa-cog"></i> <span>Configure Visitor Policies</span></li>
+                        <li id="nav-security-personnel"><i class="fas fa-user-secret"></i> <span>Manage Security Personnel</span></li>
+                        <li id="nav-cctv"><i class="fas fa-camera"></i> <span>View CCTV Management</span></li>
+                        <li id="nav-biometrics"><i class="fas fa-fingerprint"></i> <span>View Biometric Systems</span></li>
+                    </ul>
+                    
+                    <div class="nav-subsection-title">Health & Safety (Global)</div>
+                    <ul class="nav-links">
+                        <li id="nav-medical-facilities"><i class="fas fa-first-aid"></i> <span>Manage Medical Facilities</span></li>
+                        <li id="nav-safety-compliance"><i class="fas fa-fire-extinguisher"></i> <span>Manage Safety Compliance</span></li>
+                        <li id="nav-health-records"><i class="fas fa-file-medical"></i> <span>View Health Records</span></li>
+                        <li id="nav-add-health-record"><i class="fas fa-plus-circle"></i> <span>Add Medical Record</span></li>
+                        <li id="nav-medical-staff"><i class="fas fa-hospital"></i> <span>Manage Medical Staff</span></li>
+                        <li id="nav-medical-supplies"><i class="fas fa-box"></i> <span>Manage Medical Supplies</span></li>
+                        <li id="nav-emergency-protocols"><i class="fas fa-ambulance"></i> <span>Configure Emergency Protocols</span></li>
+                        <li id="nav-incident-reports"><i class="fas fa-exclamation-triangle"></i> <span>View Incident Reports</span></li>
+                        <li id="nav-file-incident"><i class="fas fa-plus-circle"></i> <span>File Incident Report</span></li>
+                        <li id="nav-pandemic-mgmt"><i class="fas fa-shield-virus"></i> <span>Pandemic Management</span></li>
+                    </ul>
+
+                    <div class="nav-subsection-title">Communication & AI (Global)</div>
+                    <ul class="nav-links">
+                        <li id="nav-ai-config"><i class="fas fa-comments"></i> <span>AI Chatbot Configuration</span></li>
+                        <li id="nav-ai-logs"><i class="fas fa-history"></i> <span>AI Chatbot Logs</span></li>
+                        <li id="nav-create-announcement"><i class="fas fa-bullhorn"></i> <span>Create Announcement</span></li>
+                        <li id="nav-email-config"><i class="fas fa-envelope"></i> <span>Email System (Global Config)</span></li>
+                        <li id="nav-send-bulk-email"><i class="fas fa-paper-plane"></i> <span>Send Bulk Email</span></li>
+                        <li id="nav-sms-config"><i class="fas fa-sms"></i> <span>SMS Gateway (Global Config)</span></li>
+                        <li id="nav-send-bulk-sms"><i class="fas fa-mobile-alt"></i> <span>Send Bulk SMS</span></li>
+                        <li id="nav-notification-system"><i class="fas fa-bell"></i> <span>Notification System</span></li>
+                        <li id="nav-manage-events"><i class="fas fa-calendar-plus"></i> <span>Manage Events</span></li>
+                    </ul>
+
+                    <div class="nav-subsection-title">Reporting & Data (Global)</div>
+                    <ul class="nav-links">
+                        <li id="nav-report-occupancy"><i class="fas fa-chart-pie"></i> <span>Generate Occupancy Reports</span></li>
+                        <li id="nav-report-revenue"><i class="fas fa-chart-line"></i> <span>Generate Revenue Analytics</span></li>
+                        <li id="nav-report-performance"><i class="fas fa-chart-bar"></i> <span>Generate Performance Metrics</span></li>
+                        <li id="nav-report-archives"><i class="fas fa-file-export"></i> <span>View Report Archives</span></li>
+                        <li id="nav-report-trends"><i class="fas fa-chart-area"></i> <span>Generate Trend Analysis</span></li>
+                        <li id="nav-export-global"><i class="fas fa-download"></i> <span>Global Data Export</span></li>
+                        <li id="nav-import-global"><i class="fas fa-upload"></i> <span>Global Data Import</span></li>
+                        <li id="nav-export-pdf"><i class="fas fa-file-pdf"></i> <span>Student Profile Export (PDF)</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="body-content" id="mainBodyContent">
+            <div id="swarmThreatBanner" class="swarm-threat-banner"></div>
+            <div class="swarm-health-wrapper">
+                <h3>Autonomous System Health</h3>
+                <div id="swarmHealthGrid" class="swarm-health-grid"></div>
+            </div>
+
+            <section class="research-lab-panel" id="researchLabPanel">
+                <div class="research-lab-header">
+                    <h3><i class="fas fa-flask"></i> AI Learning Lab</h3>
+                    <button id="refreshResearchLab"><i class="fas fa-sync-alt"></i> Refresh</button>
+                </div>
+                <table class="research-table">
+                    <thead>
+                        <tr>
+                            <th>Pattern</th>
+                            <th>Proposed Fix</th>
+                            <th>Confidence</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="researchLabBody">
+                        <tr>
+                            <td colspan="4" class="empty-cell">Loading proposals...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <div class="dashboard-header">
+                <h2><i class="fas fa-network-wired"></i> System Administrator Dashboard</h2>
+                <div class="quick-actions">
+                    <button class="btn"><i class="fas fa-sitemap"></i> View Global Hierarchy</button>
+                    <button class="btn btn-warning"><i class="fas fa-lock"></i> Force Maintenance</button>
+                </div>
+            </div>
+            
+            <div class="module-tabs">
+                <button class="tab-button active" data-tab-target="#dashboard-panel"><i class="fas fa-tachometer-alt"></i> Global Dashboard</button>
+                <button class="tab-button" data-tab-target="#console-panel"><i class="fas fa-terminal"></i> Live Console</button>
+                <button class="tab-button" data-tab-target="#db-panel"><i class="fas fa-database"></i> Database Workspace</button>
+                <button class="tab-button" data-tab-target="#terminal-panel"><i class="fas fa-keyboard"></i> Server Terminal</button>
+                <button class="tab-button" data-tab-target="#diagnostics-panel"><i class="fas fa-heartbeat"></i> Diagnostics & Scanning</button>
+            </div>
+            
+            <div class="tab-content-container">
+
+                <div class="tab-panel active" id="dashboard-panel" data-tab-content>
+                    
+                    <div class="dashboard-welcome">
+                        <h2>Welcome, System Administrator (Root User)</h2>
+                        <p>You have global oversight of all HOSTEL MS services and infrastructure.</p>
+                    </div>
+
+                    <div class="dashboard-widget-grid" style="grid-template-columns: repeat(3, 1fr);">
+                        <div class="widget-card">
+                            <div class="widget-card-header">
+                                <h3><i class="fas fa-heartbeat" style="color: var(--success-color);"></i> System Health & Load</h3>
+                            </div>
+                            <div class="widget-card-body">
+                                <div class="widget-stat-list">
+                                    <div class="widget-stat-item">
+                                        <span class="label">Primary DB (OLTP)</span>
+                                        <span class="value" id="stat-db-primary"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                    <div class="widget-stat-item">
+                                        <span class="label">Read Replica (AI)</span>
+                                        <span class="value" id="stat-db-replica"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                    <div class="widget-stat-item">
+                                        <span class="label">API Latency (Avg)</span>
+                                        <span class="value" id="stat-api-latency"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                    <div class="widget-stat-item">
+                                        <span class="label">Global WebSocket</span>
+                                        <span class="value" id="stat-socket"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget-card-footer">
+                                <button class="btn"><i class="fas fa-search-plus"></i> View Load Balancer</button>
+                            </div>
+                        </div>
+
+                        <div class="widget-card">
+                            <div class="widget-card-header">
+                                <h3><i class="fas fa-shield-alt" style="color: var(--error-color);"></i> Autonomous Security (ASE)</h3>
+                            </div>
+                            <div class="widget-card-body">
+                                <div class="widget-stat-list">
+                                    <div class="widget-stat-item">
+                                        <span class="label">Firewall Status</span>
+                                        <span class="value" id="stat-firewall"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                    <div class="widget-stat-item">
+                                        <span class="label">Threats (Last Hour)</span>
+                                        <span class="value" id="stat-threats"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                    <div class="widget-stat-item">
+                                        <span class="label">Active IP Bans (L0)</span>
+                                        <span class="value" id="stat-bans"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                    <div class="widget-stat-item">
+                                        <span class="label">Global Trust Score</span>
+                                        <span class="value" id="stat-trust"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget-card-footer">
+                                <button class="btn"><i class="fas fa-book-reader"></i> View Threat Logs</button>
+                            </div>
+                        </div>
+
+                        <div class="widget-card">
+                            <div class="widget-card-header">
+                                <h3><i class="fas fa-robot" style="color: var(--accent-color);"></i> Autonomous Operations (AOE)</h3>
+                            </div>
+                            <div class="widget-card-body">
+                                <div class="widget-stat-list">
+                                    <div class="widget-stat-item">
+                                        <span class="label">Maintenance Mode</span>
+                                        <span class="value" id="stat-maintenance"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                    <div class="widget-stat-item">
+                                        <span class="label">Next Maintenance</span>
+                                        <span class="value" id="stat-next-maint"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                    <div class="widget-stat-item">
+                                        <span class="label">Backup Status</span>
+                                        <span class="value" id="stat-backup"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget-card-footer">
+                                <button class="btn btn-warning"><i class="fas fa-lock"></i> Force Maintenance</button>
+                            </div>
+                        </div>
+                        
+                        <div class="widget-card">
+                            <div class="widget-card-header">
+                                <h3><i class="fas fa-users-cog"></i> User Management</h3>
+                            </div>
+                            <div class="widget-card-body">
+                                <div class="widget-stat-list">
+                                    <div class="widget-stat-item">
+                                        <span class="label">Total Users</span>
+                                        <span class="value" id="stat-total-users"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                    <div class="widget-stat-item">
+                                        <span class="label">Active Sessions</span>
+                                        <span class="value" id="stat-active-sessions"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                    <div class="widget-stat-item">
+                                        <span class="label">Pending Admissions</span>
+                                        <span class="value" id="stat-pending-users"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget-card-footer">
+                                <button class="btn"><i class="fas fa-search"></i> Find User</button>
+                            </div>
+                        </div>
+
+                        <div class="widget-card">
+                            <div class="widget-card-header">
+                                <h3><i class="fas fa-globe-asia"></i> Global Hostel Operations</h3>
+                            </div>
+                            <div class="widget-card-body">
+                                <div class="widget-stat-list">
+                                    <div class="widget-stat-item">
+                                        <span class="label">Total Hostels</span>
+                                        <span class="value" id="stat-total-hostels"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                    <div class="widget-stat-item">
+                                        <span class="label">Total Rooms</span>
+                                        <span class="value" id="stat-total-rooms"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                    <div class="widget-stat-item">
+                                        <span class="label">Global Occupancy</span>
+                                        <span class="value" id="stat-occupancy"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget-card-footer">
+                                <button class="btn"><i class="fas fa-building"></i> Manage Hostels</button>
+                            </div>
+                        </div>
+
+                        <div class="widget-card">
+                            <div class="widget-card-header">
+                                <h3><i class="fas fa-file-invoice-dollar" style="color: var(--primary-color);"></i> Global Finance</h3>
+                            </div>
+                            <div class="widget-card-body">
+                                <div class="widget-stat-list">
+                                    <div class="widget-stat-item">
+                                        <span class="label">Revenue (MTD)</span>
+                                        <span class="value" id="stat-revenue"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                    <div class="widget-stat-item">
+                                        <span class="label">Pending Refunds</span>
+                                        <span class="value" id="stat-refunds"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                    <div class="widget-stat-item">
+                                        <span class="label">Total Expenses</span>
+                                        <span class="value" id="stat-expenses"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget-card-footer">
+                                <button class="btn"><i class="fas fa-chart-bar"></i> Full Report</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="tab-panel" id="console-panel" data-tab-content>
+                    <div id="liveConsolePanelFull" class="activity-list" style="height: calc(100vh - var(--header-height) - var(--footer-height) - 140px); min-height: 500px; background: var(--bg-terminal); color: var(--text-terminal); border-radius: var(--border-radius-small); padding: 10px; font-family: 'Consolas', 'Courier New', monospace; font-size: 12px; border: 1px solid var(--border-dark);">
+                        </div>
+                </div>
+
+                <div class="tab-panel" id="db-panel" data-tab-content>
+                    <div class="db-workspace">
+                        <div class="db-query-editor">
+                            <div class="db-toolbar">
+                                <button class="btn" title="Open File"><i class="fas fa-folder-open"></i></button>
+                                <button class="btn" title="Save File"><i class="fas fa-save"></i></button>
+                                <div class="db-toolbar-separator"></div>
+                                <button class="btn run-btn" id="dbRunQueryBtn" title="Execute Query (F5)"><i class="fas fa-play"></i></button>
+                                <button class="btn stop-btn" id="dbStopQueryBtn" title="Cancel Query" disabled><i class="fas fa-stop"></i></button>
+                                <div class="db-toolbar-separator"></div>
+                                <button class="btn" title="Filter results"><i class="fas fa-filter"></i></button>
+                                <button class="btn" title="Explain Query (F7)"><i class="fas fa-tasks"></i></button>
+                                <button class="btn" title="Query History"><i class="fas fa-history"></i></button>
+                            </div>
+                            <textarea id="dbQueryInput" placeholder="-- Root access granted to Read Replica by default.&#10;-- Use 'USE OLTP' to target Primary DB (DANGEROUS).&#10;&#10;SELECT * FROM users WHERE role_id = 4 LIMIT 10;"></textarea>
+                            <div class="query-status" id="dbQueryStatus">Status: Idle</div>
+                        </div>
+                        <div class="db-results">
+                            <div class="panel-header" style="margin-bottom: 0; padding: 12px 16px;">
+                                <h3><i class="fas fa-table"></i> Data Output</h3>
+                            </div>
+                            <div class="db-results-container"> 
+                                <table class="db-results-table" id="dbResultsTable">
+                                    <thead>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="1" style="text-align: center; color: var(--text-muted); padding: 20px;">Run a query to see results...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-panel" id="terminal-panel" data-tab-content>
+                     <div class="terminal-workspace" style="height: calc(100vh - var(--header-height) - var(--footer-height) - 140px); min-height: 500px;">
+                        <div class="terminal-output" id="terminalOutput">
+                            <div class="terminal-line log-system">HOSTEL MS Secure Terminal (v1.0)</div>
+                            <div class="terminal-line log-system">Authentication complete. Root access granted.</div>
+                            <div class="terminal-line log-warning">WARNING: You are connected to the LIVE production server.</div>
+                            <div class="terminal-line log-system">Type 'help' for a list of available ASE commands.</div>
+                            <div class="terminal-line"></div>
+                        </div>
+                        <div class="terminal-input-line">
+                            <span class="terminal-prompt">ASE-ROOT@HOSTEL-MS:~$</span>
+                            <input type="text" class="terminal-input" id="terminalInput" autofocus>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-panel" id="diagnostics-panel" data-tab-content>
+                    
+                    <div class="card-grid" style="grid-template-columns: 1fr 1fr; align-items: flex-start;">
+
+                        <div class="system-panel" style="height: auto;">
+                            <div class="panel-header">
+                                <h3><i class="fas fa-user-secret"></i> User Account Scanner & Impersonation</h3>
+                            </div>
+                            <div style="padding: 16px; flex-grow: 1;">
+                                <div class="search-box" style="margin-bottom: 15px; padding: 0;">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="userScanInput" placeholder="Enter User ID or Username (e.g., student.example)" style="padding-right: 12px; padding-left: 36px;"> 
+                                </div>
+                                <button class="btn" id="scanUserBtn" style="width: 100%; background: var(--accent-color); color: white; border: none;">
+                                    <i class="fas fa-search"></i> Scan User Activity
+                                </button>
+                                <button class="btn" id="impersonateUserBtn" style="width: 100%; background: var(--error-color); color: white; border: none; margin-top: 10px;">
+                                    <i class="fas fa-sign-in-alt"></i> Login as User (Impersonate)
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="activity-panel" style="height: auto; min-height: 300px;">
+                            <div class="panel-header">
+                                <h3><i class="fas fa-clipboard-check"></i> Scan Results</h3>
+                            </div>
+                            <div id="scanResultsOutput" class="activity-list" style="height: 250px;">
+                                <div class="activity-item" style="justify-content: center; color: var(--text-muted); border: none;">
+                                    Scan a user to see their details and activity log.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="system-panel" style="height: auto; grid-column: span 2; margin-top: 16px;">
+                            <div class="panel-header">
+                                <h3><i class="fas fa-heartbeat"></i> Core Service Health</h3>
+                            </div>
+                            <p style="padding: 0 16px 16px;">Core service health monitors (CPU, Memory, Network) would appear here.</p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div> 
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="system-status">
+            <div class="status-item">
+                <i class="fas fa-server" style="color: var(--success-color);"></i>
+                <span>Server:</span>
+                <span class="status-value"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+            </div>
+            <div class="status-item">
+                <i class="fas fa-database" style="color: var(--success-color);"></i>
+                <span>DB-Primary (OLTP):</span>
+                <span class="status-value"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+            </div>
+            <div class="status-item">
+                <i class="fas fa-copy" style="color: var(--success-color);"></i>
+                <span>DB-Replica (AI):</span>
+                <span class="status-value"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+            </div>
+            <div class="status-item">
+                 <i class="fas fa-ambulance" style="color: var(--primary-color);"></i>
+                <span>DB-Backup (DR):</span>
+                <span class="status-value"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+            </div>
+            <div class="status-item">
+                <i class="fas fa-shield-alt" style="color: var(--error-color);"></i>
+                <span>Security Score:</span>
+                <span class="status-value"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+            </div>
+            <div class="status-item">
+                <i class="fas fa-power-off" style="color: var(--accent-color);"></i>
+                <span>ASE Engine:</span>
+                <span class="status-value"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+            </div>
+            <div class="status-item">
+                 <i class="fas fa-traffic-light" style="color: var(--success-color);"></i>
+                <span>Network:</span>
+                <span class="status-value"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+            </div>
+            <div class="status-item">
+                 <i class="fas fa-sync" style="color: var(--accent-color);"></i>
+                <span>Sync Queue:</span>
+                <span class="status-value"><i class="fas fa-spinner fa-spin loading-spinner"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <div id="redPhoneModal" class="red-phone-modal">
+        <div class="red-phone-overlay"></div>
+        <div class="red-phone-content">
+            <h2>⚠️ CRITICAL PERMISSION REQUEST ⚠️</h2>
+            <p>Action: <strong id="redPhoneAction">Pending</strong></p>
+            <p>Reason: <span id="redPhoneReason">—</span></p>
+            <p>Severity: <span id="redPhoneSeverity">HIGH</span></p>
+            <input type="password" id="redPhonePassword" placeholder="Enter Admin Password">
+            <div class="red-phone-actions">
+                <button id="redPhoneAuthorize">AUTHORIZE</button>
+                <button id="redPhoneDeny">DENY</button>
+            </div>
+            <div id="redPhoneStatus" class="modal-status"></div>
+        </div>
+    </div>
+
+    <script>
+        window.ADMIN_PORTAL_ROLE = 'it-admin';
+    </script>
+
+    <script src="js/swarm-dashboard.js"></script>
+    <script src="js/mission-control.js"></script>
+    <script src="js/live-console.js"></script>
+    <script src="js/admin-dashboard.js"></script> <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            // --- TAB SWITCHING LOGIC ---
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabPanels = document.querySelectorAll('.tab-panel[data-tab-content]');
+            const sidebarLinks = document.querySelectorAll('.sidebar .nav-links li');
+
+            function switchTab(targetPanelId) {
+                const targetId = targetPanelId.startsWith('#') ? targetPanelId.substring(1) : targetPanelId;
+
+                tabButtons.forEach(button => {
+                    button.classList.toggle('active', button.dataset.tabTarget === `#${targetId}`);
+                });
+
+                tabPanels.forEach(panel => {
+                    panel.classList.toggle('active', panel.id === targetId);
+                });
+                
+                sidebarLinks.forEach(link => {
+                    link.classList.toggle('active', link.dataset.tabTarget === `#${targetId}`);
+                });
+                
+                const mainDashboardLink = document.getElementById('nav-global-dashboard');
+                if (mainDashboardLink) {
+                    mainDashboardLink.classList.toggle('active', targetId === 'dashboard-panel');
+                }
+
+                if (targetId === 'terminal-panel') {
+                    document.getElementById('terminalInput').focus();
+                }
+            }
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => switchTab(button.dataset.tabTarget));
+            });
+
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = link.dataset.tabTarget;
+                    if (target) {
+                        sidebarLinks.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                        switchTab(target);
+                    }
+                });
+            });
+            
+            // --- PROFILE TOGGLE ---
+            const profileToggle = document.getElementById('profileToggle');
+            if (profileToggle) {
+                profileToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    console.log('Profile toggled - Root access detected.');
+                });
+            }
+
+            // --- SHARED CONSOLE HELPER (Required for Terminal & Scanner) ---
+            const consolePanels = [
+                document.getElementById('liveConsolePanelDashboard'), 
+                document.getElementById('liveConsolePanelFull')
+            ];
+            
+            // This function is kept so the Terminal/Scanner inputs can print to the screen
+            window.addConsoleLine = function(lineHtml, logLevel) {
+                const newEntry = document.createElement('div');
+                newEntry.className = 'console-line log-' + (logLevel || 'system');
+                
+                // Allow passing raw HTML or simple text
+                if (lineHtml.includes('<span')) {
+                    newEntry.innerHTML = lineHtml;
+                } else {
+                    newEntry.textContent = lineHtml;
+                }
+
+                consolePanels.forEach(panel => {
+                    if (panel) {
+                        panel.appendChild(newEntry.cloneNode(true));
+                        panel.scrollTop = panel.scrollHeight;
+                        if (panel.children.length > 200) {
+                            panel.removeChild(panel.children[0]);
+                        }
+                    }
+                });
+            };
+
+            // 2. Database Workspace Logic
+            const dbRunQueryBtn = document.getElementById('dbRunQueryBtn');
+            const dbQueryStatus = document.getElementById('dbQueryStatus');
+            const dbResultsTable = document.getElementById('dbResultsTable');
+            const dbQueryInput = document.getElementById('dbQueryInput');
+
+            if (dbRunQueryBtn) {
+                dbRunQueryBtn.addEventListener('click', () => {
+                    const query = dbQueryInput.value;
+                    if (!query.trim()) {
+                        dbQueryStatus.textContent = 'Status: Error - Query is empty';
+                        dbQueryStatus.style.color = 'var(--error-color)';
+                        return;
+                    }
+                    
+                    dbQueryStatus.textContent = 'Running query...';
+                    dbQueryStatus.style.color = 'var(--accent-color)';
+                    dbResultsTable.innerHTML = '<tbody><tr><td colspan="1" style="text-align: center;"><i class="fas fa-spinner fa-spin loading-spinner"></i></td></tr></tbody>';
+                    
+                    setTimeout(() => {
+                        dbQueryStatus.textContent = 'Query OK. 2 rows returned in 68ms.';
+                        dbQueryStatus.style.color = 'var(--success-color)';
+                        
+                        const columns = ['user_id', 'username', 'email', 'role_id', 'status'];
+                        const data = [
+                            [101, 'student.example', 'student@hms.com', 4, 'active'],
+                            [102, 'another.student', 'student2@hms.com', 4, 'active']
+                        ];
+                        
+                        let thead = '<thead><tr>';
+                        columns.forEach(col => thead += `<th>${col}</th>`);
+                        thead += '</tr></thead>';
+                        
+                        let tbody = '<tbody>';
+                        data.forEach((row, index) => {
+                            tbody += `<tr style="${index % 2 === 0 ? 'background-color: var(--bg-page);' : ''}">`;
+                            row.forEach(cell => tbody += `<td>${cell}</td>`);
+                            tbody += '</tr>';
+                        });
+                        tbody += '</tbody>';
+                        
+                        dbResultsTable.innerHTML = thead + tbody;
+                    }, 800);
+                });
+            }
+
+            // 3. Live Terminal Logic
+            const terminalInput = document.getElementById('terminalInput');
+            const terminalOutput = document.getElementById('terminalOutput');
+
+            if (terminalInput) {
+                terminalInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const command = terminalInput.value.trim();
+                        if (command === '') return;
+
+                        const echoLine = document.createElement('div');
+                        echoLine.className = 'terminal-line';
+                        echoLine.innerHTML = `<span class="terminal-prompt">ASE-ROOT@HOSTEL-MS:~$</span> ${command}`;
+                        terminalOutput.appendChild(echoLine);
+
+                        executeTerminalCommand(command);
+                        terminalInput.value = '';
+                        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                    }
+                });
+            }
+
+            function executeTerminalCommand(command) {
+                let response = '';
+                if (command === 'help') {
+                    response = `
+    <div class="terminal-line log-system">Available ASE Commands:</div>
+    <div class="terminal-line log-info">  ASE:BLOCK-IP [ip_address]   - Instantly blocks an IP at L0 Firewall.</div>
+    <div class="terminal-line log-info">  MAINTENANCE:ENABLE          - Enables global maintenance mode.</div>
+    <div class="terminal-line log-info">  MAINTENANCE:DISABLE         - Disables global maintenance mode.</div>
+    <div class="terminal-line log-info">  clear                       - Clears the terminal screen.</div>
+    `;
+                } else if (command === 'clear') {
+                    terminalOutput.innerHTML = '';
+                    return;
+                } else if (command.startsWith('ASE:BLOCK-IP')) {
+                    const ip = command.split(' ')[1] || 'undefined';
+                    response = `<div class="terminal-line log-success">[SUCCESS] IP ${ip} has been blocked and added to 'blocked_ips' table.</div>`;
+                    addConsoleLine(`[FIREWALL] 🚨 Root Admin manually blocked IP: ${ip}`, 'error');
+                } else if (command === 'MAINTENANCE:ENABLE') {
+                    response = `<div class="terminal-line log-warning">[MAINTENANCE] System is now IN MAINTENANCE MODE. All public-facing APIs are locked.</div>`;
+                    addConsoleLine(`[WARN] Root Admin enabled GLOBAL MAINTENANCE MODE.`, 'warning');
+                } else {
+                    response = `<div class="terminal-line log-error">[ERROR] Command not found: ${command}. Type 'help' for commands.</div>`;
+                }
+                
+                const responseLine = document.createElement('div');
+                responseLine.innerHTML = response;
+                terminalOutput.appendChild(responseLine);
+            }
+            
+            // 4. User Scanner Logic
+            const userScanInput = document.getElementById('userScanInput');
+            const scanUserBtn = document.getElementById('scanUserBtn');
+            const impersonateUserBtn = document.getElementById('impersonateUserBtn');
+            const scanResultsOutput = document.getElementById('scanResultsOutput');
+
+            if (scanUserBtn) {
+                scanUserBtn.addEventListener('click', () => {
+                    const username = userScanInput.value || 'student.example';
+                    scanResultsOutput.innerHTML = `<div class="activity-item" style="justify-content: center; color: var(--text-muted); border: none;">
+                        <i class="fas fa-spinner fa-spin"></i> Scanning user: ${username}...
+                    </div>`;
+                    
+                    addConsoleLine(`[SYSTEM] Root Admin initiated scan for user: ${username}`, 'system');
+
+                    setTimeout(() => {
+                        scanResultsOutput.innerHTML = `
+                            <div class="advanced-stat-box" style="border-top: none; padding: 10px;">
+                                <span class="label">User ID:</span>
+                                <span class="value">101</span>
+                            </div>
+                            <div class="advanced-stat-box" style="padding: 10px;">
+                                <span class="label">Username:</span>
+                                <span class="value">${username}</span>
+                            </div>
+                            <div class="advanced-stat-box" style="padding: 10px;">
+                                <span class="label">Trust Score:</span>
+                                <span class="value" style="color: var(--warning-color);">42.5 (LOW)</span>
+                            </div>
+                            <div class="panel-header" style="margin-top: 15px; margin-bottom: 0px;">
+                                <h3 style="font-size: 14px;">Recent Activity (Suspicious)</h3>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-details">
+                                    <div class="activity-title" style="color: var(--error-color);">Failed Login Attempt (x5)</div>
+                                    <div class="activity-time">IP: 103.23.10.5 | 2m ago</div>
+                                </div>
+                            </div>
+                        `;
+                    }, 1200);
+                });
+            }
+
+            if (impersonateUserBtn) {
+                impersonateUserBtn.addEventListener('click', () => {
+                    const username = userScanInput.value || 'student.example';
+                    addConsoleLine(`[CRITICAL] Root Admin requested IMPERSONATION TOKEN for user: ${username}`, 'critical');
+                    window.alert('IMPERSONATION REQUESTED:\nCheck the Live Console for token generation logs.');
+                });
+            }
+            
+            // 5. Search Suggestion Box Logic
+            const searchInput = document.getElementById('sidebarSearch');
+            const searchResults = document.getElementById('searchResults');
+            const navContainer = document.querySelector('.sidebar-nav-container');
+            
+            const allFeatures = [
+                { name: 'Global System Dashboard', id: 'nav-global-dashboard' },
+                { name: 'API Performance Analytics', id: 'nav-api-performance' },
+                { name: 'System Alerts (Critical)', id: 'nav-system-alerts' },
+                { name: 'Data Synchronization Status', id: 'nav-data-sync' },
+                { name: 'High Load Traffic Trends', id: 'nav-traffic-trends' },
+                { name: 'Maintenance Mode Control', id: 'nav-maintenance-mode' },
+                { name: 'Live Console Logs', id: 'nav-live-console' },
+                { name: 'Database Workspace (SQL)', id: 'nav-db-workspace' },
+                { name: 'Live Server Terminal', id: 'nav-server-terminal' },
+                { name: 'Firewall & Threat Detection (L0)', id: 'nav-firewall-detection' },
+                { name: 'GateGuard (L1) - IP Reputation', id: 'nav-gateguard' },
+                { name: 'BuildingWatchman (L2) - Behavior', id: 'nav-buildingwatchman' },
+                { name: 'BridgeGate (L3) - Data Validation', id: 'nav-bridgegate' },
+                { name: 'Trust System Analytics', id: 'nav-trust-analytics' },
+                { name: 'View All User Accounts', id: 'nav-view-all-users' },
+                { name: 'Create New User', id: 'nav-create-user' },
+                { name: 'Global Password Reset', id: 'nav-password-reset' },
+                { name: 'View All Hostels', id: 'nav-view-all-hostels' },
+                { name: 'Create New Hostel', id: 'nav-create-hostel' },
+                { name: 'View Hostel Occupancy', id: 'nav-hostel-occupancy' },
+                { name: 'View Student Admissions', id: 'nav-student-admissions' },
+                { name: 'Run Room Allocation', id: 'nav-run-allocation' },
+                { name: 'Manage Check-in/Check-out', id: 'nav-check-in-out' },
+                { name: 'View All Employees', id: 'nav-all-employees' },
+                { name: 'Add New Employee', id: 'nav-add-employee' },
+                { name: 'Run Payroll Processing', id: 'nav-run-payroll' },
+                { name: 'View Fee Collection', id: 'nav-fee-collection' },
+                { name: 'Generate Financial Reports', id: 'nav-financial-reports' },
+                { name: 'Create New Mess', id: 'nav-create-mess' },
+                { name: 'Manage Menu Planning', id: 'nav-menu-planning' },
+                { name: 'View Laundry Orders', id: 'nav-laundry-orders' },
+                { name: 'View All Vehicles', id: 'nav-transport-vehicles' },
+                { name: 'Register New Visitor', id: 'nav-visitor-registration' },
+                { name: 'Manage Medical Facilities', id: 'nav-medical-facilities' },
+                { name: 'Send Bulk Email', id: 'nav-send-bulk-email' },
+                { name: 'Send Bulk SMS', id: 'nav-send-bulk-sms' },
+                { name: 'Generate Occupancy Reports', id: 'nav-report-occupancy' },
+                { name: 'Global Data Export', id: 'nav-export-global' }
+            ];
+
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    const query = searchInput.value.toLowerCase();
+                    if (query.length === 0) {
+                        searchResults.style.display = 'none';
+                        return;
+                    }
+                    
+                    const filteredFeatures = allFeatures.filter(f => f.name.toLowerCase().includes(query));
+                    searchResults.innerHTML = ''; 
+                    
+                    if (filteredFeatures.length > 0) {
+                        filteredFeatures.slice(0, 5).forEach(feature => { 
+                            const item = document.createElement('div');
+                            item.className = 'search-result-item';
+                            item.textContent = feature.name;
+                            
+                            item.addEventListener('mousedown', (e) => {
+                                e.preventDefault(); 
+                                searchInput.value = feature.name;
+                                searchResults.style.display = 'none';
+                                
+                                const targetElement = document.getElementById(feature.id);
+                                if (targetElement) {
+                                    navContainer.scrollTop = targetElement.offsetTop - navContainer.offsetTop - 10;
+                                    targetElement.click(); 
+                                }
+                            });
+                            searchResults.appendChild(item);
+                        });
+                        searchResults.style.display = 'block';
+                    } else {
+                        searchResults.style.display = 'none';
+                    }
+                });
+                
+                searchInput.addEventListener('blur', () => {
+                    setTimeout(() => {
+                        searchResults.style.display = 'none';
+                    }, 200);
+                });
+                
+                searchInput.addEventListener('focus', () => {
+                    if (searchInput.value.length > 0) {
+                        const event = new Event('input');
+                        searchInput.dispatchEvent(event);
+                    }
+                });
+            }
+
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,176 @@
+<!-- modules/payment-gateway.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-credit-card"></i> Payment Gateway</h2>
+    <div class="quick-actions">
+        <button class="btn" id="configureGatewayBtn"><i class="fas fa-cog"></i> Configure</button>
+        <button class="btn" id="testGatewayBtn"><i class="fas fa-vial"></i> Test Gateway</button>
+        <button class="btn" id="viewLogsBtn"><i class="fas fa-list"></i> View Logs</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-plug"></i>
+            </div>
+            <h3>Gateway Status</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Successful</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-times-circle"></i>
+            </div>
+            <h3>Failed</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-percentage"></i>
+            </div>
+            <h3>Success Rate</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Gateway Configuration -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Gateway Configuration</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshConfig" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="gatewayConfig" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading gateway configuration...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gateway Settings -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Gateway Settings</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Gateway Provider
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select provider...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Merchant ID
+                </label>
+                <input type="text" class="form-input" placeholder="Enter merchant ID" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    API Key
+                </label>
+                <input type="password" class="form-input" placeholder="Enter API key" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Environment
+                </label>
+                <div style="display: flex; gap: 15px;">
+                    <label style="display: flex; align-items: center; gap: 5px; font-size: 12px;">
+                        <input type="radio" name="environment" checked> Sandbox
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px; font-size: 12px;">
+                        <input type="radio" name="environment"> Production
+                    </label>
+                </div>
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-save"></i> Save Configuration
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Transaction Logs -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Recent Transactions</h3>
+        <button class="btn" id="viewAllTransactions" style="font-size: 11px;">
+            <i class="fas fa-history"></i> Full Logs
+        </button>
+    </div>
+    
+    <div class="activity-list" id="transactionLogs" style="max-height: 190px;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading transaction logs...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Payment Gateway module loaded');
+    
+    // BACKEND INTEGRATION: Load payment gateway data
+    // TODO: Fetch gateway configuration and transaction logs from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/payment-gateway/config</code> - Gateway configuration</li>
+            <li><code>PUT /api/payment-gateway/config</code> - Update configuration</li>
+            <li><code>POST /api/payment-gateway/test</code> - Test gateway connection</li>
+            <li><code>GET /api/payment-gateway/logs</code> - Transaction logs</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>financial:gateway:config</code></p>
+    </div>
+</div>

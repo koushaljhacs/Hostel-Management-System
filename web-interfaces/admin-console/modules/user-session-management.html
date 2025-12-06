@@ -1,0 +1,133 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-user-clock"></i> User Session Management</h2>
+    <div class="quick-actions">
+        <button class="btn" id="refreshSessions"><i class="fas fa-sync-alt"></i> Refresh</button>
+        <button class="btn" id="bulkLogout" style="background: var(--warning-color); color: white;">
+            <i class="fas fa-sign-out-alt"></i> Bulk Logout
+        </button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Active Sessions</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3>Mobile Sessions</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-desktop"></i>
+            </div>
+            <h3>Web Sessions</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Idle Sessions</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<!-- Session Controls -->
+<div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Session Controls</h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Session Timeout</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>30 minutes</option>
+                <option>1 hour</option>
+                <option>2 hours</option>
+                <option>4 hours</option>
+                <option>8 hours (default)</option>
+            </select>
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Max Concurrent Sessions</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>1 session per user</option>
+                <option>2 sessions per user</option>
+                <option>3 sessions per user</option>
+                <option>Unlimited sessions</option>
+            </select>
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Idle Timeout</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>15 minutes</option>
+                <option>30 minutes</option>
+                <option>1 hour</option>
+                <option>2 hours</option>
+            </select>
+        </div>
+    </div>
+    
+    <button class="btn" style="background: var(--primary-color); color: white;">
+        <i class="fas fa-save"></i> Update Session Settings
+    </button>
+</div>
+
+<!-- Active Sessions Table -->
+<div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Active User Sessions</h3>
+    
+    <div style="text-align: center; padding: 40px;">
+        <i class="fas fa-sync fa-spin fa-2x" style="color: var(--primary-color); margin-bottom: 15px;"></i>
+        <p style="color: var(--text-muted);">Loading active sessions...</p>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('User Session Management module loaded');
+    
+    // BACKEND INTEGRATION: Load active sessions and settings
+    // TODO: Fetch session data from backend API
+    
+    document.getElementById('refreshSessions')?.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Refreshing...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
+            console.log('Sessions refreshed');
+        }, 1500);
+    });
+    
+    document.getElementById('bulkLogout')?.addEventListener('click', function() {
+        if (confirm('Are you sure you want to log out all selected users?')) {
+            this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Logging out...';
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-sign-out-alt"></i> Bulk Logout';
+                alert('Selected users have been logged out successfully');
+            }, 2000);
+        }
+    });
+});
+</script>

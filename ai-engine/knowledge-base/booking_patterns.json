@@ -1,0 +1,16 @@
+[
+  {
+    "name": "DuplicateRoomCollision",
+    "pattern": "duplicate key value violates unique constraint.*rooms_room_id_key",
+    "resolution": "assign_next_room",
+    "notes": "If two students fight for the same room id, move one to next available in corridor."
+  },
+  {
+    "name": "PaymentTimeout",
+    "pattern": "payment gateway timeout",
+    "resolution": "create_suspense_entry",
+    "notes": "Hold room temporarily until FinanceGuard validates payment."
+  }
+]
+
+

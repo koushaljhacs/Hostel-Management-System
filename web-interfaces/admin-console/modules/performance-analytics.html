@@ -1,0 +1,64 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-chart-line"></i> Performance Analytics</h2>
+    <div class="quick-actions">
+        <button class="btn" id="exportAnalytics"><i class="fas fa-file-export"></i> Export Report</button>
+        <button class="btn" id="refreshAnalytics"><i class="fas fa-sync-alt"></i> Refresh Data</button>
+    </div>
+</div>
+
+<!-- Analytics Cards -->
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Active Users</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h3>Response Time</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-server"></i>
+            </div>
+            <h3>Server Uptime</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div style="text-align: center; padding: 40px; color: var(--text-muted);">
+    <i class="fas fa-chart-line fa-2x" style="margin-bottom: 15px;"></i>
+    <p>Performance Analytics Module Loaded Successfully!</p>
+    <p style="font-size: 12px; margin-top: 10px;">Backend data will load here when connected</p>
+</div>
+
+<script>
+// Performance Analytics specific functionality
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Performance Analytics module loaded');
+    
+    document.getElementById('refreshAnalytics')?.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Refreshing...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh Data';
+        }, 1000);
+    });
+});
+</script>

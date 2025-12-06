@@ -1,0 +1,271 @@
+<!-- modules/room-allocation.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-bed"></i> Room Allocation</h2>
+    <div class="quick-actions">
+        <button class="btn" id="allocateRoomBtn"><i class="fas fa-user-plus"></i> Allocate Room</button>
+        <button class="btn" id="bulkAllocateBtn"><i class="fas fa-users"></i> Bulk Allocation</button>
+        <button class="btn" id="exportAllocationsBtn"><i class="fas fa-file-export"></i> Export</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-user-graduate"></i>
+            </div>
+            <h3>Pending Allocations</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-bed"></i>
+            </div>
+            <h3>Available Rooms</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-building"></i>
+            </div>
+            <h3>Occupancy Rate</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-exchange-alt"></i>
+            </div>
+            <h3>Transfer Requests</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Allocation Management Panel -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Room Allocation Management</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshAllocations" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <button class="btn" id="filterAllocations" style="font-size: 11px;">
+                    <i class="fas fa-filter"></i> Filter
+                </button>
+            </div>
+        </div>
+        
+        <!-- Search and Filter Bar -->
+        <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+            <div class="search-box" style="flex: 1; min-width: 200px;">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchAllocations" placeholder="Search students or rooms...">
+            </div>
+            <select class="btn" style="background: var(--bg-card); border: 1px solid var(--border-medium);">
+                <option value="">All Hostels</option>
+            </select>
+            <select class="btn" style="background: var(--bg-card); border: 1px solid var(--border-medium);">
+                <option value="">All Status</option>
+            </select>
+        </div>
+
+        <!-- Allocation List -->
+        <div class="activity-list" id="allocationList" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading room allocations...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-footer">
+            <div class="activity-summary">
+                <span class="summary-text" id="allocationSummary">
+                    <i class="fas fa-sync fa-spin"></i> Loading allocation data...
+                </span>
+                <span class="realtime-indicator"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions & Room Status -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Quick Allocation</h3>
+            <button class="btn" id="autoAllocateBtn" style="font-size: 11px;">
+                <i class="fas fa-magic"></i> Auto-Allocate
+            </button>
+        </div>
+
+        <!-- Allocation Form -->
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Select Student
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Choose student...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Available Rooms
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Choose room...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Allocation Type
+                </label>
+                <div style="display: flex; gap: 10px;">
+                    <label style="display: flex; align-items: center; gap: 5px; font-size: 12px;">
+                        <input type="radio" name="allocationType" checked> Regular
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px; font-size: 12px;">
+                        <input type="radio" name="allocationType"> Temporary
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px; font-size: 12px;">
+                        <input type="radio" name="allocationType"> Emergency
+                    </label>
+                </div>
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-check"></i> Confirm Allocation
+            </button>
+        </div>
+
+        <!-- Room Status Overview -->
+        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-light);">
+            <h4 style="font-size: 13px; color: var(--primary-color); margin-bottom: 10px;">Room Status Overview</h4>
+            <div class="quick-stats-grid">
+                <div class="quick-stats-item">
+                    <span class="quick-stats-label">Total Rooms</span>
+                    <span class="quick-stats-value">
+                        <i class="fas fa-sync fa-spin"></i>
+                    </span>
+                </div>
+                <div class="quick-stats-item">
+                    <span class="quick-stats-label">Occupied</span>
+                    <span class="quick-stats-value">
+                        <i class="fas fa-sync fa-spin"></i>
+                    </span>
+                </div>
+                <div class="quick-stats-item">
+                    <span class="quick-stats-label">Vacant</span>
+                    <span class="quick-stats-value">
+                        <i class="fas fa-sync fa-spin"></i>
+                    </span>
+                </div>
+                <div class="quick-stats-item">
+                    <span class="quick-stats-label">Under Maintenance</span>
+                    <span class="quick-stats-value">
+                        <i class="fas fa-sync fa-spin"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Allocation History Section -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Recent Allocations & Changes</h3>
+        <button class="btn" id="viewAllHistory" style="font-size: 11px;">
+            <i class="fas fa-history"></i> View All
+        </button>
+    </div>
+    
+    <div class="activity-list" id="allocationHistory" style="max-height: 190px;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading allocation history...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Room Allocation module loaded');
+    
+    // Element references
+    const allocationList = document.getElementById('allocationList');
+    const allocationHistory = document.getElementById('allocationHistory');
+    const refreshBtn = document.getElementById('refreshAllocations');
+    const allocateRoomBtn = document.getElementById('allocateRoomBtn');
+    const autoAllocateBtn = document.getElementById('autoAllocateBtn');
+    
+    // BACKEND INTEGRATION: Load allocation data
+    // TODO: Fetch room allocations from backend API
+    
+    // Event listeners
+    refreshBtn.addEventListener('click', function() {
+        refreshBtn.innerHTML = '<i class="fas fa-sync fa-spin"></i> Refreshing';
+        // BACKEND INTEGRATION: Refresh allocation data
+        setTimeout(() => {
+            refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
+        }, 1000);
+    });
+    
+    allocateRoomBtn.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Opening...';
+        // BACKEND INTEGRATION: Open allocation modal
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-user-plus"></i> Allocate Room';
+        }, 1000);
+    });
+    
+    autoAllocateBtn.addEventListener('click', function() {
+        autoAllocateBtn.innerHTML = '<i class="fas fa-sync fa-spin"></i> Processing...';
+        // BACKEND INTEGRATION: Auto-allocation logic
+        setTimeout(() => {
+            autoAllocateBtn.innerHTML = '<i class="fas fa-magic"></i> Auto-Allocate';
+        }, 2000);
+    });
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/room-allocations</code> - Fetch current allocations</li>
+            <li><code>POST /api/room-allocations</code> - Create new allocation</li>
+            <li><code>PUT /api/room-allocations/{id}</code> - Update allocation</li>
+            <li><code>DELETE /api/room-allocations/{id}</code> - Remove allocation</li>
+            <li><code>GET /api/available-rooms</code> - Get vacant rooms</li>
+            <li><code>POST /api/auto-allocate</code> - Auto-allocation batch</li>
+        </ul>
+        <p><strong>WebSocket Events:</strong> Real-time updates for allocation changes</p>
+        <p><strong>Permissions Required:</strong> <code>student:room:allocate</code></p>
+    </div>
+</div>

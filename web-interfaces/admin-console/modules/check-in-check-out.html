@@ -1,0 +1,173 @@
+<!-- modules/check-in-check-out.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-user-check"></i> Check-in/Check-out</h2>
+    <div class="quick-actions">
+        <button class="btn" id="checkInBtn"><i class="fas fa-sign-in-alt"></i> Check-in</button>
+        <button class="btn" id="checkOutBtn"><i class="fas fa-sign-out-alt"></i> Check-out</button>
+        <button class="btn" id="bulkCheckInBtn"><i class="fas fa-users"></i> Bulk Check-in</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-home"></i>
+            </div>
+            <h3>Currently Checked-in</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-bed"></i>
+            </div>
+            <h3>Available Beds</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Pending Check-outs</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>Overstays</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Check-in/Check-out Panel -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Recent Check-in/Check-out Activity</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshActivity" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="checkInOutActivity" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading check-in/check-out activity...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-footer">
+            <div class="activity-summary">
+                <span class="summary-text" id="activitySummary">
+                    <i class="fas fa-sync fa-spin"></i> Loading activity summary...
+                </span>
+                <span class="realtime-indicator"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Check-in/Check-out Form -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Quick Action</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Student ID / Roll Number
+                </label>
+                <input type="text" class="form-input" placeholder="Enter student ID or roll number" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Action Type
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select action...</option>
+                    <option value="checkin">Check-in</option>
+                    <option value="checkout">Check-out</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Remarks (Optional)
+                </label>
+                <textarea class="form-input" placeholder="Enter any remarks..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px; min-height: 60px; resize: vertical;"></textarea>
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-check"></i> Process Action
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Current Status Overview -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Current Hostel Status</h3>
+        <button class="btn" id="viewDetailedStatus" style="font-size: 11px;">
+            <i class="fas fa-chart-bar"></i> Detailed View
+        </button>
+    </div>
+    
+    <div class="activity-list" id="hostelStatus" style="max-height: 190px;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading hostel status...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Check-in/Check-out module loaded');
+    
+    // BACKEND INTEGRATION: Load check-in/check-out data
+    // TODO: Fetch check-in/check-out activity from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>POST /api/check-in</code> - Student check-in</li>
+            <li><code>POST /api/check-out</code> - Student check-out</li>
+            <li><code>GET /api/check-in-out/activity</code> - Recent activity</li>
+            <li><code>GET /api/hostel-status</code> - Current hostel occupancy</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>student:checkin:manage</code></p>
+    </div>
+</div>

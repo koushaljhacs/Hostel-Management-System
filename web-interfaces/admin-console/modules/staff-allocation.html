@@ -1,0 +1,178 @@
+<!-- modules/staff-allocation.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-users"></i> Staff Allocation</h2>
+    <div class="quick-actions">
+        <button class="btn" id="assignStaffBtn"><i class="fas fa-user-plus"></i> Assign Staff</button>
+        <button class="btn" id="scheduleRosterBtn"><i class="fas fa-calendar"></i> Schedule Roster</button>
+        <button class="btn" id="exportStaffBtn"><i class="fas fa-file-export"></i> Export</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Total Staff</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-user-check"></i>
+            </div>
+            <h3>On Duty</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-user-clock"></i>
+            </div>
+            <h3>Scheduled</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>Understaffed</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Staff Roster -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Staff Roster</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshRoster" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <select class="btn" style="background: var(--bg-card); border: 1px solid var(--border-medium); font-size: 11px;">
+                    <option value="">All Shifts</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="staffRoster" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading staff roster...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assign Staff -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Assign Staff</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Staff Member
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select staff member...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Shift
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select shift...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Date
+                </label>
+                <input type="date" class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Assignment Type
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select assignment type...</option>
+                </select>
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-user-plus"></i> Assign Staff
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Staff Availability -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Staff Availability</h3>
+        <button class="btn" id="viewFullSchedule" style="font-size: 11px;">
+            <i class="fas fa-calendar"></i> Full Schedule
+        </button>
+    </div>
+    
+    <div class="activity-list" id="staffAvailability" style="max-height: 190px;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading staff availability...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Staff Allocation module loaded');
+    
+    // BACKEND INTEGRATION: Load staff allocation data
+    // TODO: Fetch staff roster and availability from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/staff-roster</code> - Fetch staff roster</li>
+            <li><code>POST /api/staff-assignments</code> - Assign staff to shifts</li>
+            <li><code>GET /api/staff-availability</code> - Staff availability data</li>
+            <li><code>POST /api/shift-schedules</code> - Create shift schedules</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>laundry:staff:allocate</code></p>
+    </div>
+</div>
+
+

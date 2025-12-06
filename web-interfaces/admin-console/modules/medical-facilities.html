@@ -1,0 +1,136 @@
+<!-- modules/medical-facilities.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-first-aid"></i> Medical Facilities</h2>
+    <div class="quick-actions">
+        <button class="btn"><i class="fas fa-plus"></i> Add Facility</button>
+        <button class="btn"><i class="fas fa-calendar"></i> Schedule</button>
+        <button class="btn"><i class="fas fa-cog"></i> Settings</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-hospital"></i></div>
+            <h3>Total Facilities</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-user-md"></i></div>
+            <h3>Medical Staff</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-procedures"></i></div>
+            <h3>Available Beds</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-clock"></i></div>
+            <h3>Today's Cases</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Medical Facilities</h3>
+            <button class="btn" style="font-size: 11px;">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </div>
+        <div class="activity-list">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading medical facilities...</div>
+                    <div class="activity-time">Please wait</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Add Medical Facility</h3>
+        </div>
+        <div style="padding: 15px;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Facility Name
+                </label>
+                <input type="text" class="form-input" placeholder="Enter facility name..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+            
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Facility Type
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select facility type...</option>
+                    <option value="clinic">Medical Clinic</option>
+                    <option value="firstaid">First Aid Station</option>
+                    <option value="isolation">Isolation Ward</option>
+                    <option value="pharmacy">Pharmacy</option>
+                    <option value="lab">Laboratory</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Location
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select location...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Capacity (Beds)
+                </label>
+                <input type="number" class="form-input" placeholder="Enter bed capacity..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Operating Hours
+                </label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <input type="time" class="form-input" placeholder="Open time" style="padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <input type="time" class="form-input" placeholder="Close time" style="padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+            </div>
+
+            <button class="btn" style="background: var(--primary-color); color: white; width: 100%; margin-top: 15px;">
+                <i class="fas fa-plus"></i> Add Facility
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/health/facilities</code> - Get medical facilities</li>
+            <li><code>POST /api/health/facilities</code> - Add medical facility</li>
+            <li><code>PUT /api/health/facilities/{id}</code> - Update facility</li>
+            <li><code>DELETE /api/health/facilities/{id}</code> - Remove facility</li>
+            <li><code>GET /api/health/facilities/capacity</code> - Get facility capacity</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>health:facilities:manage</code></p>
+    </div>
+</div>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="title">Institutional Login - HMS Command</title>
+    <!-- Load Font Awesome for the refresh icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/staff-login.css">
+    
+    <!-- Maintenance Redirect - Immediate Check -->
+    <!-- MAINTENANCE BLOCK - IMMEDIATE CHECK -->
+    <script>
+    // IMMEDIATE maintenance check - runs before ANYTHING else loads
+    (function() {
+        // Don't wait for fetch, check maintenance status immediately
+        const maintenanceCheck = setTimeout(() => {
+            // If still on login page after 100ms, do immediate redirect
+            if (window.location.pathname.includes('login') && !window.location.pathname.includes('maintenance')) {
+                window.location.href = '/maintenance';
+            }
+        }, 100);
+        
+        // Also try API check
+        fetch('/api/maintenance/status')
+            .then(response => response.json())
+            .then(data => {
+                clearTimeout(maintenanceCheck);
+                if (data.maintenanceMode && !window.location.pathname.includes('/maintenance')) {
+                    // INSTANT redirect - no waiting
+                    window.location.href = '/maintenance';
+                }
+            })
+            .catch(error => {
+                clearTimeout(maintenanceCheck);
+                // If API fails, still redirect to be safe
+                if (window.location.pathname.includes('login') && !window.location.pathname.includes('maintenance')) {
+                    window.location.href = '/maintenance';
+                }
+            });
+    })();
+    </script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="nav-container">
+        <nav class="navbar">
+            <!-- Logo on the left -->
+            <a href="/" class="logo-box">
+                <i class="fas fa-home"></i>
+                <span>HOSTEL MS</span>
+            </a>
+            
+            <!-- Navigation and language selector on the right -->
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="/" class="active">
+                        <i class="fas fa-home"></i>
+                        <span data-key="nav_home">Home</span>
+                    </a>
+                    <a href="/student-login">
+                        <i class="fas fa-user-graduate"></i>
+                        <span data-key="nav_student_login">Student Login</span>
+                    </a>
+                    <a href="/about">
+                        <i class="fas fa-info-circle"></i>
+                        <span data-key="nav_about">About</span>
+                    </a>
+                    <a href="/contact">
+                        <i class="fas fa-headset"></i>
+                        <span data-key="nav_contact">Contact</span>
+                    </a>
+                </div>
+                
+                <!-- Language Selector -->
+                <div class="language-selector">
+                    <button class="language-btn">
+                        <i class="fas fa-globe"></i>
+                        <span id="currentLanguage">English</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="language-dropdown">
+                        <a href="#" class="dropdown-item" data-lang="en">English</a>
+                        <a href="#" class="dropdown-item" data-lang="hi">हिंदी (Hindi)</a>
+                        <a href="#" class="dropdown-item" data-lang="te">తెలుగు (Telugu)</a>
+                        <a href="#" class="dropdown-item" data-lang="bn">বাংলা (Bengali)</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header" data-key="login_header">Institutional Staff Login</div>
+
+                <form id="institutionalLoginForm" onsubmit="event.preventDefault(); handleLogin(event);">
+                    <div class="form-group">
+                        <label for="agentId" data-key="label_employee_id">Employee ID</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="agentId" required data-key-placeholder="placeholder_employee_id" placeholder="Enter your employee ID">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" data-key="label_password">Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="password" required data-key-placeholder="placeholder_password" placeholder="Enter your password">
+                            <button type="button" class="password-toggle" id="passwordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <p class="info-text" data-key="info_support">
+                        Please contact the dedicated <strong>HMS System Support Unit</strong> for any system access issues, lockouts, or clarifications.
+                    </p>
+
+                    <div class="button-group">
+                        <button type="submit" class="login-btn" data-key="button_login">Log in</button>
+                        <!-- Reset button now simply resets the form, not tied to captcha refresh -->
+                        <button type="reset" id="clear-btn" data-key="button_clear">Clear</button>
+                    </div>
+                    
+                    <p class="case-sensitive" data-key="info_case_sensitive">
+                        Password is case sensitive
+                    </p>
+                </form>
+                
+                <div class="login-footer">
+                    <a href="/forgot-password" data-key="link_forgot_password">Forgot Password?</a> • 
+                    <a href="/request-access" data-key="link_request_access">Request Access</a> • 
+                    <a href="/system-status" data-key="link_system_status">System Status</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Custom Modal/Alert -->
+    <div class="modal-overlay" id="customAlertModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); justify-content: center; align-items: center; z-index: 1000;">
+        <div class="modal-content" style="background: white; padding: 30px; border-radius: 12px; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);">
+            <h3 class="modal-title" id="modalTitle" style="color: var(--hms-red); margin-top: 0;">System Message</h3>
+            <p class="modal-message" id="modalMessage">Placeholder message.</p>
+            <button class="modal-close-btn" onclick="hideAlertModal()" style="background: var(--hms-red); color: white; padding: 10px 25px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; margin-top: 15px;">Close</button>
+        </div>
+    </div>
+
+    <script src="/common/public/js/security-loader.js"></script>
+    <script src="/js/staff-login.js?v=3.0"></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!-- modules/financial-reports.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-chart-bar"></i> Financial Reports</h2>
+    <div class="quick-actions">
+        <button class="btn" id="generateReportBtn"><i class="fas fa-file-alt"></i> Generate Report</button>
+        <button class="btn" id="scheduleReportBtn"><i class="fas fa-calendar"></i> Schedule Report</button>
+        <button class="btn" id="exportReportBtn"><i class="fas fa-file-export"></i> Export</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <h3>Total Revenue</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Growth Rate</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-receipt"></i>
+            </div>
+            <h3>Monthly Average</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-percentage"></i>
+            </div>
+            <h3>Collection Rate</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Report Templates -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Report Templates</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshTemplates" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="reportTemplates" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading report templates...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generate Report -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Generate Report</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Report Type
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select report type...</option>
+                </select>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+                <div>
+                    <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                        From Date
+                    </label>
+                    <input type="date" class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                <div>
+                    <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                        To Date
+                    </label>
+                    <input type="date" class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Hostel Filter
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">All Hostels</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Format
+                </label>
+                <div style="display: flex; gap: 15px;">
+                    <label style="display: flex; align-items: center; gap: 5px; font-size: 12px;">
+                        <input type="radio" name="reportFormat" checked> PDF
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px; font-size: 12px;">
+                        <input type="radio" name="reportFormat"> Excel
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px; font-size: 12px;">
+                        <input type="radio" name="reportFormat"> CSV
+                    </label>
+                </div>
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-download"></i> Generate Report
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Reports -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Recent Reports</h3>
+        <button class="btn" id="viewAllReports" style="font-size: 11px;">
+            <i class="fas fa-list"></i> View All
+        </button>
+    </div>
+    
+    <div class="activity-list" id="recentReports" style="max-height: 190px;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading recent reports...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Financial Reports module loaded');
+    
+    // BACKEND INTEGRATION: Load financial reports data
+    // TODO: Fetch report templates and recent reports from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/financial-reports/templates</code> - Report templates</li>
+            <li><code>POST /api/financial-reports/generate</code> - Generate report</li>
+            <li><code>GET /api/financial-reports/recent</code> - Recent reports</li>
+            <li><code>POST /api/financial-reports/schedule</code> - Schedule report</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>financial:reports:read</code></p>
+    </div>
+</div>

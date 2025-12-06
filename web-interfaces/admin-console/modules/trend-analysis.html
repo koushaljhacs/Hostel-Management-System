@@ -1,0 +1,150 @@
+<!-- modules/trend-analysis.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-chart-area"></i> Trend Analysis</h2>
+    <div class="quick-actions">
+        <button class="btn"><i class="fas fa-filter"></i> Apply Filters</button>
+        <button class="btn"><i class="fas fa-download"></i> Export Analysis</button>
+        <button class="btn"><i class="fas fa-cog"></i> Settings</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+            <h3>Active Trends</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-trending-up"></i></div>
+            <h3>Positive Trends</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-trending-down"></i></div>
+            <h3>Negative Trends</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-bell"></i></div>
+            <h3>Alerts Generated</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Trend Analysis Dashboard</h3>
+            <button class="btn" style="font-size: 11px;">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </div>
+        <div style="padding: 20px; text-align: center; color: var(--text-muted);">
+            <i class="fas fa-chart-area fa-2x" style="margin-bottom: 10px;"></i>
+            <p>Trend analysis charts and insights will be displayed here</p>
+            <p style="font-size: 12px;">Loading data from backend...</p>
+        </div>
+    </div>
+
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Analysis Configuration</h3>
+        </div>
+        <div style="padding: 15px;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Analysis Type
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select analysis type...</option>
+                    <option value="occupancy">Occupancy Trends</option>
+                    <option value="revenue">Revenue Trends</option>
+                    <option value="expenses">Expense Trends</option>
+                    <option value="utilization">Resource Utilization</option>
+                    <option value="performance">Performance Trends</option>
+                    <option value="seasonal">Seasonal Patterns</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Time Frame
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select time frame...</option>
+                    <option value="7d">Last 7 days</option>
+                    <option value="30d">Last 30 days</option>
+                    <option value="3m">Last 3 months</option>
+                    <option value="6m">Last 6 months</option>
+                    <option value="1y">Last 1 year</option>
+                    <option value="custom">Custom range</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Granularity
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select granularity...</option>
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Comparison Period
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select comparison...</option>
+                    <option value="previous">Previous Period</option>
+                    <option value="yoy">Year-over-Year</option>
+                    <option value="qoq">Quarter-over-Quarter</option>
+                    <option value="target">Against Targets</option>
+                    <option value="none">No Comparison</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox">
+                    <span style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Include predictive analysis</span>
+                </label>
+            </div>
+
+            <button class="btn" style="background: var(--primary-color); color: white; width: 100%; margin-top: 15px;">
+                <i class="fas fa-chart-line"></i> Run Analysis
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/reports/trends</code> - Get trend analysis</li>
+            <li><code>POST /api/reports/trends/analyze</code> - Run trend analysis</li>
+            <li><code>GET /api/reports/trends/predictive</code> - Get predictive analysis</li>
+            <li><code>GET /api/reports/trends/seasonal</code> - Get seasonal patterns</li>
+            <li><code>GET /api/reports/trends/alerts</code> - Get trend alerts</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>reports:trend:read</code></p>
+    </div>
+</div>

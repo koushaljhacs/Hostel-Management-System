@@ -1,0 +1,140 @@
+<!-- modules/evacuation-plans.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-running"></i> Evacuation Plans</h2>
+    <div class="quick-actions">
+        <button class="btn"><i class="fas fa-plus"></i> New Plan</button>
+        <button class="btn"><i class="fas fa-print"></i> Print Plans</button>
+        <button class="btn"><i class="fas fa-cog"></i> Settings</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-map"></i></div>
+            <h3>Total Plans</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-building"></i></div>
+            <h3>Buildings Covered</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-clock"></i></div>
+            <h3>Last Updated</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-users"></i></div>
+            <h3>Capacity</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Evacuation Plans</h3>
+            <button class="btn" style="font-size: 11px;">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </div>
+        <div class="activity-list">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading evacuation plans...</div>
+                    <div class="activity-time">Please wait</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Create Evacuation Plan</h3>
+        </div>
+        <div style="padding: 15px;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Building/Location
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select building...</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Plan Name
+                </label>
+                <input type="text" class="form-input" placeholder="Enter plan name..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Emergency Type
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select emergency type...</option>
+                    <option value="fire">Fire</option>
+                    <option value="earthquake">Earthquake</option>
+                    <option value="flood">Flood</option>
+                    <option value="chemical">Chemical Spill</option>
+                    <option value="general">General Evacuation</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Primary Evacuation Routes
+                </label>
+                <textarea class="form-input" placeholder="Describe primary evacuation routes..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px; height: 80px; resize: vertical;"></textarea>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Alternate Routes
+                </label>
+                <textarea class="form-input" placeholder="Describe alternate evacuation routes..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px; height: 80px; resize: vertical;"></textarea>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Assembly Points
+                </label>
+                <textarea class="form-input" placeholder="List assembly points and capacities..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px; height: 60px; resize: vertical;"></textarea>
+            </div>
+
+            <button class="btn" style="background: var(--primary-color); color: white; width: 100%; margin-top: 15px;">
+                <i class="fas fa-save"></i> Create Evacuation Plan
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/emergency/evacuation/plans</code> - Get evacuation plans</li>
+            <li><code>POST /api/emergency/evacuation/plans</code> - Create evacuation plan</li>
+            <li><code>PUT /api/emergency/evacuation/plans/{id}</code> - Update plan</li>
+            <li><code>DELETE /api/emergency/evacuation/plans/{id}</code> - Delete plan</li>
+            <li><code>GET /api/emergency/evacuation/routes</code> - Get evacuation routes</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>emergency:evac:read</code></p>
+    </div>
+</div>

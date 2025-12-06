@@ -1,0 +1,278 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-couch"></i> Amenities Setup</h2>
+    <div class="quick-actions">
+        <button class="btn" id="saveAmenities" style="background: var(--success-color); color: white;">
+            <i class="fas fa-save"></i> Save Configuration
+        </button>
+        <button class="btn" id="addAmenity"><i class="fas fa-plus"></i> Add Amenity</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-building"></i>
+            </div>
+            <h3>Selected Hostel</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-couch"></i>
+            </div>
+            <h3>Total Amenities</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-wifi"></i>
+            </div>
+            <h3>Active Services</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-tools"></i>
+            </div>
+            <h3>Maintenance</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<!-- Hostel Selection -->
+<div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Select Hostel</h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Hostel</label>
+            <select class="btn" id="amenityHostelSelect" style="width: 100%; padding: 8px;">
+                <option value="">Select Hostel</option>
+                <option value="bh-a">Boys Hostel A</option>
+                <option value="bh-b">Boys Hostel B</option>
+                <option value="gh-a">Girls Hostel A</option>
+                <option value="gh-b">Girls Hostel B</option>
+            </select>
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Amenity Category</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>All Categories</option>
+                <option>Room Amenities</option>
+                <option>Common Facilities</option>
+                <option>Recreational</option>
+                <option>Security</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Amenities Configuration -->
+<div id="amenityConfig" style="display: none;">
+    <!-- Room Amenities -->
+    <div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+        <h3 style="color: var(--primary-color); margin-bottom: 20px;">Room Amenities</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                    <div>
+                        <div style="font-weight: 600; color: var(--text-dark);">Wi-Fi Internet</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">High-speed internet access</div>
+                    </div>
+                </label>
+            </div>
+            
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                    <div>
+                        <div style="font-weight: 600; color: var(--text-dark);">Air Conditioning</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Central AC in rooms</div>
+                    </div>
+                </label>
+            </div>
+            
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                    <div>
+                        <div style="font-weight: 600; color: var(--text-dark);">Attached Bathroom</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Private bathroom facilities</div>
+                    </div>
+                </label>
+            </div>
+            
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" style="accent-color: var(--primary-color);">
+                    <div>
+                        <div style="font-weight: 600; color: var(--text-dark);">Room Heater</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Winter heating facility</div>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Common Facilities -->
+    <div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+        <h3 style="color: var(--primary-color); margin-bottom: 20px;">Common Facilities</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                    <div>
+                        <div style="font-weight: 600; color: var(--text-dark);">Study Room</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Dedicated study area</div>
+                    </div>
+                </label>
+            </div>
+            
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                    <div>
+                        <div style="font-weight: 600; color: var(--text-dark);">Common Room</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Recreation and TV area</div>
+                    </div>
+                </label>
+            </div>
+            
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" style="accent-color: var(--primary-color);">
+                    <div>
+                        <div style="font-weight: 600; color: var(--text-dark);">Gymnasium</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Fitness equipment area</div>
+                    </div>
+                </label>
+            </div>
+            
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                    <div>
+                        <div style="font-weight: 600; color: var(--text-dark);">Laundry Service</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Washing and ironing</div>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security & Maintenance -->
+    <div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid var(--border-light);">
+        <h3 style="color: var(--primary-color); margin-bottom: 20px;">Security & Maintenance</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                    <div>
+                        <div style="font-weight: 600; color: var(--text-dark);">CCTV Surveillance</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">24/7 security cameras</div>
+                    </div>
+                </label>
+            </div>
+            
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                    <div>
+                        <div style="font-weight: 600; color: var(--text-dark);">Biometric Access</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Secure entry system</div>
+                    </div>
+                </label>
+            </div>
+            
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                    <div>
+                        <div style="font-weight: 600; color: var(--text-dark);">24/7 Security</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Round-the-clock guards</div>
+                    </div>
+                </label>
+            </div>
+            
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                    <div>
+                        <div style="font-weight: 600; color: var(--text-dark);">Maintenance Staff</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">On-site repair service</div>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Empty State -->
+<div id="amenityEmptyState" style="background: white; border-radius: 8px; padding: 60px; text-align: center; border: 1px solid var(--border-light);">
+    <i class="fas fa-couch fa-3x" style="color: var(--border-light); margin-bottom: 15px;"></i>
+    <p style="color: var(--text-muted); font-size: 16px;">Select a hostel to configure amenities</p>
+    <p style="color: var(--text-muted); font-size: 12px; margin-top: 10px;">Enable or disable various amenities and facilities</p>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Amenities Setup module loaded');
+    
+    // BACKEND INTEGRATION: Load hostel amenities configuration
+    // TODO: Fetch amenities data from backend API
+    
+    const amenityHostelSelect = document.getElementById('amenityHostelSelect');
+    const amenityConfig = document.getElementById('amenityConfig');
+    const amenityEmptyState = document.getElementById('amenityEmptyState');
+    
+    amenityHostelSelect.addEventListener('change', function() {
+        if (this.value) {
+            amenityConfig.style.display = 'block';
+            amenityEmptyState.style.display = 'none';
+            
+            // BACKEND INTEGRATION: Load amenities for selected hostel
+            // TODO: Fetch amenities configuration for selected hostel
+            console.log('Loading amenities for:', this.value);
+        } else {
+            amenityConfig.style.display = 'none';
+            amenityEmptyState.style.display = 'block';
+        }
+    });
+    
+    document.getElementById('saveAmenities').addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Saving...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-save"></i> Save Configuration';
+            alert('Amenities configuration saved successfully!');
+        }, 2000);
+    });
+    
+    document.getElementById('addAmenity').addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Opening...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-plus"></i> Add Amenity';
+            // TODO: Open custom amenity addition form
+        }, 1000);
+    });
+});
+</script>

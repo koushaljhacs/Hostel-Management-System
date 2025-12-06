@@ -1,0 +1,176 @@
+<!-- modules/gate-pass-system.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-id-card"></i> Gate Pass System</h2>
+    <div class="quick-actions">
+        <button class="btn" id="issuePassBtn"><i class="fas fa-print"></i> Issue Pass</button>
+        <button class="btn" id="verifyPassBtn"><i class="fas fa-check"></i> Verify Pass</button>
+        <button class="btn" id="exportPassesBtn"><i class="fas fa-file-export"></i> Export</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-id-card"></i>
+            </div>
+            <h3>Active Passes</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Expiring Soon</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Verified Today</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>Security Issues</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Gate Pass List -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Active Gate Passes</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshPasses" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <select class="btn" style="background: var(--bg-card); border: 1px solid var(--border-medium); font-size: 11px;">
+                    <option value="">All Types</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="gatePassList" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading gate passes...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Issue Gate Pass -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Issue Gate Pass</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Visitor
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select visitor...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Pass Type
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select pass type...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Valid Until
+                </label>
+                <input type="datetime-local" class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Access Areas
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select access areas...</option>
+                </select>
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-print"></i> Issue Gate Pass
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Pass Verification -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Recent Verifications</h3>
+        <button class="btn" id="viewAllVerifications" style="font-size: 11px;">
+            <i class="fas fa-list"></i> All Verifications
+        </button>
+    </div>
+    
+    <div class="activity-list" id="passVerification" style="max-height: 190px;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading pass verifications...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Gate Pass System module loaded');
+    
+    // BACKEND INTEGRATION: Load gate pass system data
+    // TODO: Fetch gate passes and verification data from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/gate-passes</code> - Fetch gate passes</li>
+            <li><code>POST /api/gate-passes</code> - Issue gate pass</li>
+            <li><code>POST /api/gate-passes/verify</code> - Verify gate pass</li>
+            <li><code>GET /api/pass-verifications</code> - Pass verification history</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>security:gatepass:manage</code></p>
+    </div>
+</div>

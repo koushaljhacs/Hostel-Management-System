@@ -1,0 +1,17 @@
+[
+  {
+    "name": "NodeCrash",
+    "pattern": "service_crash",
+    "process": "server",
+    "notes": "Restart main API cluster"
+  },
+  {
+    "name": "ConfigMissing",
+    "pattern": "missing_file",
+    "filePath": "config/.env",
+    "permissions": "600",
+    "notes": "Restore env file from latest backup snapshot"
+  }
+]
+
+

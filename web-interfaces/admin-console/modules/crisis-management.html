@@ -1,0 +1,140 @@
+<!-- modules/crisis-management.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-ambulance"></i> Crisis Management</h2>
+    <div class="quick-actions">
+        <button class="btn"><i class="fas fa-plus"></i> New Incident</button>
+        <button class="btn"><i class="fas fa-bell"></i> Alert Team</button>
+        <button class="btn"><i class="fas fa-cog"></i> Settings</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3>Active Crises</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-users"></i></div>
+            <h3>Response Team</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-clock"></i></div>
+            <h3>Avg Response Time</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-check-circle"></i></div>
+            <h3>Resolved Today</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Active Crisis Incidents</h3>
+            <button class="btn" style="font-size: 11px;">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </div>
+        <div class="activity-list">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading crisis incidents...</div>
+                    <div class="activity-time">Please wait</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Report Crisis Incident</h3>
+        </div>
+        <div style="padding: 15px;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Crisis Type
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select crisis type...</option>
+                    <option value="natural_disaster">Natural Disaster</option>
+                    <option value="medical_emergency">Medical Emergency</option>
+                    <option value="security_breach">Security Breach</option>
+                    <option value="infrastructure">Infrastructure Failure</option>
+                    <option value="cyber_attack">Cyber Attack</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Severity Level
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select severity...</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                    <option value="critical">Critical</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Location
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select location...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Incident Description
+                </label>
+                <textarea class="form-input" placeholder="Provide detailed description of the crisis..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px; height: 100px; resize: vertical;"></textarea>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Immediate Actions Taken
+                </label>
+                <textarea class="form-input" placeholder="Describe immediate response actions..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px; height: 80px; resize: vertical;"></textarea>
+            </div>
+
+            <button class="btn" style="background: var(--error-color); color: white; width: 100%; margin-top: 15px;">
+                <i class="fas fa-exclamation-triangle"></i> Report Crisis
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/emergency/crisis/incidents</code> - Get crisis incidents</li>
+            <li><code>POST /api/emergency/crisis/incidents</code> - Report crisis incident</li>
+            <li><code>PUT /api/emergency/crisis/incidents/{id}</code> - Update incident</li>
+            <li><code>POST /api/emergency/crisis/incidents/{id}/resolve</code> - Resolve incident</li>
+            <li><code>GET /api/emergency/crisis/team</code> - Get crisis response team</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>emergency:crisis:manage</code></p>
+    </div>
+</div>

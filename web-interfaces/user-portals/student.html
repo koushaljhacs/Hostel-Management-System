@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostel MS - Student Dashboard</title>
+
+    <!-- 1. CORE STYLES -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- 2. REACT ENGINE DEPENDENCIES (Required for Booking App) -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script> <!-- For React styling -->
+
+    <style>
+        /* Reset Tailwind Preflight conflicts if any */
+        body {
+            margin: 0;
+        }
+
+        :root {
+            --primary-color: #720026;
+            --primary-light: #8c0030;
+            --primary-dark: #4f0019;
+            --primary-gradient: linear-gradient(135deg, #720026 0%, #8c0030 100%);
+            --secondary-color: #ffc400;
+            --text-dark: #1a1a1a;
+            --text-medium: #4a4a4a;
+            --text-light: #f8f9fa;
+            --text-muted: #6c757d;
+            --bg-page: #f5f7fa;
+            --bg-card: #ffffff;
+            --bg-hover: rgba(114, 0, 38, 0.05);
+            --bg-active: rgba(114, 0, 38, 0.1);
+            --border-light: #e9ecef;
+            --border-medium: #dee2e6;
+            --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --sidebar-width: 200px;
+            --header-height: 50px;
+            --nav-height: 40px;
+            --footer-height: 30px;
+            --border-radius: 6px;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --error-color: #d32f2f;
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            font-size: 12px;
+        }
+
+        /* --- LAYOUT UTILITIES --- */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        /* Header */
+        .header {
+            background: var(--primary-gradient);
+            color: var(--text-light);
+            height: var(--header-height);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 12px;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-soft);
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* SOS Button */
+        .sos-btn {
+            background: var(--error-color);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            animation: pulse-red 2s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% {
+                box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 6px rgba(211, 47, 47, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(211, 47, 47, 0);
+            }
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .user-info img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid var(--secondary-color);
+        }
+
+        /* Horizontal Nav */
+        .nav-bar {
+            background: var(--bg-card);
+            height: var(--nav-height);
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            gap: 4px;
+            border-bottom: 1px solid var(--border-light);
+            overflow-x: auto;
+            flex-shrink: 0;
+        }
+
+        .nav-item {
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            white-space: nowrap;
+            color: var(--text-medium);
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-hover);
+            color: var(--primary-color);
+        }
+
+        .nav-item.active {
+            background: var(--bg-active);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-card);
+            border-right: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .search-container {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border-light);
+            background: var(--bg-card);
+            flex-shrink: 0;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 5px 8px 5px 28px;
+            border: 1px solid var(--border-medium);
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 11px;
+        }
+
+        /* Scrollable Menu Container */
+        .sidebar-menu {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px 0;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+        }
+
+        .sidebar-menu::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar-menu::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+        }
+
+        .nav-section {
+            margin-bottom: 12px;
+        }
+
+        .nav-section-title {
+            padding: 0 10px 4px;
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .nav-links li {
+            padding: 7px 10px;
+            cursor: pointer;
+            color: var(--text-medium);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-left: 3px solid transparent;
+            transition: 0.2s;
+        }
+
+        .nav-links li:hover {
+            background: var(--bg-hover);
+            color: var(--primary-color);
+        }
+
+        .nav-links li.active {
+            background: var(--bg-active);
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Right Content - Optimized */
+        .body-content {
+            flex: 1;
+            padding: 8px;
+            overflow-y: auto;
+            background-color: var(--bg-page);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- DASHBOARD GRID SYSTEM --- */
+        .dashboard-view {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            height: 100%;
+        }
+
+        /* Welcome Header & Marquee */
+        .welcome-section {
+            background: white;
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .welcome-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .welcome-text h2 {
+            font-size: 16px;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .welcome-text p {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .date-badge {
+            background: var(--bg-page);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: var(--text-dark);
+            border: 1px solid var(--border-light);
+            font-weight: 600;
+        }
+
+        /* Marquee Style */
+        .marquee-wrapper {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            padding: 4px 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 15s linear infinite;
+            padding-left: 100%;
+            font-weight: 600;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(-100%, 0);
+            }
+        }
+
+        /* Top Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .info-card {
+            background: white;
+            padding: 8px 10px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .info-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-color);
+            min-height: 18px;
+        }
+
+        /* Main Split Layout (Compact Gaps) */
+        .dashboard-split {
+            display: grid;
+            grid-template-columns: 2.5fr 1fr;
+            gap: 6px;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .split-left,
+        .split-right {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            overflow-y: auto;
+            padding-right: 2px;
+        }
+
+        /* Content Components */
+        .content-panel {
+            background: white;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-light);
+            padding: 10px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid var(--bg-page);
+        }
+
+        .panel-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        /* Service Status Widget */
+        .service-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 6px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .service-icon {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .service-info {
+            line-height: 1.2;
+            flex: 1;
+        }
+
+        .service-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .service-status {
+            height: 10px;
+            width: 40px;
+            margin-top: 2px;
+        }
+
+        /* Quick Action Grid */
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+            gap: 6px;
+        }
+
+        .quick-btn {
+            background: var(--bg-page);
+            border: 1px solid var(--border-light);
+            padding: 8px 4px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .quick-btn:hover {
+            border-color: var(--primary-color);
+            background: white;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .quick-btn i {
+            font-size: 14px;
+            color: var(--primary-color);
+        }
+
+        .quick-btn span {
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        /* Staff List */
+        .staff-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .staff-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 8px;
+            background: var(--bg-page);
+            border-radius: 4px;
+        }
+
+        .staff-info {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .staff-name {
+            font-weight: 600;
+            font-size: 11px;
+            color: var(--primary-color);
+        }
+
+        .staff-role {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        /* Up Next Widget */
+        .up-next-widget {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 8px 10px;
+            border-radius: var(--border-radius);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 5px rgba(114, 0, 38, 0.2);
+        }
+
+        .up-next-label {
+            font-size: 9px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .up-next-val {
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 1px;
+        }
+
+        .up-next-icon {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
+        /* Rating Stars */
+        .rating-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 3px 0;
+            border-bottom: 1px dashed var(--border-light);
+        }
+
+        .rating-row:last-child {
+            border-bottom: none;
+        }
+
+        .stars {
+            color: #ddd;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .stars span:hover,
+        .stars span.active {
+            color: var(--secondary-color);
+        }
+
+        /* Alerts/Notices */
+        .alert-item {
+            display: flex;
+            gap: 8px;
+            padding: 6px 8px;
+            border-left: 3px solid var(--warning-color);
+            background: #fff9f0;
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+
+        .alert-content h4 {
+            font-size: 10px;
+            font-weight: 700;
+            color: #d35400;
+            margin-bottom: 1px;
+        }
+
+        .alert-content p {
+            font-size: 9px;
+            color: #555;
+            margin: 0;
+        }
+
+        /* SKELETON LOADER ANIMATION */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 3px;
+            display: inline-block;
+            color: transparent !important;
+            user-select: none;
+        }
+
+        .skeleton-text {
+            height: 10px;
+            width: 60px;
+        }
+
+        .skeleton-title {
+            height: 12px;
+            width: 90px;
+        }
+
+        .spinner-sm {
+            width: 12px;
+            height: 12px;
+            border: 2px solid var(--border-light);
+            border-top: 2px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* --- BOOKING VIEW --- */
+        .booking-view {
+            display: none;
+            height: 100%;
+            flex-direction: column;
+        }
+
+        .booking-header {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-medium);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+        }
+
+        .back-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .booking-panel {
+            background: white;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-light);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            max-width: 700px;
+            margin: 0 auto;
+            width: 100%;
+            overflow-y: auto;
+        }
+
+        .checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .check-item {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+            align-items: flex-start;
+            background: #fff;
+        }
+
+        .check-item:hover {
+            background: var(--bg-hover);
+            border-color: var(--border-medium);
+        }
+
+        .check-item input {
+            margin-top: 3px;
+            width: 14px;
+            height: 14px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+            width: 100%;
+            max-width: 250px;
+        }
+
+        .btn-disabled {
+            background: #ccc !important;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-card);
+            height: var(--footer-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 12px;
+            border-top: 1px solid var(--border-light);
+            flex-shrink: 0;
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        /* Modals */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 350px;
+        }
+
+        .btn-xs {
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .dashboard-split {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .sidebar {
+                position: absolute;
+                height: 100%;
+                z-index: 100;
+                transform: translateX(-100%);
+                transition: 0.3s;
+                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+        }
+    </style>
+    <script src="/js/session-manager.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-bars" id="menuBtn" style="cursor: pointer; margin-right: 10px; display: none;"></i>
+                <i class="fas fa-building"></i> HOSTEL MS
+            </div>
+            <div class="header-right">
+                <!-- SOS BUTTON with STRICT HOVER TITLE -->
+                <div class="sos-btn" onclick="openModal('sosModal')"
+                    title="EMERGENCY ONLY! Strict action against misuse.">
+                    <i class="fas fa-ambulance"></i> SOS
+                </div>
+                <div class="user-info">
+                    <div style="text-align: right; line-height: 1.1;">
+                        <div id="uName" class="skeleton skeleton-text" style="width: 80px; margin-bottom: 2px;"></div>
+                        <div id="uRoll" class="skeleton skeleton-text" style="width: 50px; font-size: 10px;"></div>
+                    </div>
+                    <img src="https://i.pravatar.cc/150?img=12" alt="User">
+                </div>
+            </div>
+        </div>
+
+        <!-- Nav Bar -->
+        <div class="nav-bar">
+            <div class="nav-item active" onclick="switchView('dashboard')"><i class="fas fa-th-large"></i> Dashboard
+            </div>
+            <div class="nav-item" onclick="switchView('booking')"><i class="fas fa-calendar-check"></i> Booking</div>
+            <div class="nav-item"><i class="fas fa-bed"></i> Room</div>
+            <div class="nav-item"><i class="fas fa-utensils"></i> Mess</div>
+            <div class="nav-item"><i class="fas fa-file-invoice"></i> Fee</div>
+        </div>
+
+        <div class="main-content">
+            <!-- Sidebar -->
+            <div class="sidebar" id="sidebar">
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search...">
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <div class="nav-section">
+                        <div class="nav-section-title">My Profile</div>
+                        <ul class="nav-links">
+                            <li class="active" onclick="switchView('dashboard')"><i class="fas fa-user-circle"></i>
+                                <span>Dashboard</span></li>
+                            <li><i class="fas fa-id-card"></i> <span>My ID Card</span></li>
+                            <li><i class="fas fa-qrcode"></i> <span>My QR Code</span></li>
+                            <li><i class="fas fa-user-edit"></i> <span>Update Profile</span></li>
+                        </ul>
+                    </div>
+                    <div class="nav-section">
+                        <div class="nav-section-title">Hostel & Room</div>
+                        <ul class="nav-links">
+                            <li onclick="switchView('booking')"><i class="fas fa-calendar-plus"></i> <span>Hostel
+                                    Booking</span></li>
+                            <li><i class="fas fa-bed"></i> <span>My Room Details</span></li>
+                            <li><i class="fas fa-door-open"></i> <span>Room Change Request</span></li>
+                            <li><i class="fas fa-home"></i> <span>Hostel Facilities</span></li>
+                        </ul>
+                    </div>
+                    <div class="nav-section">
+                        <div class="nav-section-title">Staff & Services</div>
+                        <ul class="nav-links">
+                            <li><i class="fas fa-users"></i> <span>Staff Attendance</span></li>
+                            <li><i class="fas fa-broom"></i> <span>Room Cleaning</span></li>
+                            <li><i class="fas fa-shield-alt"></i> <span>Security</span></li>
+                        </ul>
+                    </div>
+                    <div class="nav-section">
+                        <div class="nav-section-title">Requests</div>
+                        <ul class="nav-links">
+                            <li onclick="openModal('leaveModal')"><i class="fas fa-calendar-alt"></i> <span>Leave
+                                    App</span></li>
+                            <li><i class="fas fa-user-friends"></i> <span>Visitor Pass</span></li>
+                            <li><i class="fas fa-file-medical"></i> <span>Medical</span></li>
+                            <li><i class="fas fa-tools"></i> <span>Maintenance</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Body Content -->
+            <div class="body-content">
+                <!-- VIEW 1: DASHBOARD -->
+                <div id="view-dashboard" class="dashboard-view">
+
+                    <!-- Welcome Banner & Marquee -->
+                    <div class="welcome-section">
+                        <div class="welcome-row">
+                            <div class="welcome-text">
+                                <h2 id="welcomeMsg">Welcome Back, <span class="skeleton skeleton-text"
+                                        style="width:80px; display:inline-block;"></span></h2>
+                                <p>Hostel Management System v2.0</p>
+                            </div>
+                            <div class="date-badge" id="currentDate">Loading...</div>
+                        </div>
+                        <!-- Marquee -->
+                        <div class="marquee-wrapper">
+                            <div class="marquee-content">
+                                📢 NOTICE: Annual Hostel maintenance scheduled for this Sunday 10 AM - 4 PM. Please
+                                cooperate. &nbsp;&nbsp;&nbsp;&nbsp; 🔔 REMINDER: Mess fee due date is approaching.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info Grid -->
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <div class="info-label">Roll Number</div>
+                            <div class="info-value skeleton skeleton-text" id="cardRoll"></div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">Room</div>
+                            <div class="info-value skeleton skeleton-text" id="cardRoom"></div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">Mess Status</div>
+                            <div class="info-value">
+                                <div class="spinner-sm"></div>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">Dues</div>
+                            <div class="info-value skeleton skeleton-text" id="cardDue"></div>
+                        </div>
+                    </div>
+
+                    <!-- Split Layout -->
+                    <div class="dashboard-split">
+                        <!-- Left Column -->
+                        <div class="split-left">
+
+                            <!-- Quick Actions -->
+                            <div class="content-panel">
+                                <div class="panel-header">
+                                    <div class="panel-title"><i class="fas fa-bolt"></i> Quick Actions</div>
+                                </div>
+                                <div class="quick-grid">
+                                    <div class="quick-btn" onclick="switchView('booking')">
+                                        <i class="fas fa-bed"></i><span>Booking</span>
+                                    </div>
+                                    <div class="quick-btn" onclick="openModal('leaveModal')">
+                                        <i class="fas fa-calendar-minus"></i><span>Leave</span>
+                                    </div>
+                                    <div class="quick-btn">
+                                        <i class="fas fa-exclamation-circle"></i><span>Complain</span>
+                                    </div>
+                                    <div class="quick-btn">
+                                        <i class="fas fa-qrcode"></i><span>Gate Pass</span>
+                                    </div>
+                                    <div class="quick-btn">
+                                        <i class="fas fa-receipt"></i><span>Pay Fee</span>
+                                    </div>
+                                    <div class="quick-btn">
+                                        <i class="fas fa-utensils"></i><span>Menu</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Staff Attendance -->
+                            <div class="content-panel">
+                                <div class="panel-header">
+                                    <div class="panel-title"><i class="fas fa-users"></i> Staff on Duty</div>
+                                </div>
+                                <div class="staff-list" id="staffList">
+                                    <div class="staff-item">
+                                        <div class="staff-info">
+                                            <div class="skeleton skeleton-text" style="width: 50%; margin-bottom: 4px;">
+                                            </div>
+                                            <div class="skeleton skeleton-text" style="width: 30%;"></div>
+                                        </div>
+                                        <div class="skeleton skeleton-text" style="width: 20px;"></div>
+                                    </div>
+                                    <div class="staff-item">
+                                        <div class="staff-info">
+                                            <div class="skeleton skeleton-text" style="width: 50%; margin-bottom: 4px;">
+                                            </div>
+                                            <div class="skeleton skeleton-text" style="width: 30%;"></div>
+                                        </div>
+                                        <div class="skeleton skeleton-text" style="width: 20px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="split-right">
+
+                            <!-- Service Status Widget -->
+                            <div class="service-grid">
+                                <div class="service-card">
+                                    <div class="service-icon"><i class="fas fa-wifi"></i></div>
+                                    <div class="service-info">
+                                        <div class="service-label">Wi-Fi</div>
+                                        <div class="service-status skeleton skeleton-text" style="width: 40px;"></div>
+                                    </div>
+                                </div>
+                                <div class="service-card">
+                                    <div class="service-icon"><i class="fas fa-tshirt"></i></div>
+                                    <div class="service-info">
+                                        <div class="service-label">Laundry</div>
+                                        <div class="service-status skeleton skeleton-text" style="width: 40px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Up Next Widget -->
+                            <div class="up-next-widget">
+                                <div>
+                                    <div class="up-next-label">Upcoming Meal</div>
+                                    <div class="up-next-val" id="nextMealTime"><span class="skeleton skeleton-text"
+                                            style="width:60px; background:rgba(255,255,255,0.3);"></span></div>
+                                </div>
+                                <div class="up-next-icon"><i class="fas fa-utensils"></i></div>
+                            </div>
+
+                            <!-- Food Rating -->
+                            <div class="content-panel">
+                                <div class="panel-header">
+                                    <div class="panel-title"><i class="fas fa-star"></i> Rate Meal</div>
+                                </div>
+                                <div class="rating-row">
+                                    <div style="font-weight: 600; font-size: 11px;" id="menuBfast">
+                                        <div class="skeleton skeleton-text" style="width: 80px;"></div>
+                                    </div>
+                                    <div class="stars">
+                                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                    </div>
+                                </div>
+                                <div class="rating-row">
+                                    <div style="font-weight: 600; font-size: 11px;" id="menuLunch">
+                                        <div class="skeleton skeleton-text" style="width: 80px;"></div>
+                                    </div>
+                                    <div class="stars" style="opacity: 0.5;">
+                                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Notices & Alerts -->
+                            <div class="content-panel" style="flex: 1;">
+                                <div class="panel-header">
+                                    <div class="panel-title"><i class="fas fa-bell"></i> Notices & Alerts</div>
+                                </div>
+                                <div id="alertList" style="display: flex; flex-direction: column; gap: 6px;">
+                                    <div class="alert-item"
+                                        style="background: white; border: 1px solid var(--border-light); border-left: 3px solid #ccc;">
+                                        <div class="alert-content" style="width: 100%;">
+                                            <div class="skeleton skeleton-text" style="width: 60%; margin-bottom: 4px;">
+                                            </div>
+                                            <div class="skeleton skeleton-text" style="width: 90%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW 2: BOOKING (Sidecar) -->
+                <div id="view-booking" class="booking-view">
+                    <div class="booking-header">
+                        <button class="back-btn" onclick="switchView('dashboard')">
+                            <i class="fas fa-arrow-left"></i> Back to Dashboard
+                        </button>
+                    </div>
+
+                    <div class="booking-panel" id="bookingRequirements">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <h2 style="color: var(--primary-color); margin-bottom: 5px;">Hostel Booking</h2>
+                            <p style="color: var(--text-muted);">Mandatory Requirements</p>
+                        </div>
+
+                        <div class="checklist">
+                            <label class="check-item">
+                                <input type="checkbox" class="req-checkbox">
+                                <div class="check-content">
+                                    <h4>Stable Network</h4>
+                                    <p>I ensure I am not using restricted/firewall networks that block WebSocket (Port
+                                        8080).</p>
+                                </div>
+                            </label>
+                            <label class="check-item">
+                                <input type="checkbox" class="req-checkbox">
+                                <div class="check-content">
+                                    <h4>Session Integrity</h4>
+                                    <p>I will NOT refresh the page, use the back button, or switch tabs during the
+                                        booking process.</p>
+                                </div>
+                            </label>
+                            <label class="check-item">
+                                <input type="checkbox" class="req-checkbox">
+                                <div class="check-content">
+                                    <h4>Payment Readiness</h4>
+                                    <p>I have my UPI/Card details ready. Seats are held for only 10 minutes during
+                                        payment.</p>
+                                </div>
+                            </label>
+                            <label class="check-item">
+                                <input type="checkbox" class="req-checkbox">
+                                <div class="check-content">
+                                    <h4>Profile Verified</h4>
+                                    <p>I confirm my academic profile is complete and I have no pending fee dues > ₹5000.
+                                    </p>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div style="margin-top: 20px; display: flex; justify-content: center;">
+                            <button id="proceedBtn" class="btn-primary btn-disabled" disabled onclick="startBooking()">
+                                Proceed to Book Hostel <i class="fas fa-arrow-right" style="margin-left: 5px;"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="react-root"
+                        style="display: none; height: 100%; justify-content: center; align-items: center; flex-direction: column;">
+                        <i class="fas fa-circle-notch fa-spin"
+                            style="font-size: 40px; color: var(--primary-color); margin-bottom: 15px;"></i>
+                        <div style="color: var(--text-muted);">Connecting to Booking Node...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div>System: <span id="sysStatus" style="color: var(--warning-color);">Connecting...</span></div>
+            <div>Session: <span id="sessId">...</span></div>
+        </div>
+    </div>
+
+    <!-- SOS MODAL (STRICT) -->
+    <div class="modal-overlay" id="sosModal">
+        <div class="modal" style="border-top: 5px solid var(--error-color);">
+            <h3 style="color: var(--error-color); display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-exclamation-triangle"></i> EMERGENCY ALERT
+            </h3>
+            <div
+                style="background: #fff5f5; border: 1px solid #fc8181; color: #c53030; padding: 10px; border-radius: 4px; font-size: 11px; margin-bottom: 15px;">
+                <strong>STRICT WARNING:</strong> Misuse of the SOS system is a serious offense equivalent to pulling a
+                train emergency chain.
+                <br><br>
+                False alarms will result in:
+                <ul style="list-style: disc; margin-left: 20px; margin-top: 5px;">
+                    <li>Immediate Suspension</li>
+                    <li>Fine of ₹5,000</li>
+                    <li>Disciplinary Committee Action</li>
+                </ul>
+            </div>
+            <p style="font-size: 12px; color: var(--text-dark); margin-bottom: 20px;">
+                This will instantly broadcast your location to the Chief Warden, Security, and Medical Unit.
+            </p>
+            <div style="text-align: right; display: flex; justify-content: flex-end; gap: 10px;">
+                <button class="btn-xs" style="background: #ccc; color: #333; padding: 8px 15px;"
+                    onclick="closeModal('sosModal')">Cancel</button>
+                <button class="btn-xs"
+                    style="background: var(--error-color); color: white; padding: 8px 15px; font-weight: bold;"
+                    onclick="triggerSOS()">I UNDERSTAND, ACTIVATE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEAVE MODAL -->
+    <div class="modal-overlay" id="leaveModal">
+        <div class="modal">
+            <h3>Apply Leave</h3>
+            <div class="form-group">
+                <label style="font-size: 11px; display: block; margin-bottom: 4px;">From Date</label>
+                <input type="date" class="form-control">
+            </div>
+            <div class="form-group">
+                <label style="font-size: 11px; display: block; margin-bottom: 4px;">To Date</label>
+                <input type="date" class="form-control">
+            </div>
+            <div style="text-align: right;">
+                <button class="btn-xs" style="background: #ccc; color: #333;"
+                    onclick="closeModal('leaveModal')">Cancel</button>
+                <button class="btn-xs" style="background: var(--primary-color); color: white;"
+                    onclick="closeModal('leaveModal'); alert('Applied!');">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- VIEW LOGIC ---
+        function switchView(view) {
+            document.getElementById('view-dashboard').style.display = 'none';
+            document.getElementById('view-booking').style.display = 'none';
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+            if (view === 'dashboard') {
+                document.getElementById('view-dashboard').style.display = 'flex';
+                document.querySelector('.nav-item:nth-child(1)').classList.add('active');
+            } else {
+                document.getElementById('view-booking').style.display = 'flex';
+                document.querySelector('.nav-item:nth-child(2)').classList.add('active');
+                document.getElementById('bookingRequirements').style.display = 'flex';
+                document.getElementById('react-root').style.display = 'none';
+                resetCheckboxes();
+            }
+        }
+
+        // --- CHECKBOX LOGIC ---
+        const checkboxes = document.querySelectorAll('.req-checkbox');
+        const proceedBtn = document.getElementById('proceedBtn');
+
+        checkboxes.forEach(box => {
+            box.addEventListener('change', validateCheckboxes);
+        });
+
+        function validateCheckboxes() {
+            const allChecked = Array.from(checkboxes).every(box => box.checked);
+            if (allChecked) {
+                proceedBtn.disabled = false;
+                proceedBtn.classList.remove('btn-disabled');
+            } else {
+                proceedBtn.disabled = true;
+                proceedBtn.classList.add('btn-disabled');
+            }
+        }
+
+        function resetCheckboxes() {
+            checkboxes.forEach(box => box.checked = false);
+            validateCheckboxes();
+        }
+
+        // --- REACT INJECTION (Crucial Integration Step) ---
+        function startBooking() {
+            // Hide Requirements
+            document.getElementById('bookingRequirements').style.display = 'none';
+            // Show React Container
+            const reactRoot = document.getElementById('react-root');
+            reactRoot.style.display = 'block'; // Changed to block to allow React to take over full height
+
+            // Dynamically Load React App (Only once)
+            if (!document.getElementById('react-app-script')) {
+                const script = document.createElement('script');
+                script.id = 'react-app-script';
+                script.type = 'text/babel';
+                // Served from hostel-booking/client via /booking static mount
+                script.src = '/booking/BookingApp.jsx';
+                document.body.appendChild(script);
+            }
+        }
+
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        function triggerSOS() {
+            closeModal('sosModal');
+            const btn = document.querySelector('.sos-btn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ALERTING...';
+            setTimeout(() => {
+                alert("🚨 EMERGENCY ALERT SENT! \nSecurity and Medical teams have been notified. Stay where you are.");
+                btn.innerHTML = '<i class="fas fa-ambulance"></i> SOS';
+            }, 2000);
+        }
+
+        // --- REAL BACKEND CONNECTION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Date
+            const options = { weekday: 'short', month: 'short', day: 'numeric' };
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+
+            // Mobile Sidebar
+            if (window.innerWidth < 900) document.getElementById('menuBtn').style.display = 'inline';
+            document.getElementById('menuBtn').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.toggle('active');
+            });
+            
+            hydrateStudentDashboard();
+        });
+
+        async function hydrateStudentDashboard() {
+            try {
+                const token = localStorage.getItem('hmsToken') || localStorage.getItem('adminJwtToken');
+                const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+
+                const [profileRes, roomRes, duesRes, alertsRes] = await Promise.all([
+                    fetch('/api/student/profile', { headers, credentials: 'include' }),
+                    fetch('/api/student/room-status', { headers, credentials: 'include' }),
+                    fetch('/api/student/dues', { headers, credentials: 'include' }),
+                    fetch('/api/student/alerts', { headers, credentials: 'include' })
+                ]);
+
+                const profile = await profileRes.json();
+                const room = await roomRes.json();
+                const dues = await duesRes.json();
+                const alerts = await alertsRes.json();
+
+                if (profileRes.ok && profile.success && profile.data) {
+                    const data = profile.data;
+                    document.getElementById('welcomeMsg').innerHTML = `Welcome Back, <span>${data.full_name || data.name}</span>`;
+                    document.getElementById('cardRoll').textContent = data.roll_no || data.university_roll_no || 'N/A';
+                    document.getElementById('sessId').textContent = `ID-${data.id || data.student_id}`;
+                }
+
+                if (roomRes.ok && room.success && room.data) {
+                    const r = room.data;
+                    document.getElementById('cardRoom').textContent = `${r.hostel_name || r.hostel} / ${r.room_number || r.room}`;
+                } else {
+                    document.getElementById('cardRoom').textContent = 'Not Allocated';
+                }
+
+                if (duesRes.ok && dues.success) {
+                    document.getElementById('cardDue').textContent = dues.totalDue > 0 ? `₹${dues.totalDue}` : 'Clear';
+                }
+
+                const staffList = document.getElementById('staffList');
+                if (alertsRes.ok && alerts.success && Array.isArray(alerts.staffOnDuty)) {
+                    staffList.innerHTML = '';
+                    alerts.staffOnDuty.forEach((staff) => {
+                        const item = document.createElement('div');
+                        item.className = 'staff-item';
+                        item.innerHTML = `
+                            <div class="staff-info">
+                                <div style="font-weight:600;font-size:11px;">${staff.name}</div>
+                                <div style="font-size:10px;color:var(--text-muted);">${staff.role || 'Staff'}</div>
+                            </div>
+                            <div style="font-size:10px;color:${staff.onDuty ? 'var(--success-color)' : 'var(--warning-color)'};">
+                                ${staff.onDuty ? 'ON DUTY' : 'OFF'}
+                            </div>
+                        `;
+                        staffList.appendChild(item);
+                    });
+                }
+
+                const alertList = document.getElementById('alertList');
+                if (alertsRes.ok && alerts.success && Array.isArray(alerts.notices)) {
+                    alertList.innerHTML = '';
+                    alerts.notices.forEach((notice) => {
+                        const div = document.createElement('div');
+                        div.className = 'alert-item';
+                        div.style.background = 'white';
+                        div.style.border = '1px solid var(--border-light)';
+                        div.style.borderLeft = '3px solid #ccc';
+                        div.innerHTML = `
+                            <div class="alert-content" style="width:100%;">
+                                <div style="font-weight:600;font-size:11px;margin-bottom:4px;">${notice.title}</div>
+                                <div style="font-size:10px;color:var(--text-muted);">${notice.message}</div>
+                            </div>
+                        `;
+                        alertList.appendChild(div);
+                    });
+                }
+
+                document.getElementById('sysStatus').textContent = 'Online';
+                document.getElementById('sysStatus').style.color = 'var(--success-color)';
+            } catch (error) {
+                console.error('Student dashboard hydration failed', error);
+                document.getElementById('sysStatus').textContent = 'Degraded';
+                document.getElementById('sysStatus').style.color = 'var(--warning-color)';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-history"></i> User Activity Logs</h2>
+    <div class="quick-actions">
+        <button class="btn" id="exportLogs"><i class="fas fa-download"></i> Export Logs</button>
+        <button class="btn" id="clearOldLogs"><i class="fas fa-trash"></i> Clear Old Logs</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-sign-in-alt"></i>
+            </div>
+            <h3>Logins Today</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>Security Events</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-user-times"></i>
+            </div>
+            <h3>Failed Logins</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<!-- Filters -->
+<div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Filter Logs</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Date Range</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>Last 24 hours</option>
+                <option>Last 7 days</option>
+                <option>Last 30 days</option>
+                <option>Custom range</option>
+            </select>
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">User Type</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>All Users</option>
+                <option>Admins Only</option>
+                <option>Staff Only</option>
+            </select>
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Activity Type</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>All Activities</option>
+                <option>Logins Only</option>
+                <option>Security Events</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Activity Logs Table -->
+<div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Recent Activity Logs</h3>
+    
+    <div style="text-align: center; padding: 40px;">
+        <i class="fas fa-sync fa-spin fa-2x" style="color: var(--primary-color); margin-bottom: 15px;"></i>
+        <p style="color: var(--text-muted);">Loading activity logs...</p>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('User Activity Logs module loaded');
+    
+    // BACKEND INTEGRATION: Load activity logs with filters
+    // TODO: Fetch activity logs from backend API
+    
+    document.getElementById('exportLogs')?.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Exporting...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-download"></i> Export Logs';
+        }, 2000);
+    });
+});
+</script>

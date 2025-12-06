@@ -1,0 +1,135 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-tasks"></i> Duty Allocation</h2>
+    <div class="quick-actions">
+        <button class="btn" id="createSchedule"><i class="fas fa-calendar-plus"></i> Create Schedule</button>
+        <button class="btn" id="autoAllocate"><i class="fas fa-magic"></i> Auto Allocate</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <h3>Scheduled Today</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-user-clock"></i>
+            </div>
+            <h3>On Duty Now</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>Unfilled Shifts</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-exchange-alt"></i>
+            </div>
+            <h3>Shift Changes</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<!-- Schedule Controls -->
+<div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Schedule Controls</h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Date Range</label>
+            <input type="date" class="btn" style="width: 100%; padding: 8px; border: 1px solid var(--border-medium); border-radius: 6px;">
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Department</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>All Departments</option>
+                <option>Housekeeping</option>
+                <option>Security</option>
+                <option>Maintenance</option>
+                <option>Mess</option>
+            </select>
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Shift Type</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>All Shifts</option>
+                <option>Morning (6AM-2PM)</option>
+                <option>Evening (2PM-10PM)</option>
+                <option>Night (10PM-6AM)</option>
+            </select>
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Hostel</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>All Hostels</option>
+                <option>Boys Hostel A</option>
+                <option>Boys Hostel B</option>
+                <option>Girls Hostel A</option>
+                <option>Girls Hostel B</option>
+            </select>
+        </div>
+    </div>
+    
+    <button class="btn" style="background: var(--primary-color); color: white;">
+        <i class="fas fa-filter"></i> Apply Filters
+    </button>
+</div>
+
+<!-- Duty Roster -->
+<div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Duty Roster</h3>
+    
+    <div style="text-align: center; padding: 60px;">
+        <i class="fas fa-calendar-alt fa-3x" style="color: var(--border-light); margin-bottom: 15px;"></i>
+        <p style="color: var(--text-muted);">Duty roster loading...</p>
+        <p style="color: var(--text-muted); font-size: 12px; margin-top: 10px;">View and manage employee duty schedules</p>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Duty Allocation module loaded');
+    
+    // BACKEND INTEGRATION: Load duty schedules and allocation data
+    // TODO: Fetch duty allocation data from backend API
+    
+    document.getElementById('createSchedule')?.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Opening...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-calendar-plus"></i> Create Schedule';
+            // TODO: Open schedule creation interface
+        }, 1000);
+    });
+    
+    document.getElementById('autoAllocate')?.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Allocating...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-magic"></i> Auto Allocate';
+            alert('Duties allocated automatically based on availability!');
+        }, 2000);
+    });
+});
+</script>

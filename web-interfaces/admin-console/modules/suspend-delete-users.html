@@ -1,0 +1,102 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-user-times"></i> Suspend/Delete Users</h2>
+    <div class="quick-actions">
+        <button class="btn" id="bulkActions" style="background: var(--warning-color); color: white;">
+            <i class="fas fa-cog"></i> Bulk Actions
+        </button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-user-slash"></i>
+            </div>
+            <h3>Suspended Users</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-trash"></i>
+            </div>
+            <h3>Deleted Users</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Pending Actions</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<!-- User Management Table -->
+<div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 20px;">User Management</h3>
+    
+    <div style="display: grid; grid-template-columns: auto 1fr auto; gap: 15px; align-items: center; margin-bottom: 20px;">
+        <div style="font-weight: 600; color: var(--text-dark);">Actions:</div>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn" style="background: var(--warning-color); color: white; font-size: 12px;">
+                <i class="fas fa-user-slash"></i> Suspend Selected
+            </button>
+            <button class="btn" style="background: var(--success-color); color: white; font-size: 12px;">
+                <i class="fas fa-user-check"></i> Activate Selected
+            </button>
+            <button class="btn" style="background: var(--error-color); color: white; font-size: 12px;">
+                <i class="fas fa-trash"></i> Delete Selected
+            </button>
+        </div>
+        <div>
+            <input type="text" placeholder="Search users..." class="btn" style="padding: 8px; border: 1px solid var(--border-medium);">
+        </div>
+    </div>
+    
+    <div style="text-align: center; padding: 60px;">
+        <i class="fas fa-users fa-3x" style="color: var(--border-light); margin-bottom: 15px;"></i>
+        <p style="color: var(--text-muted);">User management interface loading...</p>
+        <p style="color: var(--text-muted); font-size: 12px; margin-top: 10px;">Suspension and deletion actions will be available here</p>
+    </div>
+</div>
+
+<!-- Warning Section -->
+<div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 20px; margin-top: 20px;">
+    <h4 style="color: #856404; margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+        <i class="fas fa-exclamation-triangle"></i> Important Notes
+    </h4>
+    <ul style="color: #856404; font-size: 13px; line-height: 1.5;">
+        <li>Suspended users cannot access the system but their data is preserved</li>
+        <li>Deleted users are permanently removed from the system</li>
+        <li>User deletion may affect historical records and reports</li>
+        <li>Always backup data before performing bulk deletions</li>
+    </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Suspend/Delete Users module loaded');
+    
+    // BACKEND INTEGRATION: Load user list for management
+    // TODO: Fetch users with status from backend
+    
+    document.getElementById('bulkActions')?.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Loading...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-cog"></i> Bulk Actions';
+        }, 1000);
+    });
+});
+</script>

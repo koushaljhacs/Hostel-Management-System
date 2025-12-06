@@ -1,0 +1,139 @@
+<!-- modules/room-transfers.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-exchange-alt"></i> Room Transfers</h2>
+    <div class="quick-actions">
+        <button class="btn" id="initiateTransferBtn"><i class="fas fa-exchange-alt"></i> Initiate Transfer</button>
+        <button class="btn" id="approveTransferBtn"><i class="fas fa-check"></i> Approve Transfers</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Pending Transfers</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Approved Transfers</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-times-circle"></i>
+            </div>
+            <h3>Rejected Transfers</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Transfer Requests Panel -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Transfer Requests</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshTransfers" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="transferRequests" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading transfer requests...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transfer Actions Panel -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Transfer Actions</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Select Student
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Choose student...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Current Room
+                </label>
+                <input type="text" class="form-input" placeholder="Current room" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;" readonly>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    New Room
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select new room...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Transfer Reason
+                </label>
+                <textarea class="form-input" placeholder="Enter transfer reason..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px; min-height: 60px; resize: vertical;"></textarea>
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-paper-plane"></i> Submit Transfer Request
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Room Transfers module loaded');
+    
+    // BACKEND INTEGRATION: Load transfer data
+    // TODO: Fetch transfer requests from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/room-transfers</code> - Fetch transfer requests</li>
+            <li><code>POST /api/room-transfers</code> - Create transfer request</li>
+            <li><code>PUT /api/room-transfers/{id}/approve</code> - Approve transfer</li>
+            <li><code>PUT /api/room-transfers/{id}/reject</code> - Reject transfer</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>student:room:transfer_write</code></p>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-chart-pie"></i> Statistical Reports</h2>
+    <div class="quick-actions">
+        <button class="btn" id="generateReport"><i class="fas fa-plus"></i> Generate Report</button>
+        <button class="btn" id="exportReports"><i class="fas fa-download"></i> Export All</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-file-alt"></i>
+            </div>
+            <h3>Total Reports</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Completed</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-sync"></i>
+            </div>
+            <h3>In Progress</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div style="text-align: center; padding: 40px;">
+    <i class="fas fa-sync fa-spin fa-2x" style="color: var(--primary-color);"></i>
+    <p style="margin-top: 15px; color: var(--text-muted);">Loading statistical reports data...</p>
+</div>
+
+<script>
+// Statistical Reports specific functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Generate Report
+    document.getElementById('generateReport')?.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Generating...';
+        // Backend integration will go here
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-plus"></i> Generate Report';
+        }, 2000);
+    });
+});
+</script>
+
