@@ -1,7 +1,7 @@
 {
   "name": "Hostel-Management-System",
   "version": "0.0.1",
-  "description": "Enterprise-Class Centralized Distributed Server Architecture for Hostel Management",
+  "description": "Enterprise-Class Centralized Distributed Server Architecture for Hostel Management with AI Engine, Microservices, and Multi-layer Security - Major Project",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -16,19 +16,39 @@
     "build:production": "webpack --config production/webpack.config.js"
   },
   "keywords": [
-    "hostel",
-    "management",
-    "centralized",
-    "distributed",
+    "hostel-management",
+    "enterprise-architecture",
+    "distributed-systems",
     "microservices",
-    "security",
-    "autonomous",
+    "ai-engine",
+    "cyber-security",
     "real-time",
     "monitoring",
-    "production"
+    "production-grade",
+    "nodejs",
+    "postgresql",
+    "redis",
+    "webpack"
   ],
-  "author": "OctNov Team (Koushal Jha - Architect)",
+  "author": "Koushal Jha <koushaljha.cs@gmail.com>",
+  "contributors": [
+    "Koushal Jha <koushaljha.cs@gmail.com> (Lead Architect, Security Designer, Backend & AI Developer)",
+    "Hitanshu Dhakrey (Frontend Support)",
+    "Divya Mani Tiwari (Frontend Support)"
+  ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/koushaljhacs/Hostel-Management-System.git"
+  },
+  "bugs": {
+    "url": "https://github.com/koushaljhacs/Hostel-Management-System/issues"
+  },
+  "homepage": "https://github.com/koushaljhacs/Hostel-Management-System#readme",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
   "dependencies": {
     "bcrypt": "^6.0.0",
     "bcryptjs": "^2.4.3",
@@ -81,9 +101,5 @@
     "terser-webpack-plugin": "^5.3.14",
     "webpack": "^5.103.0",
     "webpack-cli": "^6.0.1"
-  },
-  "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=8.0.0"
   }
 }
