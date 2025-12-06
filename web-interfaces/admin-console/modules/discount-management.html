@@ -1,0 +1,174 @@
+<!-- modules/discount-management.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-percentage"></i> Discount Management</h2>
+    <div class="quick-actions">
+        <button class="btn" id="addDiscountBtn"><i class="fas fa-plus"></i> Add Discount</button>
+        <button class="btn" id="applyDiscountBtn"><i class="fas fa-tag"></i> Apply Discount</button>
+        <button class="btn" id="exportDiscountsBtn"><i class="fas fa-file-export"></i> Export</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-tags"></i>
+            </div>
+            <h3>Active Discounts</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <h3>Total Discounts</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Beneficiaries</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Expiring Soon</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Discount Schemes -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Discount Schemes</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshDiscounts" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <select class="btn" style="background: var(--bg-card); border: 1px solid var(--border-medium); font-size: 11px;">
+                    <option value="">All Types</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="discountSchemes" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading discount schemes...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Discount -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Create Discount</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Discount Name
+                </label>
+                <input type="text" class="form-input" placeholder="Enter discount name" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Discount Type
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select discount type...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Value
+                </label>
+                <input type="number" class="form-input" placeholder="Enter discount value" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Eligibility Criteria
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select criteria...</option>
+                </select>
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-plus"></i> Create Discount Scheme
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Discount Applications -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Recent Applications</h3>
+        <button class="btn" id="viewAllApplications" style="font-size: 11px;">
+            <i class="fas fa-list"></i> View All
+        </button>
+    </div>
+    
+    <div class="activity-list" id="discountApplications" style="max-height: 190px;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading discount applications...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Discount Management module loaded');
+    
+    // BACKEND INTEGRATION: Load discount management data
+    // TODO: Fetch discount schemes and applications from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/discount-schemes</code> - Fetch discount schemes</li>
+            <li><code>POST /api/discount-schemes</code> - Create discount scheme</li>
+            <li><code>POST /api/discounts/apply</code> - Apply discount to student</li>
+            <li><code>GET /api/discount-applications</code> - Discount applications</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>financial:discount:manage</code></p>
+    </div>
+</div>

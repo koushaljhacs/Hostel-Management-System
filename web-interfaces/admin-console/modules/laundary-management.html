@@ -1,0 +1,174 @@
+<!-- modules/laundry-management.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-tshirt"></i> Laundry Management</h2>
+    <div class="quick-actions">
+        <button class="btn" id="newOrderBtn"><i class="fas fa-plus"></i> New Order</button>
+        <button class="btn" id="trackOrderBtn"><i class="fas fa-search"></i> Track Order</button>
+        <button class="btn" id="exportLaundryBtn"><i class="fas fa-file-export"></i> Export</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-tshirt"></i>
+            </div>
+            <h3>Active Orders</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Completed Today</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Pending Delivery</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <h3>Daily Revenue</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Order List -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Recent Laundry Orders</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshOrders" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <select class="btn" style="background: var(--bg-card); border: 1px solid var(--border-medium); font-size: 11px;">
+                    <option value="">All Status</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="orderList" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading laundry orders...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Order -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Create New Order</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Student
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select student...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Service Type
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select service type...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Items Count
+                </label>
+                <input type="number" class="form-input" placeholder="Enter number of items" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Special Instructions
+                </label>
+                <textarea class="form-input" placeholder="Enter any special instructions..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px; min-height: 60px; resize: vertical;"></textarea>
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-plus"></i> Create Order
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Order Tracking -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Order Tracking</h3>
+        <button class="btn" id="viewAllTracking" style="font-size: 11px;">
+            <i class="fas fa-list"></i> All Orders
+        </button>
+    </div>
+    
+    <div class="activity-list" id="orderTracking" style="max-height: 190px;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading order tracking data...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Laundry Management module loaded');
+    
+    // BACKEND INTEGRATION: Load laundry management data
+    // TODO: Fetch orders and tracking data from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/laundry-orders</code> - Fetch laundry orders</li>
+            <li><code>POST /api/laundry-orders</code> - Create laundry order</li>
+            <li><code>GET /api/order-tracking</code> - Order tracking data</li>
+            <li><code>PUT /api/orders/{id}/status</code> - Update order status</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>laundry:management:read</code></p>
+    </div>
+</div>

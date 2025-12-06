@@ -1,0 +1,174 @@
+<!-- modules/fee-structure.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-money-bill-wave"></i> Fee Structure</h2>
+    <div class="quick-actions">
+        <button class="btn" id="addFeeItemBtn"><i class="fas fa-plus"></i> Add Fee Item</button>
+        <button class="btn" id="updateFeeStructureBtn"><i class="fas fa-edit"></i> Update Structure</button>
+        <button class="btn" id="exportFeeStructureBtn"><i class="fas fa-file-export"></i> Export</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-list"></i>
+            </div>
+            <h3>Fee Items</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-building"></i>
+            </div>
+            <h3>Hostel Types</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-calendar"></i>
+            </div>
+            <h3>Academic Years</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-cog"></i>
+            </div>
+            <h3>Active Structures</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Fee Structure List -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Current Fee Structure</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshFeeStructure" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <select class="btn" style="background: var(--bg-card); border: 1px solid var(--border-medium); font-size: 11px;">
+                    <option value="">All Hostels</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="feeStructureList" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading fee structure...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Fee Item -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Add Fee Item</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Fee Item Name
+                </label>
+                <input type="text" class="form-input" placeholder="Enter fee item name" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Amount
+                </label>
+                <input type="number" class="form-input" placeholder="Enter amount" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Frequency
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select frequency...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Applicable To
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select hostel type...</option>
+                </select>
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-plus"></i> Add Fee Item
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Fee Structure History -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Fee Structure History</h3>
+        <button class="btn" id="viewFullHistory" style="font-size: 11px;">
+            <i class="fas fa-history"></i> Full History
+        </button>
+    </div>
+    
+    <div class="activity-list" id="feeHistory" style="max-height: 190px;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading fee structure history...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Fee Structure module loaded');
+    
+    // BACKEND INTEGRATION: Load fee structure data
+    // TODO: Fetch fee structure and history from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/fee-structure</code> - Fetch current fee structure</li>
+            <li><code>POST /api/fee-structure/items</code> - Add fee item</li>
+            <li><code>PUT /api/fee-structure/items/{id}</code> - Update fee item</li>
+            <li><code>GET /api/fee-structure/history</code> - Fee structure history</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>financial:fees:read</code></p>
+    </div>
+</div>

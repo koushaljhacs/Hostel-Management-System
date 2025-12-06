@@ -1,0 +1,178 @@
+<!-- modules/pass-management.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-ticket-alt"></i> Pass Management</h2>
+    <div class="quick-actions">
+        <button class="btn" id="issuePassBtn"><i class="fas fa-plus"></i> Issue Pass</button>
+        <button class="btn" id="renewPassBtn"><i class="fas fa-redo"></i> Renew Pass</button>
+        <button class="btn" id="exportPassesBtn"><i class="fas fa-file-export"></i> Export</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-ticket-alt"></i>
+            </div>
+            <h3>Active Passes</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Expiring Soon</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-times-circle"></i>
+            </div>
+            <h3>Expired</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <h3>Revenue</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Pass List -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Transport Passes</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshPasses" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <select class="btn" style="background: var(--bg-card); border: 1px solid var(--border-medium); font-size: 11px;">
+                    <option value="">All Status</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="passList" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading transport passes...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Issue Pass -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Issue Transport Pass</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Student
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select student...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Pass Type
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select pass type...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Validity Period
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select validity...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Routes
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select routes...</option>
+                </select>
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-ticket-alt"></i> Issue Pass
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Pass Usage Analytics -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Pass Usage Analytics</h3>
+        <button class="btn" id="viewDetailedAnalytics" style="font-size: 11px;">
+            <i class="fas fa-chart-bar"></i> Detailed Analytics
+        </button>
+    </div>
+    
+    <div class="activity-list" id="passAnalytics" style="max-height: 190px;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading pass usage analytics...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Pass Management module loaded');
+    
+    // BACKEND INTEGRATION: Load pass management data
+    // TODO: Fetch passes and analytics from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/transport-passes</code> - Fetch transport passes</li>
+            <li><code>POST /api/transport-passes</code> - Issue pass</li>
+            <li><code>POST /api/transport-passes/renew</code> - Renew pass</li>
+            <li><code>GET /api/pass-analytics</code> - Pass usage analytics</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>transport:pass:manage</code></p>
+    </div>
+</div>

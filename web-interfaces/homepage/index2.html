@@ -1,0 +1,2786 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostel Management System - Multi-Role Access Dashboard</title>
+    <meta name="description" content="Secure and dedicated access hub for students, wardens, and administrative staff of the Hostel Management System.">
+    <meta name="referrer" content="strict-origin-when-cross-origin"> 
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- HIGH-LEVEL DESIGN SYSTEM VARIABLES --- */
+        :root {
+            --primary-color: #720026; /* Deep Crimson/Maroon */
+            --primary-light: #8c0030; /* Lighter primary */
+            --primary-dark: #4f0019; /* Darker for hover/accents */
+            
+            --secondary-color: #ffc400; /* Vibrant Gold/Yellow (Student Portal Accent) */
+            --secondary-light: #ffd54f; /* Lighter gold */
+            --accent-color: #a37f00; /* Deep Gold/Brown */
+            --success-color: #4caf50; 
+            --warning-color: #ff9800; 
+            --text-dark: #1f1f1f;
+            --text-medium: #4a4a4a;
+            --text-light: #f5f5f5;
+            --bg-page: #e0e6ed; /* Default light background */
+            --bg-card: #ffffff; 
+            --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.12);
+            --shadow-deep: 0 20px 60px rgba(0, 0, 0, 0.3); 
+            --transition-speed: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --border-radius: 16px;
+            --border-radius-small: 8px;
+            --border-light: #e0e0e0;
+            --developer-color: #4CAF50; 
+            
+            /* --- NEW: Dynamic Animation Colors --- */
+            --grad-white: #ffffff;
+            --grad-black: #000000;
+            --grad-maroon: #720026;
+            --grad-gold: #ffc400;
+            --grad-violet: #1a0636; 
+            --grad-orange: #ff6b00; 
+            --content-bg-dark: #120520; 
+            --light-gold-tint: #fff8e1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            /* REMOVED: background-color: var(--bg-page); */
+            color: var(--text-dark);
+            min-height: 100vh; 
+            line-height: 1.5; 
+            font-size: 14px; 
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            
+            /* --- NEW: Root Background Gradient Animation --- */
+            background: linear-gradient(135deg, 
+                var(--grad-black), 
+                var(--grad-violet), 
+                var(--grad-maroon), 
+                var(--grad-white), 
+                var(--grad-gold),
+                var(--grad-orange) 
+            );
+            background-size: 1000% 1000%; 
+            animation: background-flow 35s ease infinite; 
+        }
+
+        @keyframes background-flow {
+            0% { background-position: 0% 0%; }
+            25% { background-position: 100% 0%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        /* Subtler background grid effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.05; 
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(114, 0, 38, 0.3) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moving-grid 5s linear infinite;
+        }
+        
+        @keyframes moving-grid {
+            0% { background-position: 0 0; }
+            100% { background-position: 200px 0; }
+        }
+
+        /* --- NEW: Large Icon Overlay (Behind content) --- */
+        .icon-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5; /* Below header, below content wrapper */
+            opacity: 0.15; 
+        }
+
+        .icon-overlay i {
+            position: absolute;
+            font-size: 10vw; 
+            color: var(--secondary-color);
+            opacity: 0.4; 
+            transform: rotate(var(--rot-deg, 0deg));
+            filter: blur(3px); 
+            animation: float-icon 20s linear infinite var(--delay, 0s) alternate;
+        }
+
+        @keyframes float-icon {
+            0% { transform: translate(var(--start-x, 0), var(--start-y, 0)) scale(1); }
+            100% { transform: translate(var(--end-x, 0), var(--end-y, 0)) scale(1.05); }
+        }
+
+        .icon-overlay i:nth-child(1) { top: 15%; left: 10%; --rot-deg: 20deg; --start-x: 0; --start-y: 0; --end-x: 30px; --end-y: -15px; --delay: 1s; }
+        .icon-overlay i:nth-child(2) { top: 25%; right: 15%; font-size: 12vw; color: var(--primary-light); --rot-deg: -35deg; --start-x: 0; --start-y: 0; --end-x: -20px; --end-y: 20px; --delay: 3s; }
+        .icon-overlay i:nth-child(3) { bottom: 10%; left: 25%; --rot-deg: 40deg; --start-x: 0; --start-y: 0; --end-x: -30px; --end-y: 10px; --delay: 5s; }
+        .icon-overlay i:nth-child(4) { bottom: 20%; right: 5%; font-size: 9vw; --rot-deg: -15deg; --start-x: 0; --start-y: 0; --end-x: 15px; --end-y: -25px; --delay: 2s; }
+        .icon-overlay i:nth-child(5) { top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 15vw; color: var(--primary-light); --rot-deg: 65deg; --start-x: 0; --start-y: 0; --end-x: 10px; --end-y: 10px; --delay: 4s; }
+        /* --- END: Large Icon Overlay --- */
+
+        /* --- CONTENT WRAPPER (Dynamic Container) --- */
+
+        /* NEW: Container Glow Animation Keyframes */
+        @keyframes container-border-glow {
+            0% { border-color: rgba(255, 196, 0, 0.4); box-shadow: 0 0 15px rgba(255, 196, 0, 0.2); }
+            50% { border-color: rgba(255, 196, 0, 0.8); box-shadow: 0 0 30px rgba(255, 196, 0, 0.5); }
+            100% { border-color: rgba(255, 196, 0, 0.4); box-shadow: 0 0 15px rgba(255, 196, 0, 0.2); }
+        }
+
+        /* NEW: Inner Container Background Animation (White & Gold) */
+        @keyframes inner-background-flow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        #content-wrapper {
+            margin: 110px 6px 40px; 
+            max-width: calc(100% - 12px);
+            
+            /* DYNAMIC BACKGROUND */
+            background: linear-gradient(90deg, 
+                var(--grad-white) 0%, 
+                var(--light-gold-tint) 25%, 
+                var(--grad-gold) 50%, 
+                var(--light-gold-tint) 75%,
+                var(--grad-white) 100%
+            );
+            background-size: 400% 100%;
+            animation: inner-background-flow 20s ease-in-out infinite;
+            
+            box-shadow: var(--shadow-deep); 
+            position: relative;
+            z-index: 10; 
+            border-radius: var(--border-radius);
+            flex-grow: 1;
+            margin-bottom: 40px; 
+            
+            /* DYNAMIC BORDER EFFECT */
+            border: 3px solid var(--secondary-color);
+            animation: container-border-glow 4s ease-in-out infinite alternate;
+        }
+
+        /* --- HEADER & NAVIGATION STYLES --- */
+        .header-wrapper {
+            position: fixed;
+            top: 0; 
+            left: 0;
+            width: 100%;
+            z-index: 1000; 
+            box-shadow: var(--shadow-medium);
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            overflow: visible;
+        }
+
+        .header-top-row {
+            padding: 6px 20px; 
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0; 
+            order: 1; 
+        }
+
+        /* --- UPDATED: HOSTEL MS Logo Style to match image --- */
+        .logo-box {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 8px 15px; /* Increased padding */
+            font-weight: 900;
+            font-size: 1.3em; 
+            letter-spacing: 1.5px;
+            border-radius: 12px; /* Increased border radius for rounded button look */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3); /* Subtle glow on white text/icon */
+        }
+        /* --- END UPDATED: HOSTEL MS Logo Style --- */
+
+        .logo-box i {
+            font-size: 1.1em;
+        }
+
+        .utility-nav-links {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            font-size: 0.75rem; 
+        }
+
+        .utility-nav-links a {
+            color: var(--text-medium);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .utility-nav-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        /* NEW: Language Dropdown Button */
+        .lang-dropdown-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .lang-trigger-btn {
+            display: flex;
+            align-items: center;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 2px 8px; /* Adjusted padding */
+            border-radius: var(--border-radius-small);
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.8rem;
+            font-family: 'Inter', sans-serif; /* Ensure font consistency */
+        }
+
+        .lang-trigger-btn:hover,
+        .lang-dropdown-wrapper:hover .lang-trigger-btn { /* Show hover when menu is open */
+            background-color: var(--primary-dark);
+        }
+
+        .lang-trigger-btn i.fa-language {
+            font-size: 1.1em;
+            margin-right: 5px;
+        }
+
+        .lang-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0; /* Align to the right */
+            z-index: 1100;
+            background-color: var(--bg-card);
+            min-width: 150px;
+            padding: 5px 0; /* Tighter padding */
+            list-style: none;
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-small);
+            box-shadow: var(--shadow-medium);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            margin-top: 5px;
+        }
+
+        .lang-dropdown-wrapper:hover .lang-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .lang-option-btn {
+            color: var(--text-dark);
+            padding: 8px 15px; /* Tighter padding */
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+            white-space: nowrap;
+            text-align: left;
+            transition: background-color 0.2s;
+            font-size: 0.9rem;
+        }
+        .lang-option-btn:hover { 
+            background-color: var(--bg-page); 
+            color: var(--primary-color); 
+        }
+        /* END Language Dropdown Button */
+
+
+        /* Main Navigation Bar */
+        .main-nav-bar {
+            background-color: var(--bg-card); 
+            width: 100%;
+            padding: 4px 20px; 
+            border-top: none;
+            border-bottom: 3px solid var(--primary-color); 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); 
+            order: 2; 
+            position: relative;
+            z-index: 1002;
+        }
+
+        .main-nav-links {
+            display: flex;
+            gap: 8px; /* MODIFIED: Reduced gap from 15px */
+            justify-content: flex-start; 
+            flex-wrap: wrap; 
+            overflow-x: visible; 
+            padding-bottom: 0px; 
+        }
+
+
+        .nav-dropdown-item {
+            position: relative; 
+            display: inline-block; 
+            z-index: 100; 
+        }
+
+        .nav-link-trigger {
+            color: var(--primary-dark);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 6px 8px; 
+            font-size: 0.85rem;
+            position: relative;
+            display: flex; 
+            align-items: center;
+            gap: 5px; 
+            transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+            white-space: nowrap; 
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-small);
+        }
+
+        .nav-link-trigger i {
+            font-size: 1.0em;
+            color: var(--primary-color);
+        }
+
+        .nav-link-trigger:hover .nav-text {
+            color: var(--accent-color); 
+        }
+
+        .nav-link-trigger:hover,
+        .nav-dropdown-item:focus-within .nav-link-trigger {
+            background-color: var(--bg-page);
+            border-color: var(--primary-color);
+        }
+
+        /* Dropdown menu */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1100;
+            background-color: var(--bg-card);
+            min-width: 250px;
+            padding: 10px 0;
+            list-style: none;
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-small);
+            box-shadow: var(--shadow-medium);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            margin-top: 5px;
+        }
+
+        .nav-dropdown-item:hover .dropdown-menu,
+        .nav-dropdown-item:focus-within .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            color: var(--text-dark);
+            padding: 10px 20px; 
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+            border-bottom: 1px solid #f0f0f0; 
+            white-space: nowrap;
+            text-align: left;
+            transition: background-color 0.2s;
+            font-size: 0.9rem; 
+        }
+
+        .dropdown-menu a:hover { 
+            background-color: var(--bg-page); 
+            color: var(--primary-color); 
+        } 
+
+        /* Marquee Bar */
+        .announcement-bar {
+            width: 100%;
+            height: 25px; 
+            background-color: var(--secondary-color); 
+            color: var(--primary-dark);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            overflow: hidden; 
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            order: 3; 
+        }
+
+        .announcement-bar marquee {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0 10px;
+            line-height: 25px; 
+        }
+
+        /* --- MAIN CONTENT & LAYOUT STYLES --- */
+
+        .container {
+            padding: 20px 15px 10px;
+            margin: 0;
+            max-width: 100%; 
+        }
+
+        /* PREMIUM CAROUSEL STYLES - REDESIGNED */
+        .premium-carousel-section {
+            /* MODIFIED: Reduced bottom margin */
+            margin: 0 auto 20px; 
+            max-width: 100%;
+            position: relative;
+        }
+
+        .carousel-container {
+            position: relative;
+            height: 350px; 
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-deep);
+            background: linear-gradient(145deg, #0c0c0c 0%, #1a1a1a 100%);
+            border: 3px solid rgba(255, 196, 0, 0.4);
+            /* animation: borderGlow 3s ease-in-out infinite; <-- Removed duplicate glow */
+            /* MODIFICATION: Added perspective for 3D transforms */
+            perspective: 1200px;
+        }
+
+        /* NEW: Added carousel-controls styling */
+        .carousel-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        /* NEW: Added carousel-dot styling */
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .carousel-dot.active {
+            background: var(--secondary-color);
+            transform: scale(1.2);
+        }
+
+
+        @keyframes borderGlow {
+            0%, 100% { border-color: rgba(255, 196, 0, 0.4); box-shadow: 0 0 15px rgba(255, 196, 0, 0.2); }
+            50% { border-color: rgba(255, 196, 0, 0.8); box-shadow: 0 0 30px rgba(255, 196, 0, 0.5); }
+        }
+
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* MODIFICATION: Base state for all slides */
+            opacity: 0;
+            transform: scale(0); /* Default hidden state */
+            animation-duration: 1s;
+            animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+            animation-fill-mode: forwards; /* Stick to end state */
+            
+            display: flex;
+            align-items: center;
+            padding: 0 80px;
+            gap: 40px; 
+        }
+
+        /* --- NEW: Individual Slide Animations --- (Keeping existing animations) */
+
+        /* Slide 1: Fall Over Entry / Airplane Exit */
+        @keyframes fallOverEntry {
+            from { transform: rotateY(-90deg) scale(0.8); opacity: 0; }
+            to { transform: rotateY(0) scale(1); opacity: 1; }
+        }
+        @keyframes airplaneExit {
+            to { transform: scale(0.1) translateX(2000px) rotateZ(45deg); opacity: 0; }
+        }
+        .carousel-slide[data-slide="1"].active {
+            animation-name: fallOverEntry;
+        }
+        .carousel-slide[data-slide="1"].prev {
+            animation-name: airplaneExit;
+            opacity: 1; /* Keep visible during animation */
+        }
+
+        /* Slide 2: Scale Up Entry / Scale Down Exit */
+        @keyframes scaleUpEntry {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes scaleDownExit {
+            to { transform: scale(0.5); opacity: 0; }
+        }
+        .carousel-slide[data-slide="2"].active {
+            animation-name: scaleUpEntry;
+        }
+        .carousel-slide[data-slide="2"].prev {
+            animation-name: scaleDownExit;
+            opacity: 1;
+        }
+
+        /* Slide 3: Slide From Right Entry / Slide Out Left Exit */
+        @keyframes slideFromRightEntry {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOutLeftExit {
+            to { transform: translateX(-100%); opacity: 0; }
+        }
+        .carousel-slide[data-slide="3"].active {
+            animation-name: slideFromRightEntry;
+        }
+        .carousel-slide[data-slide="3"].prev {
+            animation-name: slideOutLeftExit;
+            opacity: 1;
+        }
+
+        /* Slide 4: 3D Flip Entry / 3D Flip Exit */
+        @keyframes flipEntry {
+            from { transform: rotateX(-180deg) scale(0.7); opacity: 0; }
+            to { transform: rotateX(0) scale(1); opacity: 1; }
+        }
+        @keyframes flipExit {
+            to { transform: rotateX(180deg) scale(0.7); opacity: 0; }
+        }
+        .carousel-slide[data-slide="4"].active {
+            animation-name: flipEntry;
+        }
+        .carousel-slide[data-slide="4"].prev {
+            animation-name: flipExit;
+            opacity: 1;
+        }
+
+        /* Slide 5: Zoom In Entry / Zoom Out Exit */
+        @keyframes zoomInEntry {
+            from { transform: scale(0.1); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes zoomOutExit {
+            to { transform: scale(1.5); opacity: 0; }
+        }
+        .carousel-slide[data-slide="5"].active {
+            animation-name: zoomInEntry;
+        }
+        .carousel-slide[data-slide="5"].prev {
+            animation-name: zoomOutExit;
+            opacity: 1;
+        }
+
+        /* Slide 6: Fade In Up Entry / Fade Out Down Exit */
+        @keyframes fadeInUpEntry {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeOutDownExit {
+            to { transform: translateY(50px); opacity: 0; }
+        }
+        .carousel-slide[data-slide="6"].active {
+            animation-name: fadeInUpEntry;
+        }
+        .carousel-slide[data-slide="6"].prev {
+            animation-name: fadeOutDownExit;
+            opacity: 1;
+        }
+
+        /* --- END: Individual Slide Animations --- */
+
+
+        /* Slide Content Styles */
+        .slide-content {
+            flex: 0.6; 
+            color: white;
+            z-index: 2;
+            max-width: 60%;
+        }
+
+        /* NEW: Text animations (Fade & Slide Up) */
+        .carousel-slide .slide-description,
+        .carousel-slide .slide-cta {
+            opacity: 0;
+            transform: translateY(20px); 
+            transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
+        }
+
+        .carousel-slide .slide-title {
+            opacity: 1; 
+            transition: none;
+            position: relative;
+        }
+
+        .carousel-slide.active .slide-description {
+            opacity: 1;
+            transform: translateY(0); 
+            transition-delay: 1s; 
+        }
+        .carousel-slide.active .slide-cta {
+            opacity: 1;
+            transform: translateY(0); 
+            transition-delay: 1.3s; 
+        }
+
+
+        .slide-title {
+            font-size: 2.8rem; 
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffc400 0%, #ffd54f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            min-height: 70px; 
+            text-shadow: 0 0 10px rgba(255, 196, 0, 0.5); 
+        }
+
+        /* NEW: Typing cursor animation */
+        .slide-title::after {
+            content: '_';
+            display: inline-block;
+            color: var(--secondary-color);
+            opacity: 0;
+            animation: blink 0.7s infinite;
+        }
+        .slide-title.typing::after {
+            opacity: 1;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .slide-description {
+            font-size: 1.1rem; 
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 400;
+        }
+
+        .slide-cta {
+            display: inline-block;
+            padding: 15px 35px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius-small);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .slide-cta:hover {
+            background: transparent;
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px 5px rgba(255, 196, 0, 0.4), 
+                        inset 0 0 10px rgba(255, 196, 0, 0.2);
+        }
+
+        /* SIMPLIFIED Slide Visuals */
+        .slide-visual {
+            flex: 0.4;
+            text-align: right;
+            z-index: 1;
+        }
+        .slide-visual i {
+            font-size: 10rem;
+            color: rgba(255, 255, 255, 0.1);
+            transform: rotate(-15deg);
+        }
+
+        .carousel-nav {
+            display: none; 
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .carousel-nav:hover {
+            background: var(--secondary-color);
+            color: var(--primary-dark);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-prev {
+            left: 20px;
+        }
+
+        .carousel-next {
+            right: 20px;
+        }
+
+        /* Carousel Auto-play Indicator */
+        .carousel-autoplay {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .autoplay-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--secondary-color);
+            animation: autoplayPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes autoplayPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        /* END OF INTEGRATED CAROUSEL STYLES */
+
+
+        /* Two-panel layout */
+        .banking-section {
+            display: flex;
+            flex-wrap: wrap;
+            /* MODIFIED: Removed top margin */
+            margin-top: 0; 
+            justify-content: flex-start;
+            gap: 6px; 
+            margin-left: 0;
+        }
+
+        .banking-panel {
+            flex: 1 1 45%;
+            padding: 22px; 
+            text-align: center;
+            min-width: 320px; 
+            background-color: var(--bg-card); 
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-medium); 
+            border: 3px solid var(--border-light); 
+        }
+
+        .personal-panel {
+            border-color: var(--secondary-color); 
+            background-color: #fffdf5; 
+            transition: box-shadow 0.3s;
+        }
+
+        .personal-panel:hover {
+            box-shadow: 0 10px 30px rgba(255, 196, 0, 0.35); 
+        }
+
+        .corporate-panel {
+            border-color: var(--primary-color);
+            background-color: #f7f0f2;
+            transition: box-shadow 0.3s;
+        }
+
+        .corporate-panel:hover {
+            box-shadow: 0 10px 30px rgba(114, 0, 38, 0.25); 
+        }
+
+        /* NEW: Icon above panel title */
+        .panel-icon {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+        }
+        .personal-panel .panel-icon {
+            color: var(--accent-color); /* Match the border */
+        }
+        .corporate-panel .panel-icon {
+            color: var(--primary-color); /* Match the border */
+        }
+
+        .banking-panel h2 {
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            font-weight: 800;
+            border-bottom: 3px solid var(--secondary-color);
+            display: inline-block;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        .corporate-panel h2 {
+            border-bottom-color: var(--primary-color);
+        }
+
+        .business-description {
+            font-size: 1rem;
+            color: var(--text-medium);
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .login-select-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto 15px;
+        }
+
+        .login-select-wrapper select {
+            width: 100%;
+            padding: 12px 20px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-small);
+            appearance: none;
+            background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f0019' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat right 15px center;
+            background-size: 18px;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--primary-dark);
+            font-weight: 500;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .banking-login-btn {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 14px 35px; 
+            font-size: 1.1rem; 
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: var(--border-radius-small);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: auto; 
+            margin-top: 15px;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            border: none;
+            text-transform: uppercase;
+            position: relative; /* NEW: for pseudo-element */
+            overflow: hidden;   /* NEW: to contain shine */
+        }
+
+        /* NEW: Shine animation element */
+        .banking-login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%; /* Start off-screen */
+            width: 75%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            transform: skewX(-25deg); /* Angle the shine */
+            transition: left 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .banking-login-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* NEW: Shine animation on hover */
+        .banking-login-btn:hover::before {
+            left: 125%; /* Move across the button */
+        }
+
+        /* REMOVED: Old arrow style */
+        /* .arrow-right { 
+            margin-left: 10px; 
+            font-size: 1.1em;
+        } */
+
+        .new-user-links {
+            list-style: none;
+            padding: 0;
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px 20px;
+            font-size: 0.95rem;
+        }
+
+        .new-user-links li {
+            position: relative;
+            padding-right: 15px;
+        }
+
+        .new-user-links li:not(:last-child)::after {
+            content: '|';
+            position: absolute;
+            right: 4px;
+            color: var(--border-light);
+            font-weight: 300;
+        }
+
+        .new-user-links a {
+            color: var(--accent-color); 
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .new-user-links a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        /* Quick Actions Section */
+        .quick-actions-section {
+            padding: 40px;
+            margin-top: 50px;
+            background-color: var(--bg-page);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-light);
+        }
+
+        .quick-actions-section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            color: var(--primary-dark);
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .quick-action-btn {
+            background-color: var(--secondary-color); 
+            color: var(--primary-dark);
+            border: none;
+            padding: 15px 30px;
+            border-radius: var(--border-radius); 
+            cursor: pointer;
+            font-weight: 700; 
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: var(--shadow-medium);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .quick-action-btn i {
+            font-size: 1.3em;
+        }
+
+        .quick-action-btn:hover {
+            background-color: var(--secondary-light);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Data Loading Status Box */
+        .data-loading-box {
+            margin: 50px auto 30px;
+            max-width: 500px;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border-radius: var(--border-radius-small);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px dashed var(--primary-color);
+            text-align: center;
+        }
+
+        .data-loading-box p {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-top: 15px;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin-top: 0;
+        }
+
+        .stat-card {
+            background-color: var(--bg-card);
+            padding: 25px;
+            border-radius: var(--border-radius); 
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+            border: 1px solid var(--border-light);
+            position: relative;
+            min-height: 150px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stat-card i {
+            font-size: 2em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-card h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            font-size: 1rem;
+            color: var(--text-medium);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-deep);
+            border-color: var(--secondary-color);
+        }
+
+        /* Generic Loader/Spinner */
+        .small-loader {
+            border: 5px solid rgba(114, 0, 38, 0.2); 
+            border-top-color: var(--secondary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Developer Info Section - UPDATED */
+        .developer-info-section {
+            padding: 0;
+            margin-top: 0;
+            background-color: transparent;
+            border-radius: 0;
+            box-shadow: none;
+            color: var(--text-light);
+            text-align: left;
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        /* MODIFIED: This style is now shared with .footer-column > h2 */
+        .developer-info-section h2 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+            border-bottom: none;
+            padding-bottom: 0;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .developer-team {
+            display: grid; /* UPDATED: Use grid for team */
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 0;
+        }
+
+        .developer-card {
+            background-color: rgba(255, 255, 255, 0.05); /* UPDATED: Slight bg */
+            color: var(--text-light);
+            padding: 15px; /* UPDATED: Padding */
+            border-radius: var(--border-radius-small);
+            box-shadow: none;
+            min-width: auto;
+            text-align: left; /* UPDATED: left align */
+            border-top: 3px solid var(--developer-color); /* UPDATED: Accent border */
+            transition: transform 0.3s, background-color 0.3s;
+            flex: 0 1 auto;
+            max-width: none;
+        }
+
+        .developer-card:hover {
+            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .developer-card h3 {
+            font-size: 1rem;
+            color: var(--secondary-light);
+            margin-bottom: 5px;
+            display: flex; /* UPDATED: Icon and name side-by-side */
+            align-items: center;
+            gap: 10px;
+        }
+
+        .developer-card h3 i {
+            font-size: 1.2rem; /* UPDATED */
+            margin-bottom: 0;
+            color: var(--secondary-color); /* MODIFIED: Removed green */
+        }
+
+        .developer-card p {
+            font-size: 0.8rem; /* Smaller text */
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.4;
+        }
+
+        /* --- FOOTER STYLES - UPDATED --- */
+        .footer-wrapper {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding: 60px 40px 30px; 
+            text-align: left; 
+            font-size: 0.9rem;
+            margin-top: auto; /* Pushes footer to bottom */
+            z-index: 50; 
+            /* MODIFIED: Changed border color for a stronger brand accent */
+            border-top: 5px solid var(--secondary-color); 
+            width: 100%;
+        }
+
+
+        /* NEW: Footer Grid System */
+        .footer-grid {
+            display: grid;
+            /* MODIFIED: Changed to 2 columns */
+            grid-template-columns: 1fr 2fr; 
+            gap: 50px; /* MODIFIED: Increased gap */
+            margin: 0 auto 40px; 
+            max-width: 1400px;
+            text-align: left;
+        }
+
+        /* MODIFIED: Consolidated styles for footer column headers */
+        .footer-column > h2, 
+        .developer-info-section h2 {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-bottom: 25px; 
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--secondary-color); 
+            display: inline-block; 
+            padding-bottom: 8px; 
+            /* Reset developer-info-section h2 specifics */
+            border-bottom: 2px solid var(--secondary-color); /* Ensure it's not none */
+            padding-bottom: 8px; /* Ensure it's not 0 */
+            display: inline-block; /* Ensure it's not block */
+        }
+
+        /* REMOVED: Old .footer-column h3 style */
+
+
+        /* REMOVED: Brand column styles */
+        /* .footer-column .logo-box-footer { ... } */
+        /* .footer-column .logo-box-footer i { ... } */
+        /* .footer-contact-info { ... } */
+
+        /* MODIFIED: Renamed to .footer-social-links-bottom and centered */
+        .footer-social-links-bottom {
+            display: flex;
+            gap: 15px;
+            justify-content: center; /* NEW */
+            margin: 0 auto 30px; /* NEW: Added margin for spacing */
+        }
+
+        /* MODIFIED: Renamed to .footer-social-links-bottom a */
+        .footer-social-links-bottom a {
+            color: var(--text-light);
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        /* MODIFIED: Renamed to .footer-social-links-bottom a:hover */
+        .footer-social-links-bottom a:hover {
+            background-color: var(--secondary-color);
+            color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(255, 196, 0, 0.3);
+        }
+        /* END: New Footer Styles */
+
+
+        .footer-links {
+            margin-bottom: 0;
+        }
+
+        .footer-links a {
+            color: var(--text-light); 
+            opacity: 0.8; 
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease; 
+            display: block; 
+            margin-bottom: 12px; 
+            padding: 2px 0;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-light);
+            text-decoration: none; 
+            opacity: 1; 
+            transform: translateX(5px); 
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 30px; 
+            padding-top: 30px; 
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center; 
+        }
+
+        /* --- LOADING OVERLAY --- */
+        #loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.98);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.8s, visibility 0.8s;
+        }
+
+        #loader-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            width: 100px;
+            height: 100px;
+            border: 10px solid rgba(114, 0, 38, 0.1); 
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        .loader-text {
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+            font-weight: 700;
+            opacity: 0;
+            animation: fade-in-out 2s infinite alternate;
+        }
+
+        @keyframes fade-in-out {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Useful Links Styling */
+        .useful-links-section {
+            margin-top: 50px;
+            padding: 30px 0;
+        }
+
+        .useful-links-section h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 25px;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .links-grid li a {
+            display: block;
+            padding: 15px 20px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-small);
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .links-grid li a:hover {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Custom Alert Modal Styles */
+        .custom-alert-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .custom-alert-modal.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--bg-card);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-deep);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .modal-message {
+            font-size: 1rem;
+            color: var(--text-medium);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .modal-close-btn {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            border: none;
+            padding: 12px 30px;
+            border-radius: var(--border-radius-small);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-transform: uppercase;
+        }
+
+        .modal-close-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* --- NEW: Chatbot Styles --- */
+        .chat-icon-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            text-decoration: none;
+            box-shadow: var(--shadow-deep);
+            z-index: 1050;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform: scale(1);
+            cursor: pointer;
+            border: none;
+        }
+
+        .chat-icon-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .chat-modal {
+            position: fixed;
+            bottom: 100px; /* 30px margin + 60px button + 10px gap */
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-deep);
+            z-index: 1049; /* Just below the icon's z-index when active */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.95);
+            transform-origin: bottom right;
+            transition: all 0.3s ease;
+        }
+
+        .chat-modal.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+            z-index: 1051; /* Above icon */
+        }
+
+        .chat-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .chat-header h3 {
+            font-size: 1.2rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-header-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .chat-header-close:hover {
+            opacity: 1;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+
+        .message-bubble {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            font-size: 0.9rem;
+            word-wrap: break-word;
+        }
+
+        .message-bubble.user {
+            background-color: var(--primary-color);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-bubble.bot {
+            background-color: #e0e0e0;
+            color: var(--text-dark);
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message-bubble.bot.typing {
+            color: #555;
+            font-style: italic;
+            animation: typing-dots 1s infinite;
+        }
+
+        @keyframes typing-dots {
+            0% { content: 'Typing.'; }
+            33% { content: 'Typing..'; }
+            66% { content: 'Typing...'; }
+            100% { content: 'Typing.'; }
+        }
+
+
+        .quick-queries {
+            padding: 10px 15px;
+            border-top: 1px solid var(--border-light);
+            flex-shrink: 0;
+            background: var(--bg-card);
+        }
+
+        .quick-queries-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-medium);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .queries-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .quick-query-btn {
+            background: none;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 6px 10px;
+            border-radius: var(--border-radius-small);
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-query-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid var(--border-light);
+            flex-shrink: 0;
+        }
+
+        .chat-input input {
+            flex-grow: 1;
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-small);
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            margin-right: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+        .chat-input input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px rgba(114, 0, 38, 0.3);
+        }
+
+        .chat-input button {
+            background-color: var(--primary-color);
+            border: none;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background-color 0.2s;
+        }
+
+        .chat-input button:hover {
+            background-color: var(--primary-dark);
+        }
+        /* --- END: Chatbot Styles --- */
+
+
+        /* --- MEDIA QUERIES (Responsiveness) --- */
+        @media (max-width: 900px) {
+            .banking-section {
+                gap: 20px;
+            }
+            .banking-panel {
+                flex: 1 1 100%;
+                margin: 0; 
+                padding: 30px;
+                box-shadow: var(--shadow-soft);
+            }
+            .container {
+                padding: 30px 20px;
+            }
+
+            /* Carousel responsive */
+            .carousel-slide {
+                padding: 0 40px;
+                flex-direction: column;
+                text-align: center;
+            }
+            .slide-content {
+                max-width: 100%;
+                margin-bottom: 30px;
+                flex: 1; /* Reset flex */
+            }
+            .slide-title {
+                font-size: 2rem;
+                min-height: 50px;
+            }
+            .slide-visual {
+                flex: 1; /* Reset flex */
+                text-align: center; /* NEW: Center icon */
+            }
+            .slide-visual i {
+                font-size: 8rem; /* Smaller icon on mobile */
+                text-align: center;
+            }
+            
+            /* MODIFIED: Footer responsive */
+            .footer-grid {
+                /* MODIFIED: 2 columns on tablet */
+                grid-template-columns: 1fr 1fr; 
+                gap: 40px;
+                /* REMOVED: grid-template-areas */
+            }
+            /* REMOVED: grid-area rules */
+            /* .footer-column.brand-col { grid-area: brand; } */
+            /* .footer-column.links-col { grid-area: links; } */
+            /* .footer-column.dev-col { grid-area: dev; } */
+
+            .developer-team {
+                grid-template-columns: 1fr 1fr; /* 2 columns on tablet */
+            }
+            
+        }
+
+        @media (max-width: 700px) { /* A bit wider breakpoint for nav links */
+            .utility-nav-links a {
+                display: none; /* Hide FAQ/Contact on tablets too */
+            }
+            
+        }
+
+        @media (max-width: 600px) {
+            #content-wrapper {
+                margin-top: 190px;
+                margin-left: 0;
+                margin-right: 0;
+                max-width: 100%;
+                border-radius: 0;
+                box-shadow: none;
+                flex-grow: 1; 
+            }
+            .header-top-row, .main-nav-bar {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            .utility-nav-links {
+                gap: 10px;
+            }
+            .utility-nav-links a {
+                display: none; /* Hide FAQ and Contact Us */
+            }
+            .lang-dropdown-wrapper { 
+                display: flex;
+            }
+            
+            .nav-dropdown-item {
+                position: static;
+                width: 100%;
+                text-align: center;
+                z-index: 50; 
+            }
+            .dropdown-menu {
+                width: 90%;
+                position: static;
+                transform: none;
+                margin: 5px auto;
+                z-index: 51; 
+            }
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+            .quick-action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            /* MODIFIED: Footer responsive mobile */
+            .footer-grid {
+                grid-template-columns: 1fr; /* 1 column on mobile */
+                text-align: center;
+                /* REMOVED: grid-template-areas */
+            }
+            .footer-column {
+                display: flex; 
+                flex-direction: column; 
+                align-items: center; 
+            }
+            .footer-column > h2, 
+            .developer-info-section h2 {
+                display: inline-block; /* Keep underline effect centered */
+            }
+            .footer-links a {
+                text-align: center;
+                transform: translateX(0); /* Disable hover effect */
+            }
+            .footer-links a:hover {
+                transform: translateX(0);
+            }
+            /* REMOVED: .footer-contact-info rule */
+            .developer-info-section {
+                text-align: center;
+            }
+            .developer-team {
+                grid-template-columns: 1fr; /* 1 column for team on mobile */
+            }
+            .developer-card {
+                text-align: left; /* Keep card content left-aligned */
+                min-width: 100%;
+            }
+            
+            
+            /* Carousel responsive */
+            .carousel-container {
+                height: 450px; /* Taller on mobile for text */
+            }
+            .carousel-slide {
+                padding: 0 20px;
+                flex-direction: column-reverse; /* Show text above icon */
+            }
+            .slide-title {
+                font-size: 1.5rem;
+            }
+            .slide-description {
+                font-size: 1rem;
+            }
+            .slide-visual i {
+                font-size: 6rem; /* Even smaller icon */
+                opacity: 0.2;
+            }
+            .carousel-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            /* --- NEW: Chatbot Responsive --- */
+            .chat-modal {
+                width: calc(100% - 20px);
+                height: 70vh;
+                max-height: 500px;
+                right: 10px;
+                bottom: 80px;
+            }
+            .chat-icon-btn {
+                bottom: 20px;
+                right: 20px;
+            }
+            /* --- END: Chatbot Responsive --- */
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="icon-overlay">
+        <i class="fas fa-cog" aria-hidden="true"></i>
+        <i class="fas fa-database" aria-hidden="true"></i>
+        <i class="fas fa-server" aria-hidden="true"></i>
+        <i class="fas fa-desktop" aria-hidden="true"></i>
+        <i class="fas fa-network-wired" aria-hidden="true"></i>
+    </div>
+    
+    <div class="header-wrapper">
+        
+        <div class="header-top-row">
+            <div class="logo-box">
+                <i class="fas fa-home"></i>
+                <span data-en="HOSTEL MS" data-hi="छात्रावास एमएस" data-ta="விடுதி MS" data-bn="হোস্টেল MS">HOSTEL MS</span>
+            </div>
+            
+            <div class="utility-nav-links">
+                <a href="#" onclick="showAlertModal('Utility', 'FAQs Link Activated', false)" aria-label="Frequently Asked Questions">
+                    <i class="fas fa-question-circle"></i> 
+                    <span data-en="FAQs" data-hi="अक्सर पूछे जाने वाले प्रश्न" data-ta="அடிக்கடி கேட்கப்படும் கேள்விகள்" data-bn="সাধারণ প্রশ্নাবলী">FAQs</span>
+                </a>
+                <a href="#" onclick="showAlertModal('Utility', 'Contact Us Link Activated', false)" aria-label="Contact Us">
+                    <i class="fas fa-headset"></i> 
+                    <span data-en="Contact Us" data-hi="हमसे संपर्क करें" data-ta="தொடர்பு கொள்ள" data-bn="যোগাযোগ করুন">Contact Us</span>
+                </a>
+                
+                <div class="lang-dropdown-wrapper">
+                    <button class="lang-trigger-btn" aria-label="Select Language" aria-haspopup="true">
+                        <i class="fas fa-language"></i>
+                        <span id="lang-trigger-text">English</span> 
+                        <i class="fas fa-caret-down" style="font-size: 0.8em; margin-left: 5px;"></i>
+                    </button>
+                    <div class="lang-dropdown-menu">
+                        <a href="#" class="lang-option-btn" onclick="setLanguage('en'); return false;">English</a>
+                        <a href="#" class="lang-option-btn" onclick="setLanguage('hi'); return false;">हिंदी</a>
+                        <a href="#" class="lang-option-btn" onclick="setLanguage('ta'); return false;">தமிழ்</a>
+                        <a href="#" class="lang-option-btn" onclick="setLanguage('bn'); return false;">বাংলা</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+        <nav class="main-nav-bar" aria-label="Main Navigation">
+            <div class="main-nav-links">
+                
+                <a href="#" class="nav-link-trigger" onclick="showAlertModal('Navigation', 'Home Link Activated', false)" aria-label="Home">
+                    <i class="fas fa-home"></i> 
+                    <span class="nav-text" data-en="Home" data-hi="होम" data-ta="முகப்பு" data-bn="হোম">Home</span>
+                </a>
+                
+                <div class="nav-dropdown-item" tabindex="0">
+                    <a href="#" class="nav-link-trigger" aria-expanded="false" aria-controls="fee-menu">
+                        <i class="fas fa-money-bill-wave"></i> 
+                        <span class="nav-text" data-en="Fee & Payment" data-hi="शुल्क और भुगतान" data-ta="கட்டணம் & செலுத்துதல்" data-bn="ফি এবং পেমেন্ট">Fee & Payment</span>
+                    </a>
+                    <div class="dropdown-menu" id="fee-menu" role="menu">
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Pay Hostel Fees', false);" data-en="Pay Hostel Fees" data-hi="छात्रावास शुल्क का भुगतान करें" data-ta="விடுதி கட்டணம் செலுத்துங்கள்" data-bn="হোস্টেল ফি প্রদান করুন" role="menuitem">Pay Hostel Fees</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'View Payment History', false);" data-en="View Payment History" data-hi="भुगतान इतिहास देखें" data-ta="கட்டண வரலாற்றைக் காண்க" data-bn="পেমেন্ট ইতিহাস দেখুন" role="menuitem">View Payment History</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Scholarship Status', false);" data-en="Scholarship Status" data-hi="छात्रवृत्ति स्थिति" data-ta="உதவித்தொகை நிலை" data-bn="স্কলারশিপ স্ট্যাটাস" role="menuitem">Scholarship Status</a>
+                    </div>
+                </div>
+                
+                <div class="nav-dropdown-item" tabindex="0">
+                    <a href="#" class="nav-link-trigger" aria-expanded="false" aria-controls="attendance-menu">
+                        <i class="fas fa-clipboard-check"></i> 
+                        <span class="nav-text" data-en="Attendance & Leave" data-hi="उपस्थिति और छुट्टी" data-ta="வருகை & விடுப்பு" data-bn="হাজিরা এবং ছুটি">Attendance & Leave</span>
+                    </a>
+                    <div class="dropdown-menu" id="attendance-menu" role="menu">
+                        <a href="#" onclick="showAlertModal('Dropdown', 'View My Attendance', false);" data-en="View My Attendance" data-hi="मेरी उपस्थिति देखें" data-ta="எனது வருகையைக் காண்க" data-bn="আমার হাজিরা দেখুন" role="menuitem">View My Attendance</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Apply for Leave/Gate Pass', false);" data-en="Apply for Leave/Gate Pass" data-hi="छुट्टी/गेट पास के लिए आवेदन करें" data-ta="விடுப்பு/கேட் பாஸ் விண்ணப்பிக்கவும்" data-bn="ছুটি/গেট পাসের জন্য আবেদন করুন" role="menuitem">Apply for Leave/Gate Pass</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Leave History', false);" data-en="Leave History" data-hi="छुट्टी इतिहास" data-ta="விடுப்பு வரலாறு" data-bn="ছুটির ইতিহাস" role="menuitem">Leave History</a>
+                    </div>
+                </div>
+                
+                <div class="nav-dropdown-item" tabindex="0">
+                    <a href="#" class="nav-link-trigger" aria-expanded="false" aria-controls="mess-menu">
+                        <i class="fas fa-utensils"></i> 
+                        <span class="nav-text" data-en="Mess & Dining" data-hi="मेस और भोजन" data-ta="மெஸ் & உணவு" data-bn="মেস ও ডাইনিং">Mess & Dining</span>
+                    </a>
+                    <div class="dropdown-menu" id="mess-menu" role="menu">
+                        <a href="#" onclick="showAlertModal('Dropdown', 'View Mess Menu', false);" data-en="View Mess Menu" data-hi="मेस मेनू देखें" data-ta="மெஸ் மெனுவைப் பார்க்கவும்" data-bn="মেস মেনু দেখুন" role="menuitem">View Mess Menu</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Mess Bill & Payment', false);" data-en="Mess Bill & Payment" data-hi="मेस बिल और भुगतान" data-ta="மெஸ் பில் & கட்டணம்" data-bn="মেস বিল ও পেমেন্ট" role="menuitem">Mess Bill & Payment</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Mess Feedback', false);" data-en="Mess Feedback" data-hi="मेस प्रतिक्रिया" data-ta="மெஸ் கருத்து" data-bn="মেস প্রতিক্রিয়া" role="menuitem">Mess Feedback</a>
+                    </div>
+                </div>
+
+                <div class="nav-dropdown-item" tabindex="0">
+                    <a href="#" class="nav-link-trigger" aria-expanded="false" aria-controls="profile-menu">
+                        <i class="fas fa-user-circle"></i> 
+                        <span class="nav-text" data-en="My Profile" data-hi="मेरी प्रोफ़ाइल" data-ta="என் சுயவிவரம்" data-bn="আমার প্রোফাইল">My Profile</span>
+                    </a>
+                    <div class="dropdown-menu" id="profile-menu" role="menu">
+                        <a href="#" onclick="showAlertModal('Dropdown', 'View My Profile', false);" data-en="View My Profile" data-hi="मेरी प्रोफ़ाइल देखें" data-ta="எனது சுயவிவரத்தைப் பார்க்கவும்" data-bn="আমার প্রোফাইল দেখুন" role="menuitem">View My Profile</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Edit Contact Details', false);" data-en="Edit Contact Details" data-hi="संपर्क विवरण संपादित करें" data-ta="தொடர்பு விவரங்களைத் திருத்தவும்" data-bn="যোগাযোগের বিবরণ সম্পাদনা করুন" role="menuitem">Edit Contact Details</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'View Allotted Items', false);" data-en="View Allotted Items" data-hi="आवंटित वस्तुएं देखें" data-ta="ஒதுக்கப்பட்ட பொருட்களைக் காண்க" data-bn="বরাদ্দকৃত আইটেম দেখুন" role="menuitem">View Allotted Items</a>
+                    </div>
+                </div>
+
+                <div class="nav-dropdown-item" tabindex="0">
+                    <a href="#" class="nav-link-trigger" aria-expanded="false" aria-controls="room-menu">
+                        <i class="fas fa-bed"></i> 
+                        <span class="nav-text" data-en="Room Management" data-hi="कमरा प्रबंधन" data-ta="அறை மேலாண்மை" data-bn="রুম ম্যানেজমেন্ট">Room Management</span>
+                    </a>
+                    <div class="dropdown-menu" id="room-menu" role="menu">
+                        <a href="#" onclick="showAlertModal('Dropdown', 'View Room Details', false);" data-en="View Room Details" data-hi="कमरे का विवरण देखें" data-ta="அறை விவரங்களைக் காண்க" data-bn="রুমের বিবরণ দেখুন" role="menuitem">View Room Details</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Request Room Change', false);" data-en="Request Room Change" data-hi="कमरा बदलने का अनुरोध करें" data-ta="அறை மாற்றக் கோரிக்கை" data-bn="রুম পরিবর্তনের অনুরোধ করুন" role="menuitem">Request Room Change</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Room Inventory', false);" data-en="Room Inventory" data-hi="कमरा इन्वेंटरी" data-ta="அறை இருப்பு" data-bn="রুম ইনவெনটরি" role="menuitem">Room Inventory</a>
+                    </div>
+                </div>
+                
+                <div class="nav-dropdown-item" tabindex="0">
+                    <a href="#" class="nav-link-trigger" aria-expanded="false" aria-controls="complaints-menu">
+                        <i class="fas fa-comments"></i> 
+                        <span class="nav-text" data-en="Grievance" data-hi="शिकायत निवारण" data-ta="குறை தீர்வு" data-bn="অভিযোগ">Grievance</span>
+                    </a>
+                    <div class="dropdown-menu" id="complaints-menu" role="menu">
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Lodge a Complaint', false);" data-en="Lodge a Complaint" data-hi="शिकायत दर्ज करें" data-ta="புகார் அளிக்கவும்" data-bn="অভিযোগ দায়ের করুন" role="menuitem">Lodge a Complaint</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Track Complaint Status', false);" data-en="Track Complaint Status" data-hi="शिकायत की स्थिति ट्रैक करें" data-ta="புகார் நிலையைக் கண்காணிக்கவும்" data-bn="অভিযোগের অবস্থা ট্র্যাক করুন" role="menuitem">Track Complaint Status</a>
+                    </div>
+                </div>
+
+                <div class="nav-dropdown-item" tabindex="0">
+                    <a href="#" class="nav-link-trigger" aria-expanded="false" aria-controls="security-menu">
+                        <i class="fas fa-shield-alt"></i> 
+                        <span class="nav-text" data-en="Safety & Security" data-hi="Sसुरक्षा एवं संरक्षा" data-ta="பாதுகாப்பு & பாதுகாப்பு" data-bn="নিরাপত্তা ও সুরক্ষা">Safety & Security</span>
+                    </a>
+                    <div class="dropdown-menu" id="security-menu" role="menu">
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Emergency Contacts', false);" data-en="Emergency Contacts" data-hi="आपातकालीन संपर्क" data-ta="அவசர தொடர்புகள்" data-bn="জরুরী যোগাযোগ" role="menuitem">Emergency Contacts</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Hostel Rules & Regulations', false);" data-en="Hostel Rules & Regulations" data-hi="छात्रावास के नियम और विनियम" data-ta="விடுதி விதிகள் மற்றும் ஒழுங்குமுறைகள்" data-bn="হোস্টেলের নিয়ম ও প্রবিধান" role="menuitem">Hostel Rules & Regulations</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Anti-Ragging Policy', false);" data-en="Anti-Ragging Policy" data-hi="एंटी-रैगिंग नीति" data-ta="Anti-Ragging Policy" data-bn="অ্যান্টি-র‌্যাগিং নীতি" role="menuitem">Anti-Ragging Policy</a>
+                    </div>
+                </div>
+                
+                <div class="nav-dropdown-item" tabindex="0">
+                    <a href="#" class="nav-link-trigger" aria-expanded="false" aria-controls="campus-menu">
+                        <i class="fas fa-tree"></i> 
+                        <span class="nav-text" data-en="Campus Life" data-hi="कैंपस लाइफ" data-ta="வளாக வாழ்க்கை" data-bn="ক্যাম্পাস লাইফ">Campus Life</span>
+                    </a>
+                    <div class="dropdown-menu" id="campus-menu" role="menu">
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Events Calendar', false);" data-en="Events Calendar" data-hi="कार्यक्रम कैलेंडर" data-ta="நிகழ்வுகள் காலண்டர்" data-bn="ইভেন্ট ক্যালেন্ডার" role="menuitem">Events Calendar</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Clubs & Societies', false);" data-en="Clubs & Societies" data-hi="क्लब और सोसायटी" data-ta="கிளப்புகள் & சங்கங்கள்" data-bn="ক্লাব এবং সোসাইটি" role="menuitem">Clubs & Societies</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Sports Facilities', false);" data-en="Sports Facilities" data-hi="खेल सुविधाएं" data-ta="விளையாட்டு வசதிகள்" data-bn="ক্রীড়া সুবিধা" role="menuitem">Sports Facilities</a>
+                    </div>
+                </div>
+
+                <div class="nav-dropdown-item" tabindex="0">
+                    <a href="#" class="nav-link-trigger" aria-expanded="false" aria-controls="library-menu">
+                        <i class="fas fa-atlas"></i> 
+                        <span class="nav-text" data-en="Resources" data-hi="संसाधन" data-ta="வளங்கள்" data-bn="সম্পদ">Resources</span>
+                    </a>
+                    <div class="dropdown-menu" id="library-menu" role="menu">
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Downloads & Forms', false);" data-en="Downloads & Forms" data-hi="डाउनलोड और फॉर्म" data-ta="பதிவிறக்கங்கள் & படிவங்கள்" data-bn="ডাউনলোড এবং ফর্ম" role="menuitem">Downloads & Forms</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Academic Calendar', false);" data-en="Academic Calendar" data-hi="शैक्षणिक कैलेंडर" data-ta="கல்வி நாட்காட்டி" data-bn="একাডেমিক ক্যালেন্ডার" role="menuitem">Academic Calendar</a>
+                    </div>
+                </div>
+
+                <div class="nav-dropdown-item" tabindex="0">
+                    <a href="#" class="nav-link-trigger" aria-expanded="false" aria-controls="features-menu">
+                        <i class="fas fa-star"></i> 
+                        <span class="nav-text" data-en="Features" data-hi="विशेषताएं" data-ta="অம்சங்கள்" data-bn="বৈশিষ্ট্য">Features</span>
+                    </a>
+                    <div class="dropdown-menu" id="features-menu" role="menu">
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Core Features', false);" data-en="Core Features" data-hi="मुख्य विशेषताएं" data-ta="முக்கிய அம்சங்கள்" data-bn="মূল বৈশিষ্ট্য" role="menuitem">Core Features</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Student Portal Features', false);" data-en="Student Portal" data-hi="छात्र पोर्टल" data-ta="மாணவர் போர்டல்" data-bn="ছাত্র পোর্টাল" role="menuitem">Student Portal</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Admin Dashboard Features', false);" data-en="Admin Dashboard" data-hi="एडमिन डैशबोर्ड" data-ta="நிர்வாகி டாஷ்போர்டு" data-bn="অ্যাডমিন ড্যাশবোর্ড" role="menuitem">Admin Dashboard</a>
+                        <a href="#" onclick="showAlertModal('Dropdown', 'Security Features', false);" data-en="Security Features" data-hi="सुरक्षा विशेषताएं" data-ta="பாதுகாப்பு அம்சங்கள்" data-bn="নিরাপত্তা বৈশিষ্ট্য" role="menuitem">Security Features</a>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+        
+        <div class="announcement-bar" aria-live="polite">
+            <marquee behavior="scroll" direction="left" scrollamount="6">
+                <i class="fas fa-bullhorn"></i> 
+                <span data-en="LATEST NEWS:" data-hi="नवीनतम समाचार:" data-ta="சமீபத்திய செய்திகள்:" data-bn="সর্বশেষ সংবাদ:">LATEST NEWS:</span> 
+                <span data-en="Room Allocation Phase 2 is now open. Last date for fee payment is 30th November." 
+                      data-hi="कमरा आवंटन चरण 2 अब खुला है। शुल्क भुगतान की अंतिम तिथि 30 नवंबर है।"
+                      data-ta="அறை ஒதுக்கீடு கட்டம் 2 இப்போது திறக்கப்பட்டுள்ளது. கட்டணம் செலுத்துவதற்கான கடைசி தேதி 30 நவம்பர்."
+                      data-bn="রুম বরাদ্দ পর্যায় 2 এখন খোলা। ফি প্রদানের শেষ তারিখ 30 নভেম্বর।">Room Allocation Phase 2 is now open. Last date for fee payment is 30th November.</span> | 
+                <i class="fas fa-exclamation-triangle"></i> 
+                <span data-en="Disclaimer:" data-hi="अस्वीकरण:" data-ta="பொறுப்புத்துறப்பு:" data-bn="দাবিত্যাগ:">Disclaimer:</span> 
+                <span data-en="Always use your official student or staff ID for all system accesses and inquiries." 
+                      data-hi="सभी सिस्टम एक्सेस और पूछताछ के लिए हमेशा अपनी आधिकारिक छात्र या कर्मचारी आईडी का उपयोग करें।"
+                      data-ta="அனைத்து கணினி அணுகல்கள் மற்றும் விசாரணைகளுக்கு உங்கள் அதிகாரப்பூர்வ மாணவர் அல்லது பணியாளர் ஐடியைப் பயன்படுத்தவும்."
+                      data-bn="সমস্ত সিস্টেম অ্যাক্সেস এবং অনুসন্ধানের জন্য সর্বদা আপনার অফিসিয়াল ছাত্র বা স্টাফ আইডি ব্যবহার করুন।">Always use your official student or staff ID for all system accesses and inquiries.</span>
+            </marquee>
+        </div>
+    </div> 
+    
+    <div id="content-wrapper"> 
+        
+        <div class="container">
+            
+            <div class="premium-carousel-section">
+                <div class="carousel-container">
+                    <div class="carousel-slide active" data-slide="1">
+                        <div class="slide-content">
+                            <h2 class="slide-title" data-en="Unified Multi-Role Dashboard" data-hi="एकीकृत मल्टी-रोल डैशबोर्ड" data-ta="ஒருங்கிணைந்த பல-பங்கு டாஷ்போர்டு" data-bn="ইউনিফাইড মাল্টি-রোল ড্যাশবোর্ড"></h2>
+                            <p class="slide-description" 
+                               data-en="Single platform for Students, Wardens, Admin Staff with role-based access control." 
+                               data-hi="छात्रों, वार्डन, व्यवस्थापक कर्मचारियों के लिए भूमिका-आधारित पहुँच नियंत्रण वाला एकल मंच।"
+                               data-ta="மாணவர்கள், வார்டன்கள், நிர்வாக ஊழியர்களுக்கான பங்கு அடிப்படையிலான அணுகல் கட்டுப்பாட்டுடன் கூடிய ஒற்றை தளம்."
+                               data-bn="ভূমিকা-ভিত্তিক অ্যাক্সেস কন্ট্রোল সহ ছাত্র, ওয়ার্ডেন, অ্যাডমিন স্টাফদের জন্য একক প্ল্যাটফর্ম।">Single platform for Students, Wardens, Admin Staff with role-based access control.</p>
+                            <a href="#" class="slide-cta" onclick="showAlertModal('Carousel', 'Explore Roles', false)" data-en="Explore Roles" data-hi="भूमिकाएँ देखें" data-ta="பாத்திரங்களை ஆராயுங்கள்" data-bn="ভূমিকাগুলি অন্বেষণ করুন">Explore Roles</a>
+                        </div>
+                        <div class="slide-visual">
+                           <i class="fas fa-users-cog"></i>
+                        </div>
+                    </div>
+
+                    <div class="carousel-slide" data-slide="2">
+                        <div class="slide-content">
+                            <h2 class="slide-title" data-en="Live Analytics Dashboard" data-hi="लाइव एनालिटिक्स डैशबोर्ड" data-ta="லைவ் அனலிட்டிக்ஸ் டாஷ்போர்டு" data-bn="লাইভ অ্যানালিটিক্স ড্যাশবোর্ড"></h2>
+                            <p class="slide-description"
+                               data-en="Monitor occupancy rates, fee collections, attendance trends in real-time."
+                               data-hi="वास्तविक समय में अधिभोग दर, शुल्क संग्रह, उपस्थिति रुझानों की निगरानी करें।"
+                               data-ta="நிகழ்நேரத்தில் தங்கும் விகிதங்கள், கட்டண வசூல், வருகைப் போக்குகள் ஆகியவற்றைக் கண்காணிக்கவும்."
+                               data-bn="রিয়েল-টাইমে দখলের হার, ফি সংগ্রহ, উপস্থিতির প্রবণতা নিরীক্ষণ করুন।">Monitor occupancy rates, fee collections, attendance trends in real-time.</p>
+                            <a href="#" class="slide-cta" onclick="showAlertModal('Carousel', 'View Analytics', false)" data-en="View Analytics" data-hi="एनालिटिक्स देखें" data-ta="பகுப்பாய்வுகளைக் காண்க" data-bn="অ্যানালিটিক্স দেখুন">View Analytics</a>
+                        </div>
+                        <div class="slide-visual">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+
+                    <div class="carousel-slide" data-slide="3">
+                        <div class="slide-content">
+                            <h2 class="slide-title" data-en="Smart Room Allocation" data-hi="स्मार्ट रूम आवंटन" data-ta="ஸ்மார்ட் அறை ஒதுக்கீடு" data-bn="স্মার্ট রুম বরাদ্দ"></h2>
+                            <p class="slide-description"
+                               data-en="Automated room assignments, vacancy tracking, and maintenance scheduling."
+                               data-hi="स्वचालित कमरा असाइनमेंट, रिक्ति ट्रैकिंग और रखरखाव शेड्यूलिंग।"
+                               data-ta="தானியங்கு அறை ஒதுக்கீடுகள், காலி கண்காணிப்பு மற்றும் பராமரிப்பு திட்டமிடல்."
+                               data-bn="স্বয়ংক্রিয় রুম অ্যাসাইনমেন্ট, শূন্যপদ ট্র্যাকিং এবং রক্ষণাবেক্ষণ সময়সূচী।">Automated room assignments, vacancy tracking, and maintenance scheduling.</p>
+                            <a href="#" class="slide-cta" onclick="showAlertModal('Carousel', 'Manage Rooms', false)" data-en="Manage Rooms" data-hi="कमरे प्रबंधित करें" data-ta="அறைகளை நிர்வగிக்கவும்" data-bn="রুম পরিচালনা করুন">Manage Rooms</a>
+                        </div>
+                        <div class="slide-visual">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                    </div>
+
+                    <div class="carousel-slide" data-slide="4">
+                        <div class="slide-content">
+                            <h2 class="slide-title" data-en="Comprehensive Fee Management" data-hi="व्यापक शुल्क प्रबंधन" data-ta="விரிவான கட்டண மேலாண்மை" data-bn="ব্যাপক ফি ম্যানেজমেন্ট"></h2>
+                            <p class="slide-description"
+                               data-en="Automated billing, scholarship tracking, and payment gateway integration."
+                               data-hi="स्वचालित बिलिंग, छात्रवृत्ति ट्रैकिंग और भुगतान गेटवे एकीकरण।"
+                               data-ta="தானியங்கு பில்லிங், ஸ்காலர்ஷிப் கண்காணிப்பு மற்றும் கட்டண நுழைவாயில் ஒருங்கிணைப்பு."
+                               data-bn="স্বয়ংক্রিয় বিলিং, স্কলারশিপ ট্র্যাকিং এবং পেমেন্ট গেটওয়ে ইন্টিগ্রেশন।">Automated billing, scholarship tracking, and payment gateway integration.</p>
+                            <a href="#" class="slide-cta" onclick="showAlertModal('Carousel', 'Financial Portal', false)" data-en="Financial Portal" data-hi="वित्तीय पोर्टल" data-ta="நிதி போர்டல்" data-bn="আর্থিক পোর্টাল">Financial Portal</a>
+                        </div>
+                        <div class="slide-visual">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                    </div>
+
+                    <div class="carousel-slide" data-slide="5">
+                        <div class="slide-content">
+                            <h2 class="slide-title" data-en="Biometric Integration & Security" data-hi="बायोमेट्रिक एकीकरण और सुरक्षा" data-ta="பயோமெட்ரிக் ஒருங்கிணைப்பு & பாதுகாப்பு" data-bn="বায়োমেট্রিক ইন্টিগ্রেশন এবং নিরাপত্তা"></h2>
+                            <p class="slide-description"
+                               data-en="Automated attendance tracking, gate pass management, and security protocols."
+                               data-hi="स्वचालित उपस्थिति ट्रैकिंग, गेट पास प्रबंधन और सुरक्षा प्रोटोकॉल।"
+                               data-ta="தானியங்கு வருகை கண்காணிப்பு, கேட் பாஸ் மேலாண்மை மற்றும் பாதுகாப்பு நெறிமுறைகள்."
+                               data-bn="স্বয়ংক্রিয় উপস্থিতি ট্র্যাকিং, গেট পাস ম্যানেজমেন্ট এবং নিরাপত্তা প্রোটোকল।">Automated attendance tracking, gate pass management, and security protocols.</p>
+                            <a href="#" class="slide-cta" onclick="showAlertModal('Carousel', 'Security Center', false)" data-en="Security Center" data-hi="सुरक्षा केंद्र" data-ta="பாதுகாப்பு மையம்" data-bn="নিরাপত্তা কেন্দ্র">Security Center</a>
+                        </div>
+                        <div class="slide-visual">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                    </div>
+
+                    <div class="carousel-slide" data-slide="6">
+                        <div class="slide-content">
+                            <h2 class="slide-title" data-en="24/7 Support System" data-hi="24/7 सहायता प्रणाली" data-ta="24/7 ஆதரவு அமைப்பு" data-bn="24/7 সাপোর্ট সিস্টেম"></h2>
+                            <p class="slide-description"
+                               data-en="Multi-channel complaint management, escalation matrix, and real-time status tracking."
+                               data-hi="मल्टी-चैनल शिकायत प्रबंधन, एस्केलेशन मैट्रिक्स और रीयल-टाइम स्थिति ट्रैकिंग।"
+                               data-ta="பல சேனல் புகார் மேலாண்மை, leo மmatrix மற்றும் நிகழ்நேர நிலை கண்காணிப்பு."
+                               data-bn="মাল্টি-চ্যানেল অভিযোগ ব্যবস্থাপনা, এসকেলেশন ম্যাট্রিক্স এবং রিয়েল- টাইম স্ট্যাটাস ট্র্যাকিং।">Multi-channel complaint management, escalation matrix, and real-time status tracking.</p>
+                            <a href="#" class="slide-cta" onclick="showAlertModal('Carousel', 'Support Portal', false)" data-en="Support Portal" data-hi="सहायता पोर्टल" data-ta="ஆதரவு போர்டல்" data-bn="সাপোর্ট পোর্টাল">Support Portal</a>
+                        </div>
+                        <div class="slide-visual">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-controls">
+                        <div class="carousel-dot active" onclick="goToSlide(0)"></div>
+                        <div class="carousel-dot" onclick="goToSlide(1)"></div>
+                        <div class="carousel-dot" onclick="goToSlide(2)"></div>
+                        <div class="carousel-dot" onclick="goToSlide(3)"></div>
+                        <div class="carousel-dot" onclick="goToSlide(4)"></div>
+                        <div class="carousel-dot" onclick="goToSlide(5)"></div>
+                    </div>
+
+                    <div class="carousel-autoplay">
+                        <div class="autoplay-dot"></div>
+                        <span data-en="Auto-playing" data-hi="ऑटो-प्ले" data-ta="தானாக விளையாடுகிறது" data-bn="অটো-প্লে">Auto-playing</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="banking-section">
+                <div class="banking-panel personal-panel">
+                    <div class="panel-icon"><i class="fas fa-user-graduate"></i></div>
+                    <h2 data-en="Personal Access" data-hi="व्यक्तिगत पहुँच" data-ta="தனிப்பட்ட அணுகல்" data-bn="ব্যক্তিগত অ্যাক্সেস">Personal Access</h2>
+                    <p class="business-description" 
+                       data-en="Access your room details, mess schedule, fee status, and raise service requests. Use your University Roll Number & Password." 
+                       data-hi="अपने कमरे के विवरण, मेस शेड्यूल, शुल्क की स्थिति तक पहुँचें और सेवा अनुरोध उठाएँ। अपने विश्वविद्यालय रोल नंबर और पासवर्ड का उपयोग करें।"
+                       data-ta="உங்கள் அறை விவரங்கள், மெஸ் அட்டவணை, கட்டண நிலை ஆகியவற்றை அணுகவும், மற்றும் சேவை கோரிக்கைகளை எழுப்பவும். உங்கள் பல்கலைக்கழக பதிவு எண் & கடவுச்சொல்லைப் பயன்படுத்தவும்."
+                       data-bn="আপনার রুমের বিবরণ, মেস সময়সূচী, ফি স্ট্যাটাস অ্যাক্সেস করুন এবং পরিষেবার অনুরোধ জানান। আপনার বিশ্ববিদ্যালয়ের রোল নম্বর এবং পাসওয়ার্ড ব্যবহার করুন।">
+                        Access your room details, mess schedule, fee status, and raise service requests. Use your University Roll Number & Password.
+                    </p>
+                    <div class="login-area">
+                        <button class="banking-login-btn" onclick="redirectToStudentLogin()">
+                            <span data-en="LOGIN" data-hi="लॉगिन" data-ta="உள்நுழை" data-bn="লগইন">LOGIN</span>
+                        </button>
+                    </div>
+                    <ul class="new-user-links">
+                        <li>
+                            <a href="/register" data-en="New Student Registration" data-hi="नए छात्र का पंजीकरण" data-ta="புதிய மாணவர் பதிவு" data-bn="নতুন ছাত্র নিবন্ধন">
+                                New Student Registration
+                            </a>
+                        </li>
+                        <li><a href="/forgot-password" data-en="Forgot Password" data-hi="पासवर्ड भूल गए" data-ta="கடவுச்சொல்லை மறந்துவிட்டேன்" data-bn="পাসওয়ার্ড ভুলে গেছেন">Forgot Password</a></li>
+                        <li><a href="/forgot-username" data-en="Unlock Account" data-hi="खाता अनलॉक करें" data-ta="கணக்கைத் திறக்கவும்" data-bn="অ্যাকাউন্ট আনলক করুন">Unlock Account</a></li>
+                    </ul>
+                </div>
+
+                <div class="banking-panel corporate-panel">
+                    <div class="panel-icon"><i class="fas fa-user-shield"></i></div>
+                    <h2 data-en="Institutional Access" data-hi="संस्थागत पहुँच" data-ta="நிறுவன அணுகல்" data-bn="প্রাতিষ্ঠানিক অ্যাক্সেস">Institutional Access</h2>
+                    <p class="business-description" 
+                       data-en="Dedicated access for Wardens, Mess Managers, and Administrative Staff for duty management and student record access." 
+                       data-hi="कर्तव्य प्रबंधन और छात्र रिकॉर्ड एक्सेस के लिए वार्डन, मेस प्रबंधकों और प्रशासनिक कर्मचारियों के लिए समर्पित पहुँच।"
+                       data-ta="கடமை மேலாண்மை மற்றும் மாணவர் பதிவு அணுகலுக்காக வார்டன்கள், மெஸ் மேலாளர்கள் மற்றும் நிர்வாக ஊழியர்களுக்கான பிரத்யேக அணுகல்."
+                       data-bn="দায়িত্ব ব্যবস্থাপনা এবং ছাত্র রেকর্ড অ্যাক্সেসের জন্য ওয়ার্ডেন, মেস ম্যানেজার এবং প্রশাসনিক কর্মীদের জন্য উত্সর্গীকৃত অ্যাক্সেস।">
+                        Dedicated access for Wardens, Mess Managers, and Administrative Staff for duty management and student record access.
+                    </p>
+                    <div class="login-area">
+                        <button class="banking-login-btn" onclick="redirectToStaffLogin()">
+                            <span data-en="LOGIN" data-hi="लॉगिन" data-ta="உள்நுழை" data-bn="লগইন">LOGIN</span>
+                        </button>
+                    </div>
+                    <ul class="new-user-links">
+                        <li><a href="#" onclick="showAlertModal('Staff', 'Contact IT Support Link Activated', false)" data-en="Contact IT Support" data-hi="आईटी सहायता से संपर्क करें" data-ta="தகவல் தொழில்நுட்ப ஆதரவைத் தொடர்பு கொள்ளவும்" data-bn="আইটি সাপোর্টে যোগাযোগ করুন">Contact IT Support</a></li>
+                        <li><a href="/forgot-password" data-en="Forgot ID/Password" data-hi="आईडी/पासवर्ड भूल गए" data-ta="ஐடி/கடவுச்சொல் மறந்துவிட்டேன்" data-bn="আইডি/পাসওয়ার্ড ভুলে গেছেন">Forgot ID/Password</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="quick-actions-section">
+                <h2 data-en="Quick Access Actions" data-hi="त्वरित एक्सेस कार्य" data-ta="விரைவு அணுகல் நடவடிக்கைகள்" data-bn="দ্রুত অ্যাক্সেস অ্যাকশন">Quick Access Actions</h2>
+                <div class="action-buttons">
+                    <a href="#" class="quick-action-btn" onclick="showAlertModal('Quick Access', 'Room Maintenance Form Activated', false)" aria-label="Submit a Maintenance Request">
+                        <i class="fas fa-wrench"></i> 
+                        <span data-en="Maintenance Request" data-hi="रखरखाव अनुरोध" data-ta="பராமரிப்பு கோரிக்கை" data-bn="রক্ষণাবেক্ষণ অনুরোধ">Maintenance Request</span>
+                    </a>
+                    <a href="#" class="quick-action-btn" onclick="showAlertModal('Quick Access', 'Online Grievance Form Activated', false)" aria-label="Submit an Online Grievance">
+                        <i class="fas fa-comments"></i> 
+                        <span data-en="Online Grievance" data-hi="ऑनलाइन शिकायत" data-ta="ஆன்லைன் குறை" data-bn="অনলাইন অভিযোগ">Online Grievance</span>
+                    </a>
+                    <a href="#" class="quick-action-btn" onclick="showAlertModal('Quick Access', 'Hostel Events Calendar Activated', false)" aria-label="Check the Events Calendar">
+                        <i class="fas fa-calendar-alt"></i> 
+                        <span data-en="Events Calendar" data-hi="आयोजन कैलेंडर" data-ta="நிகழ்வுகள் காலண்டர்" data-bn="ইভেন্ট ক্যালেন্ডার">Events Calendar</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="data-loading-box">
+                <div class="small-loader"></div>
+                <p data-en="Connecting to Live Data Server..." data-hi="लाइव डेटा सर्वर से कनेक्ट हो रहा है..." data-ta="லைவ் டேட்டா சர்வரில் இணைகிறது..." data-bn="লাইভ ডেটা সার্ভারের সাথে সংযোগ করা হচ্ছে...">Connecting to Live Data Server...</p>
+                <p style="font-size: 0.9rem; margin-top: 5px; color: var(--text-medium);" 
+                   data-en="Statistics below display placeholders until connection is established." 
+                   data-hi="कनेक्शन स्थापित होने तक आँकड़े नीचे प्लेसहोल्डर प्रदर्शित करते हैं।"
+                   data-ta="இணைப்பு நிறுவப்படும் வரை கீழே உள்ள புள்ளிவிவரங்கள் ஒதுக்கிடங்களைக் காட்டுகின்றன."
+                   data-bn="সংযোগ স্থাপন না হওয়া পর্যন্ত নীচের পরিসংখ্যান স্থানধারক প্রদর্শন করে।">Statistics below display placeholders until connection is established.</p>
+            </div>
+
+            <div class="stats-section">
+                <div class="stat-card" data-stat-id="students">
+                    <i class="fas fa-user-graduate"></i>
+                    <div class="small-loader" style="width: 30px; height: 30px; border-width: 3px; margin: 10px auto 5px;"></div>
+                    <p style="font-size: 0.9rem; font-weight: 500;" data-en="Loading Students..." data-hi="छात्र लोड हो रहे हैं..." data-ta="மாணவர்கள் ஏற்றப்படுகிறார்கள்..." data-bn="ছাত্র লোড হচ্ছে...">Loading Students...</p>
+                </div>
+                <div class="stat-card" data-stat-id="blocks">
+                    <i class="fas fa-building"></i>
+                    <div class="small-loader" style="width: 30px; height: 30px; border-width: 3px; margin: 10px auto 5px;"></div>
+                    <p style="font-size: 0.9rem; font-weight: 500;" data-en="Loading Blocks..." data-hi="ब्लॉक लोड हो रहे हैं..." data-ta="தொகுதிகள் ஏற்றப்படுகின்றன..." data-bn="ব্লক লোড হচ্ছে...">Loading Blocks...</p>
+                </div>
+                <div class="stat-card" data-stat-id="occupancy">
+                    <i class="fas fa-bed"></i>
+                    <div class="small-loader" style="width: 30px; height: 30px; border-width: 3px; margin: 10px auto 5px;"></div>
+                    <p style="font-size: 0.9rem; font-weight: 500;" data-en="Loading Occupancy..." data-hi="अधिभोग लोड हो रहा है..." data-ta="தங்கும் நிலை ஏற்றப்படுகிறது..." data-bn="দখল লোড হচ্ছে...">Loading Occupancy...</p>
+                </div>
+                <div class="stat-card" data-stat-id="mess-rating">
+                    <i class="fas fa-coffee"></i>
+                    <div class="small-loader" style="width: 30px; height: 30px; border-width: 3px; margin: 10px auto 5px;"></div>
+                    <p style="font-size: 0.9rem; font-weight: 500;" data-en="Loading Rating..." data-hi="रेटिंग लोड हो रही है..." data-ta="மதிப்பீடு ஏற்றப்படுகிறது..." data-bn="রেটিং লোড হচ্ছে...">Loading Rating...</p>
+                </div>
+            </div>
+            
+            <div class="useful-links-section">
+                <h2 data-en="Essential University & Hostel Links" data-hi="आवश्यक विश्वविद्यालय और छात्रावास लिंक" data-ta="அத்தியாவசிய பல்கலைக்கழகம் மற்றும் விடுதி இணைப்புகள்" data-bn="প্রয়োজনীয় বিশ্ববিদ্যালয় ও হোস্টেল লিঙ্ক">Essential University & Hostel Links</h2>
+                <ul class="links-grid">
+                    <li><a href="#" onclick="showAlertModal('Service', 'University Direct Portal', false)"><span data-en="University Direct Portal" data-hi="विश्वविद्यालय डायरेक्ट पोर्टल" data-ta="பல்கலைக்கழக நேரடி போர்டல்" data-bn="বিশ্ববিদ্যালয় সরাসরি পোর্টাল">University Direct Portal</span></a></li>
+                    <li><a href="#" onclick="showAlertModal('Service', 'Hostel Insurance Document Download', false)"><span data-en="Hostel Insurance Document" data-hi="छात्रावास बीमा दस्तावेज़" data-ta="விடுதி காப்பீட்டு ஆவணம்" data-bn="হোস্টেল বীমা নথি">Hostel Insurance Document</span></a></li>
+                    <li><a href="#" onclick="showAlertModal('Service', 'CYBER SECURITY HELPLINE', false)"><span data-en="CYBER SECURITY HELPLINE" data-hi="साइबर सुरक्षा हेल्पलाइन" data-ta="சைபர் பாதுகாப்பு ஹெல்ப்லைன்" data-bn="সাইবার নিরাপত্তা হেল্পলাইন">CYBER SECURITY HELPLINE</span></a></li>
+                    <li><a href="#" onclick="showAlertModal('Service', 'Hostel Life Services', false)"><span data-en="Hostel Life Services" data-hi="छात्रावास जीवन सेवाएँ" data-ta="விடுதி வாழ்க்கை சேவைகள்" data-bn="হোস্টেল লাইফ সার্ভিসেস">Hostel Life Services</span></a></li>
+                    <li><a href="#" onclick="showAlertModal('Service', 'Hostel Forms', false)"><span data-en="Hostel Forms" data-hi="छात्रावास फॉर्म" data-ta="விடுதி படிவங்கள்" data-bn="হোস্টেল ফর্ম">Hostel Forms</span></a></li>
+                    <li><a href="#" onclick="showAlertModal('Service', 'Scholarship Account', false)"><span data-en="Scholarship Account" data-hi="छात्रवृत्ति खाता" data-ta="உதவித்தொகை கணக்கு" data-bn="স্কলারশিপ অ্যাকাউন্ট">Scholarship Account</span></a></li>
+                    <li><a href="#" onclick="showAlertModal('Service', 'Express Fee Payment', false)"><span data-en="Express Fee Payment" data-hi="एक्सप्रेस शुल्क भुगतान" data-ta="விரைவான கட்டணம் செலுத்துதல்" data-bn="এক্সপ্রেস ফি পেমেন্ট">Express Fee Payment</span></a></li>
+                    <li><a href="#" onclick="showAlertModal('Service', 'Room Allocation Appointment', false)"><span data-en="RMS (e-Appointment)" data-hi="आरएमएस (ई-अपॉइंटMENT)" data-ta="RMS (e-Appointment)" data-bn="RMS (ই-অ্যাপয়েন্টমেন্ট)">RMS (e-Appointment)</span></a></li>
+                </ul>
+            </div>
+
+        </div> 
+    </div> 
+    <div class="footer-wrapper">
+        
+        <div class="footer-grid">
+            
+            <div class="footer-column links-col">
+                <h2 data-en="Quick Links" data-hi="त्वरित लिंक्स" data-ta="விரைவு இணைப்புகள்" data-bn="দ্রুত লিঙ্ক">Quick Links</h2>
+                <div class="footer-links">
+                    <a href="#" onclick="showAlertModal('Footer', 'Privacy Policy Page', false);" data-en="Privacy Policy" data-hi="गोपनीयता नीति" data-ta="தனியுரிமைக் கொள்கை" data-bn="গোপনীয়তা নীতি">Privacy Policy</a>
+                    <a href="#" onclick="showAlertModal('Footer', 'Sitemap Page', false);" data-en="Sitemap" data-hi="साइटमैप" data-ta="தளவரைபடம்" data-bn="সাইটম্যাপ">Sitemap</a>
+                    <a href="#" onclick="showAlertModal('Footer', 'Accessibility Options', false);" data-en="Accessibility" data-hi="पहुँच-योग्यता" data-ta="அணுகல்தன்மை" data-bn="অ্যাক্সেসিবিলিটি">Accessibility</a>
+                    <a href="#" onclick="showAlertModal('Footer', 'Terms of Service Page', false);" data-en="Terms of Service" data-hi="सेवा की शर्तें" data-ta="சேவை விதிமுறைகள்" data-bn="সেবার শর্তাবলী">Terms of Service</a>
+                </div>
+            </div>
+            
+            <section class="footer-section footer-developers">
+                <h3 data-en="DEVELOPER" data-hi="डेवलपर" data-ta="டெவலப்பர்" data-bn="ডেভেলপার">DEVELOPER</h3>
+                <div class="developer-team-grid">
+                    <div class="dev-card">
+                        <img src="images/team/Tushar_Satija.png" alt="Tushar Satija" class="dev-photo"  onerror="this.style.display='none'">
+                        <div class="dev-info">
+                            <h4>Tushar Satija</h4>
+                            <p>Project Mentor<br>Computer Science Engineering</p>
+                        </div>
+                    </div>
+                    <div class="dev-card">
+                        <img src="images/team/Koushal_Jha.png" alt="Koushal Jha" class="dev-photo" onerror="this.style.display='none'">
+                        <div class="dev-info">
+                            <h4>Koushal Jha</h4>
+                            <p>Team Lead & Tester<br>Application Architecture, Database & Firewall Design<br>B.Tech CSE</p>
+                        </div>
+                    </div>
+                    <div class="dev-card">
+                        <img src="images/team/Hitanshu_Dhakrey.png" alt="Hitanshu Dhakrey" class="dev-photo" onerror="this.style.display='none'">
+                        <div class="dev-info">
+                            <h4>Hitanshu Dhakrey</h4>
+                            <p>User Dashboard Design<br>B.Tech CSE</p>
+                        </div>
+                    </div>
+                    <div class="dev-card">
+                        <img src="images/team/Divya_Mani_Tiwari.png" alt="Divya Mani Tiwari" class="dev-photo" onerror="this.style.display='none'">
+                        <div class="dev-info">
+                            <h4>Divya Mani Tiwari</h4>
+                            <p>User Dashboard Design<br>B.Tech CSE</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            </div>
+
+        <div class="footer-social-links-bottom">
+            <a href="#" aria-label="Facebook" onclick="event.preventDefault(); showAlertModal('Social', 'Facebook Link Clicked', false);"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter" onclick="event.preventDefault(); showAlertModal('Social', 'Twitter Link Clicked', false);"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram" onclick="event.preventDefault(); showAlertModal('Social', 'Instagram Link Clicked', false);"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="LinkedIn" onclick="event.preventDefault(); showAlertModal('Social', 'LinkedIn Link Clicked', false);"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+
+        <div class="copyright">
+            &copy; <span id="copyright-year">2025</span> <span data-en="Hostel Management System. All Rights Reserved." data-hi="छात्रावास प्रबंधन प्रणाली। सभी अधिकार सुरक्षित हैं।" data-ta="விடுதி மேலாண்மை அமைப்பு. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை." data-bn="হোস্টেল ম্যানেজমেন্ট সিস্টেম। সর্বস্বত্ব সংরক্ষিত।">Hostel Management System. All Rights Reserved.</span>
+        </div>
+
+    </div>
+
+    <div id="customAlertModal" class="custom-alert-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-message">
+        <div class="modal-content">
+            <h2 id="modal-title" class="modal-title"></h2>
+            <p id="modal-message" class="modal-message"></p>
+            <button id="modal-close-btn" class="modal-close-btn" data-en="Close" data-hi="बंद करें" data-ta="மூடு" data-bn="বন্ধ করুন">Close</button>
+        </div>
+    </div>
+    
+    <button class="chat-icon-btn" id="chat-icon-btn" aria-label="Open Chatbot">
+        <i class="fas fa-comments"></i>
+    </button>
+    
+    <div class="chat-modal" id="chat-modal" role="dialog" aria-hidden="true">
+        <div class="chat-header">
+            <h3 data-en="Hostel Helper" data-hi="छात्रावास सहायक" data-ta="விடுதி உதவியாளர்" data-bn="হোস্টেল সহায়ক"><i class="fas fa-robot"></i> Hostel Helper</h3>
+            <button class="chat-header-close" id="chat-close-btn" aria-label="Close Chat">
+                &times;
+            </button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            </div>
+        <div class="quick-queries">
+            <div class="quick-queries-title" data-en="Quick Queries" data-hi="त्वरित प्रश्न" data-ta="விரைவான கேள்விகள்" data-bn="দ্রুত প্রশ্ন">Quick Queries</div>
+            <div class="queries-wrapper">
+                <button class="quick-query-btn" onclick="handleQuickQuery('Fee Payment')" data-en="Fee Payment" data-hi="शुल्क भुगतान" data-ta="கட்டணம் செலுத்துதல்" data-bn="ফি প্রদান">Fee Payment</button>
+                <button class="quick-query-btn" onclick="handleQuickQuery('Mess Menu')" data-en="Mess Menu" data-hi="मेस मेनू" data-ta="மெஸ் பட்டி" data-bn="মেস মেনু">Mess Menu</button>
+                <button class="quick-query-btn" onclick="handleQuickQuery('Room Allocation')" data-en="Room Allocation" data-hi="कमरा आवंटन" data-ta="அறை ஒதுக்கீடு" data-bn="রুম বরাদ্দ">Room Allocation</button>
+                <button class="quick-query-btn" onclick="handleQuickQuery('Wi-Fi Password')" data-en="Wi-Fi" data-hi="वाई-फ़ाई" data-ta="Wi-Fi" data-bn="Wi-Fi">Wi-Fi</button>
+                <button class="quick-query-btn" onclick="handleQuickQuery('Developers')" data-en="Developers" data-hi="डेवलपर्स" data-ta="டெவலப்பர்கள்" data-bn="ডেভেলপারগণ">Developers</button>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chat-input" placeholder="Type your message..." aria-label="Chat Message Input">
+            <button id="chat-send-btn" aria-label="Send Message">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        let currentLang = 'en';
+        
+        function updateContent(lang) {
+            currentLang = lang; 
+            document.getElementById('html-root').setAttribute('lang', lang);
+            
+            const langKey = 'data-' + lang;
+            
+            document.querySelectorAll(`[data-en]`).forEach(element => {
+                if (element.classList.contains('slide-title')) {
+                    return;
+                }
+                
+                const text = element.getAttribute(langKey);
+                const fallbackText = element.getAttribute('data-en');
+                
+                if (text) {
+                    element.textContent = text;
+                } else if (fallbackText) {
+                    element.textContent = fallbackText;
+                }
+            });
+            
+            document.querySelectorAll('#chat-modal [data-en]').forEach(element => {
+                const text = element.getAttribute(langKey) || element.getAttribute('data-en');
+                if (element.tagName === 'INPUT') {
+                    element.setAttribute('placeholder', text);
+                } else {
+                    element.textContent = text;
+                }
+            });
+            
+            // Special handling for the active slide title
+            const activeSlideTitle = document.querySelector('.carousel-slide.active .slide-title');
+            if (activeSlideTitle) {
+                const text = activeSlideTitle.getAttribute(langKey) || activeSlideTitle.getAttribute('data-en');
+                typewriterEffect(activeSlideTitle, text);
+            }
+        }
+
+        function setLanguage(lang) {
+            if (!lang) lang = 'en';
+            updateContent(lang);
+            
+            const langTriggerText = document.getElementById('lang-trigger-text');
+            if (langTriggerText) {
+                let newText = 'English'; // Default
+                if (lang === 'hi') {
+                    newText = 'हिंदी';
+                } else if (lang === 'ta') {
+                    newText = 'தமிழ்';
+                } else if (lang === 'bn') {
+                    newText = 'বাংলা';
+                }
+                langTriggerText.textContent = newText;
+            }
+        }
+
+        // Modal Functions
+        function showAlertModal(title, message, isError = true) {
+            const modal = document.getElementById('customAlertModal');
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-message').textContent = message;
+            
+            if (isError) {
+                document.getElementById('modal-title').style.color = 'var(--primary-color)'; 
+            } else {
+                document.getElementById('modal-title').style.color = 'var(--accent-color)'; 
+            }
+            
+            const closeBtn = document.getElementById('modal-close-btn');
+            const langKey = 'data-' + currentLang;
+            const closeText = closeBtn.getAttribute(langKey) || closeBtn.getAttribute('data-en');
+            closeBtn.textContent = closeText;
+
+            modal.classList.add('visible');
+        }
+
+        function hideAlertModal() {
+            const modal = document.getElementById('customAlertModal');
+            modal.classList.remove('visible');
+        }
+
+        document.getElementById('modal-close-btn').addEventListener('click', hideAlertModal);
+
+        document.getElementById('customAlertModal').addEventListener('click', function(e) {
+            if (e.target.id === 'customAlertModal') {
+                hideAlertModal();
+            }
+        });
+        
+        // --- NAVIGATION REDIRECTS ---
+function redirectToStudentLogin() {
+    window.location.href = '/student-login'; 
+}
+
+function redirectToStaffLogin() {
+    window.location.href = '/staff-login'; 
+}
+
+        // --- NEW: Typewriter Effect ---
+        let typeTimeout;
+        function typewriterEffect(element, text, i = 0) {
+            if (!element) return;
+            clearTimeout(typeTimeout);
+            
+            if (i === 0) {
+                element.textContent = '';
+                element.classList.add('typing');
+            }
+            
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                typeTimeout = setTimeout(() => typewriterEffect(element, text, i + 1), 80); 
+            } else {
+                element.classList.remove('typing'); 
+            }
+        }
+
+        // --- START OF INTEGRATED CAROUSEL SCRIPT ---
+        let currentSlide = 0;
+        let slides = []; 
+        let dots = []; 
+        let totalSlides = 0;
+        let autoPlayInterval;
+
+        function showSlide(index) {
+            if (!slides.length || !dots.length || index === currentSlide) return; 
+
+            const oldSlideEl = slides[currentSlide];
+            const newSlideEl = slides[index];
+
+            const prevTitle = oldSlideEl.querySelector('.slide-title');
+            if (prevTitle) {
+                clearTimeout(typeTimeout); 
+                prevTitle.textContent = ''; 
+                prevTitle.classList.remove('typing');
+            }
+            
+            oldSlideEl.classList.remove('active');
+            oldSlideEl.classList.add('prev'); 
+            
+            newSlideEl.classList.remove('prev'); 
+            newSlideEl.classList.add('active'); 
+
+            dots[currentSlide].classList.remove('active');
+            dots[index].classList.add('active');
+            
+            currentSlide = index;
+            
+            const activeTitle = newSlideEl.querySelector('.slide-title');
+            if (activeTitle) {
+                const langKey = 'data-' + currentLang;
+                const text = activeTitle.getAttribute(langKey) || activeTitle.getAttribute('data-en');
+                typewriterEffect(activeTitle, text);
+            }
+
+            // MODIFICATION: Set timeout to 1s (1000ms) to match CSS animation
+            setTimeout(() => {
+                oldSlideEl.classList.remove('prev');
+            }, 1000); 
+        }
+
+        function nextSlide() {
+            if (totalSlides === 0) return;
+            const next = (currentSlide + 1) % totalSlides;
+            showSlide(next);
+        }
+
+        function prevSlide() {
+            if (totalSlides === 0) return;
+            const prev = currentSlide === 0 ? totalSlides - 1 : currentSlide - 1;
+            showSlide(prev);
+        }
+
+        function goToSlide(index) {
+            if (totalSlides === 0 || index === currentSlide) return;
+            showSlide(index);
+            resetAutoPlay();
+        }
+
+        function startAutoPlay() {
+            clearInterval(autoPlayInterval); 
+            autoPlayInterval = setInterval(nextSlide, 5000); 
+        }
+
+        function resetAutoPlay() {
+            clearInterval(autoPlayInterval);
+            startAutoPlay();
+        }
+        // --- END OF INTEGRATED CAROUSEL SCRIPT ---
+        
+        
+        // --- NEW: CHATBOT SCRIPT ---
+        const chatIcon = document.getElementById('chat-icon-btn');
+        const chatModal = document.getElementById('chat-modal');
+        const chatCloseBtn = document.getElementById('chat-close-btn');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const chatSendBtn = document.getElementById('chat-send-btn');
+
+        function toggleChat() {
+            const isVisible = chatModal.classList.toggle('visible');
+            chatModal.setAttribute('aria-hidden', !isVisible);
+            if (isVisible) {
+                if (chatMessages.children.length === 0) {
+                    setTimeout(() => {
+                        displayMessage('Hello! I am the Hostel Helper. How can I assist you today?', 'bot');
+                    }, 300);
+                }
+                chatInput.focus();
+            }
+        }
+
+        function displayMessage(message, sender) {
+            const messageBubble = document.createElement('div');
+            messageBubble.classList.add('message-bubble', sender);
+            messageBubble.textContent = message;
+            
+            const typingIndicator = chatMessages.querySelector('.typing');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+            
+            chatMessages.appendChild(messageBubble);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const messageBubble = document.createElement('div');
+            messageBubble.classList.add('message-bubble', 'bot', 'typing');
+            messageBubble.textContent = 'Typing...'; 
+            chatMessages.appendChild(messageBubble);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function getBotResponse(userInput) {
+            const input = userInput.toLowerCase().trim();
+            let response = "I'm sorry, I don't understand that query. You can ask me about 'fees', 'mess', 'rooms', or 'Wi-Fi'."; // Default response
+
+            if (input.includes('fee') || input.includes('payment')) {
+                response = "You can pay your hostel fees through the 'Fee & Payment' > 'Pay Hostel Fees' link in the main navigation. The last date for this semester is 30th November.";
+            } else if (input.includes('mess') || input.includes('menu') || input.includes('food')) {
+                response = "The weekly mess menu is available on the 'Mess & Dining' section. Today's special is Paneer Butter Masala!";
+            } else if (input.includes('room') || input.includes('allocation')) {
+                response = "Room Allocation Phase 2 is currently open. Please check the portal for your allocation status or to submit preferences.";
+            } else if (input.includes('wi-fi') || input.includes('wifi') || input.includes('password')) {
+                response = "The Wi-Fi password for all common areas is 'HostelLife@2025'. For in-room routers, please check the notice board on your floor.";
+            } else if (input.includes('hello') || input.includes('hi') || input.includes('hey')) {
+                response = "Hello! How can I help you today?";
+            } else if (input.includes('grievance') || input.includes('complaint')) {
+                response = "You can lodge a grievance through the 'Grievance' > 'Lodge a Complaint' link in the navigation bar. For urgent issues, please contact the warden's office.";
+            } else if (input.includes('leave') || input.includes('gate pass')) {
+                response = "To apply for leave or a gate pass, please use the 'Attendance & Leave' > 'Apply for Leave/Gate Pass' option in the menu.";
+            
+            } else if (input.includes('developer') || input.includes('creator') || input.includes('team') || input.includes('koushal') || input.includes('hitanshu') || input.includes('divya')) {
+                response = "This Hostel Management System is proudly developed by the core team: Koushal Jha (Team Lead, Architecture, Security), Hitanshu Dhakrey (Frontend Developer), and Divya Mani Tiwari (Frontend Developer).";
+            
+            }
+
+            setTimeout(() => {
+                displayMessage(response, 'bot');
+            }, 1000 + Math.random() * 500); 
+        }
+
+        function sendMessage() {
+            const messageText = chatInput.value;
+            if (messageText.trim() === '') return;
+
+            displayMessage(messageText, 'user');
+            chatInput.value = '';
+            
+            showTypingIndicator();
+            getBotResponse(messageText);
+        }
+
+        function handleQuickQuery(query) {
+            displayMessage(query, 'user');
+            showTypingIndicator();
+            getBotResponse(query);
+            if (window.innerWidth <= 600) {
+                setTimeout(toggleChat, 1500); 
+            }
+        }
+
+        // Event Listeners
+        chatIcon.addEventListener('click', toggleChat);
+        chatCloseBtn.addEventListener('click', toggleChat);
+        chatSendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+        // --- END: CHATBOT SCRIPT ---
+
+
+        // --- NEW HYBRID LOCATION TRACKING SCRIPT ---
+        
+        /**
+         * Sends tracking data (with or without GPS) to the backend.
+         * This is "fire-and-forget" - we don't wait for a response.
+         */
+        function sendTrackingData(locationData) {
+            // Add the current page to the data
+            locationData.page = window.location.pathname;
+
+            fetch('/api/log-visit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(locationData)
+            }).catch(err => {
+                // Log failed, but don't bother the user
+                console.warn('Visitor log failed to send.', err.message);
+            });
+        }
+
+        /**
+         * This is the function that runs when the user clicks "Allow"
+         * on the GPS permission pop-up.
+         */
+        function handleGpsSuccess(position) {
+            const gpsData = {
+                lat: position.coords.latitude,
+                lon: position.coords.longitude,
+                accuracy: position.coords.accuracy 
+            };
+            console.log('GPS Location Acquired:', gpsData);
+            sendTrackingData(gpsData);
+        }
+
+        /**
+         * This function runs if the user clicks "Block", has location
+         * services off, or an error occurs.
+         */
+        function handleGpsError(error) {
+            console.warn(`GPS Error (${error.code}): ${error.message}`);
+            // Send empty data. The server will fall back to IP-only.
+            sendTrackingData({});
+        }
+
+        /**
+         * Main function to start the tracking process on page load.
+         */
+        function initiateHybridTracking() {
+            if (navigator.geolocation) {
+                // This command triggers the browser permission pop-up
+                navigator.geolocation.getCurrentPosition(
+                    handleGpsSuccess, // Run this if they click "Allow"
+                    handleGpsError,   // Run this if they click "Block"
+                    {
+                        enableHighAccuracy: false, // Use faster, less-precise mode
+                        timeout: 8000,             // Give up after 8 seconds
+                        maximumAge: 0
+                    }
+                );
+            } else {
+                // The browser is too old to support GPS
+                console.warn('Geolocation is not supported by this browser.');
+                sendTrackingData({});
+            }
+        }
+        
+        // --- END: NEW HYBRID LOCATION TRACKING SCRIPT ---
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            slides = document.querySelectorAll('.carousel-slide');
+            dots = document.querySelectorAll('.carousel-dot');
+            totalSlides = slides.length;
+            
+            setLanguage('en'); 
+            
+            const copyrightYearEl = document.getElementById('copyright-year');
+            if (copyrightYearEl) {
+                copyrightYearEl.textContent = new Date().getFullYear();
+            }
+            
+            if (totalSlides > 0) {
+                startAutoPlay();
+
+                const carousel = document.querySelector('.carousel-container');
+                if (carousel) {
+                    carousel.addEventListener('mouseenter', () => {
+                        clearInterval(autoPlayInterval);
+                    });
+                    carousel.addEventListener('mouseleave', () => { 
+                        startAutoPlay();
+                    });
+                }
+            }
+
+            // --- ADD THIS LINE ---
+            // Start the tracking process once the page is loaded.
+            initiateHybridTracking();
+        });
+        
+        // Accessibility: Allow modal to be closed with the ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape" && document.getElementById('customAlertModal').classList.contains('visible')) {
+                hideAlertModal();
+            }
+        });
+    </script>
+    <script src="/common/public/js/security-loader.js"></script>
+</body>
+</html>

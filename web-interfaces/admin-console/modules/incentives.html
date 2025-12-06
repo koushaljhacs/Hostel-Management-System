@@ -1,0 +1,139 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-award"></i> Incentives</h2>
+    <div class="quick-actions">
+        <button class="btn" id="addIncentive" style="background: var(--secondary-color); color: var(--primary-dark);">
+            <i class="fas fa-plus"></i> Add Incentive
+        </button>
+        <button class="btn" id="bulkIncentives"><i class="fas fa-users"></i> Bulk Incentives</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-award"></i>
+            </div>
+            <h3>Total Given</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <h3>This Month</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Employees</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-calendar"></i>
+            </div>
+            <h3>Pending</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<!-- Incentive Types -->
+<div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 20px;">Incentive Types</h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+        <div style="padding: 20px; border: 2px solid var(--success-color); border-radius: 8px; background: rgba(76, 175, 80, 0.05); text-align: center;">
+            <i class="fas fa-star fa-2x" style="color: var(--success-color); margin-bottom: 10px;"></i>
+            <h4 style="color: var(--text-dark); margin-bottom: 10px;">Performance Bonus</h4>
+            <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 15px;">Reward for exceptional performance and achievements</p>
+            <button class="btn" style="background: var(--success-color); color: white; font-size: 12px;">
+                <i class="fas fa-plus"></i> Add Bonus
+            </button>
+        </div>
+        
+        <div style="padding: 20px; border: 2px solid var(--primary-color); border-radius: 8px; background: rgba(114, 0, 38, 0.05); text-align: center;">
+            <i class="fas fa-trophy fa-2x" style="color: var(--primary-color); margin-bottom: 10px;"></i>
+            <h4 style="color: var(--text-dark); margin-bottom: 10px;">Employee of Month</h4>
+            <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 15px;">Monthly recognition for outstanding contribution</p>
+            <button class="btn" style="background: var(--primary-color); color: white; font-size: 12px;">
+                <i class="fas fa-crown"></i> Select Winner
+            </button>
+        </div>
+        
+        <div style="padding: 20px; border: 2px solid var(--secondary-color); border-radius: 8px; background: rgba(255, 196, 0, 0.05); text-align: center;">
+            <i class="fas fa-gift fa-2x" style="color: var(--secondary-color); margin-bottom: 10px;"></i>
+            <h4 style="color: var(--text-dark); margin-bottom: 10px;">Festival Bonus</h4>
+            <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 15px;">Special bonuses during festival seasons</p>
+            <button class="btn" style="background: var(--secondary-color); color: var(--primary-dark); font-size: 12px;">
+                <i class="fas fa-gift"></i> Schedule Bonus
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Incentives -->
+<div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Recent Incentives</h3>
+    
+    <div style="text-align: center; padding: 40px;">
+        <i class="fas fa-sync fa-spin fa-2x" style="color: var(--primary-color); margin-bottom: 15px;"></i>
+        <p style="color: var(--text-muted);">Loading incentive records...</p>
+    </div>
+</div>
+
+<!-- Incentive Guidelines -->
+<div style="background: #f8f9fa; border-radius: 8px; padding: 20px; margin-top: 20px; border-left: 4px solid var(--secondary-color);">
+    <h4 style="color: var(--primary-dark); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+        <i class="fas fa-info-circle"></i> Incentive Guidelines
+    </h4>
+    <ul style="color: var(--text-muted); font-size: 13px; line-height: 1.5;">
+        <li>Performance bonuses are typically 5-15% of monthly salary</li>
+        <li>Employee of the Month receives a special certificate and bonus</li>
+        <li>Festival bonuses are usually one month's basic salary</li>
+        <li>All incentives are subject to approval from management</li>
+        <li>Incentives are processed along with monthly payroll</li>
+    </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Incentives module loaded');
+    
+    // BACKEND INTEGRATION: Load incentive data and records
+    // TODO: Fetch incentive data from backend API
+    
+    document.getElementById('addIncentive').addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Opening...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-plus"></i> Add Incentive';
+            // TODO: Open incentive creation form
+        }, 1000);
+    });
+    
+    document.getElementById('bulkIncentives').addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Processing...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-users"></i> Bulk Incentives';
+            alert('Bulk incentive processing ready');
+        }, 1500);
+    });
+});
+</script>

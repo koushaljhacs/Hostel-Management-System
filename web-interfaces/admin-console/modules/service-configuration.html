@@ -1,0 +1,272 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-wifi"></i> Services Configuration</h2>
+    <div class="quick-actions">
+        <button class="btn" id="saveServices" style="background: var(--success-color); color: white;">
+            <i class="fas fa-save"></i> Save Configuration
+        </button>
+        <button class="btn" id="addService"><i class="fas fa-plus"></i> Add Service</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-building"></i>
+            </div>
+            <h3>Selected Hostel</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-concierge-bell"></i>
+            </div>
+            <h3>Active Services</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-tools"></i>
+            </div>
+            <h3>Maintenance</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>Issues</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<!-- Hostel Selection -->
+<div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Select Hostel</h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Hostel</label>
+            <select class="btn" id="serviceHostelSelect" style="width: 100%; padding: 8px;">
+                <option value="">Select Hostel</option>
+                <option value="bh-a">Boys Hostel A</option>
+                <option value="bh-b">Boys Hostel B</option>
+                <option value="gh-a">Girls Hostel A</option>
+                <option value="gh-b">Girls Hostel B</option>
+            </select>
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Service Category</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>All Services</option>
+                <option>Internet & IT</option>
+                <option>Utility Services</option>
+                <option>Maintenance</option>
+                <option>Security</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Services Configuration -->
+<div id="serviceConfig" style="display: none;">
+    <!-- Internet & IT Services -->
+    <div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+        <h3 style="color: var(--primary-color); margin-bottom: 20px;">Internet & IT Services</h3>
+        
+        <div style="display: grid; gap: 15px;">
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 10px;">
+                    <div>
+                        <h4 style="color: var(--text-dark); margin: 0 0 5px 0;">Wi-Fi Internet Service</h4>
+                        <p style="font-size: 12px; color: var(--text-muted); margin: 0;">High-speed wireless internet access throughout hostel</p>
+                    </div>
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                        <span style="font-weight: 600; color: var(--success-color);">Active</span>
+                    </label>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px;">
+                    <div><strong>Bandwidth:</strong> 100 Mbps</div>
+                    <div><strong>Users:</strong> 150 connected</div>
+                    <div><strong>Status:</strong> <span style="color: var(--success-color);">Operational</span></div>
+                    <div><strong>Uptime:</strong> 99.8%</div>
+                </div>
+            </div>
+            
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 10px;">
+                    <div>
+                        <h4 style="color: var(--text-dark); margin: 0 0 5px 0;">Cable TV Service</h4>
+                        <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Entertainment channels in common rooms</p>
+                    </div>
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                        <span style="font-weight: 600; color: var(--success-color);">Active</span>
+                    </label>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px;">
+                    <div><strong>Channels:</strong> 150+</div>
+                    <div><strong>HD Channels:</strong> 50+</div>
+                    <div><strong>Status:</strong> <span style="color: var(--success-color);">Operational</span></div>
+                    <div><strong>Last Update:</strong> 2 days ago</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Utility Services -->
+    <div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+        <h3 style="color: var(--primary-color); margin-bottom: 20px;">Utility Services</h3>
+        
+        <div style="display: grid; gap: 15px;">
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 10px;">
+                    <div>
+                        <h4 style="color: var(--text-dark); margin: 0 0 5px 0;">Water Supply System</h4>
+                        <p style="font-size: 12px; color: var(--text-muted); margin: 0;">24/7 water supply with purification</p>
+                    </div>
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                        <span style="font-weight: 600; color: var(--success-color);">Active</span>
+                    </label>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px;">
+                    <div><strong>Supply:</strong> 24/7</div>
+                    <div><strong>Purification:</strong> RO System</div>
+                    <div><strong>Status:</strong> <span style="color: var(--success-color);">Normal</span></div>
+                    <div><strong>Last Check:</strong> Today</div>
+                </div>
+            </div>
+            
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 10px;">
+                    <div>
+                        <h4 style="color: var(--text-dark); margin: 0 0 5px 0;">Power Backup</h4>
+                        <p style="font-size: 12px; color: var(--text-muted); margin: 0;">UPS and generator backup system</p>
+                    </div>
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                        <span style="font-weight: 600; color: var(--success-color);">Active</span>
+                    </label>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px;">
+                    <div><strong>Backup:</strong> 8 hours</div>
+                    <div><strong>Generator:</strong> 100 KVA</div>
+                    <div><strong>Status:</strong> <span style="color: var(--success-color);">Ready</span></div>
+                    <div><strong>Last Test:</strong> 1 week ago</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Maintenance Services -->
+    <div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid var(--border-light);">
+        <h3 style="color: var(--primary-color); margin-bottom: 20px;">Maintenance Services</h3>
+        
+        <div style="display: grid; gap: 15px;">
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 10px;">
+                    <div>
+                        <h4 style="color: var(--text-dark); margin: 0 0 5px 0;">Housekeeping Service</h4>
+                        <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Daily cleaning and maintenance</p>
+                    </div>
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                        <span style="font-weight: 600; color: var(--success-color);">Active</span>
+                    </label>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px;">
+                    <div><strong>Frequency:</strong> Daily</div>
+                    <div><strong>Staff:</strong> 8 members</div>
+                    <div><strong>Status:</strong> <span style="color: var(--success-color);">Active</span></div>
+                    <div><strong>Last Audit:</strong> 1 month ago</div>
+                </div>
+            </div>
+            
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 10px;">
+                    <div>
+                        <h4 style="color: var(--text-dark); margin: 0 0 5px 0;">Plumbing & Electrical</h4>
+                        <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Emergency repair services</p>
+                    </div>
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                        <span style="font-weight: 600; color: var(--success-color);">Active</span>
+                    </label>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px;">
+                    <div><strong>Response Time:</strong> 2 hours</div>
+                    <div><strong>Technicians:</strong> 4 available</div>
+                    <div><strong>Status:</strong> <span style="color: var(--success-color);">Ready</span></div>
+                    <div><strong>Last Job:</strong> 3 days ago</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Empty State -->
+<div id="serviceEmptyState" style="background: white; border-radius: 8px; padding: 60px; text-align: center; border: 1px solid var(--border-light);">
+    <i class="fas fa-wifi fa-3x" style="color: var(--border-light); margin-bottom: 15px;"></i>
+    <p style="color: var(--text-muted); font-size: 16px;">Select a hostel to configure services</p>
+    <p style="color: var(--text-muted); font-size: 12px; margin-top: 10px;">Manage internet, utilities, and maintenance services</p>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Services Configuration module loaded');
+    
+    // BACKEND INTEGRATION: Load hostel services configuration
+    // TODO: Fetch services data from backend API
+    
+    const serviceHostelSelect = document.getElementById('serviceHostelSelect');
+    const serviceConfig = document.getElementById('serviceConfig');
+    const serviceEmptyState = document.getElementById('serviceEmptyState');
+    
+    serviceHostelSelect.addEventListener('change', function() {
+        if (this.value) {
+            serviceConfig.style.display = 'block';
+            serviceEmptyState.style.display = 'none';
+            
+            // BACKEND INTEGRATION: Load services for selected hostel
+            // TODO: Fetch services configuration for selected hostel
+            console.log('Loading services for:', this.value);
+        } else {
+            serviceConfig.style.display = 'none';
+            serviceEmptyState.style.display = 'block';
+        }
+    });
+    
+    document.getElementById('saveServices').addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Saving...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-save"></i> Save Configuration';
+            alert('Services configuration saved successfully!');
+        }, 2000);
+    });
+    
+    document.getElementById('addService').addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Opening...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-plus"></i> Add Service';
+            // TODO: Open custom service addition form
+        }, 1000);
+    });
+});
+</script>

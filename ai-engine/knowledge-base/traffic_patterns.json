@@ -1,0 +1,18 @@
+[
+  {
+    "name": "DefaultCPUScaleRule",
+    "cpuThreshold": 0.85,
+    "requestRate": 600,
+    "scaleStep": 2,
+    "notes": "Scale aggressively when CPU and request rate spike together."
+  },
+  {
+    "name": "BaselineScaleDown",
+    "cpuThreshold": 0.25,
+    "direction": "down",
+    "scaleStep": 1,
+    "notes": "Release one instance when CPU stays low for 3+ minutes."
+  }
+]
+
+

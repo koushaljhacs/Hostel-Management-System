@@ -1,0 +1,447 @@
+/* --- Core Colors based on HMS Homepage/Login.html --- */
+:root {
+    --hms-red: #800000;         /* Primary Maroon/Crimson for buttons/text */
+    --hms-red-light: #a00000;   /* Lighter red for hover states */
+    --hms-light-bg: #f8f9fa;    /* Light background of the body */
+    --hms-white: #ffffff;       /* White background for cards */
+    --hms-text-dark: #333;      /* Dark text color */
+    --hms-text-light: #666;     /* Lighter text */
+    --hms-blue: #0056b3;        /* Used for information text */
+    --hms-border: #e0e0e0;      /* Border color */
+    --hms-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); /* Card shadow */
+}
+
+/* --- Global & Container Styles --- */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--hms-light-bg);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: var(--hms-text-dark);
+    overflow-x: hidden;
+}
+
+/* --- Navigation Bar --- */
+.nav-container {
+    background-color: var(--hms-white);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* Increased padding on the sides for desktop view */
+    padding: 0 40px; 
+    /* Sticky ensures it stays at the top when scrolling */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* The .navbar is the flex container for the logo and the nav links/language selector */
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Pushes logo left, nav-right right */
+    align-items: center;
+    /* Changed max-width to a large value to effectively use the full padded width */
+    max-width: 1920px; 
+    width: 100%; /* Ensure it takes full available width up to max-width */
+    margin: 0 auto;
+    height: 70px;
+}
+
+/* Logo positioned to the left */
+.logo-box {
+    background: linear-gradient(135deg, var(--hms-red) 0%, #600000 100%);
+    color: white;
+    padding: 8px 15px;
+    font-weight: 900;
+    font-size: 1.3em;
+    letter-spacing: 1.5px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    text-decoration: none;
+    flex-shrink: 0; /* Ensures logo does not shrink */
+}
+
+.logo-box i {
+    font-size: 1.1em;
+}
+
+/* Navigation positioned to the right */
+.nav-right {
+    gap: 20px; 
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; 
+    justify-content: flex-end; 
+    flex-shrink: 0; /* Ensures navigation does not shrink */
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px; 
+}
+
+.nav-links a {
+    color: var(--hms-text-dark);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-links a:hover {
+    color: var(--hms-red);
+}
+
+.nav-links a.active {
+    color: var(--hms-red);
+    font-weight: 600;
+}
+
+/* Language Selector */
+.language-selector {
+    position: relative;
+    display: inline-block;
+}
+
+.language-btn {
+    background: none;
+    border: 1px solid var(--hms-border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--hms-text-dark);
+    transition: all 0.2s ease;
+}
+
+.language-btn:hover {
+    background-color: rgba(128, 0, 0, 0.05);
+    border-color: var(--hms-red);
+}
+
+.language-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    min-width: 150px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-radius: 6px;
+    z-index: 1;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.language-dropdown a {
+    color: var(--hms-text-dark);
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.2s;
+}
+
+.language-dropdown a:hover {
+    background-color: rgba(128, 0, 0, 0.05);
+    color: var(--hms-red);
+}
+
+.language-selector:hover .language-dropdown {
+    display: block;
+}
+
+/* --- Main Content (Login Centered) --- */
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    min-height: calc(100vh - 70px);
+    width: 100%; 
+}
+
+.login-container {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.login-card {
+    background-color: var(--hms-white);
+    padding: 30px 25px;
+    border-radius: 12px;
+    box-shadow: var(--hms-shadow);
+    width: 100%;
+}
+
+/* --- Header --- */
+.login-header {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--hms-text-dark);
+    margin-bottom: 25px;
+    text-align: center;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.login-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--hms-red);
+    border-radius: 2px;
+}
+
+/* --- Form Layout & Input --- */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: var(--hms-text-dark);
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    position: relative;
+}
+
+/* Required Asterisk */
+.form-group label::after {
+    content: '*';
+    color: var(--hms-red);
+    font-weight: bold;
+    margin-left: 4px;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--hms-border);
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background-color: #fcfcfc;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--hms-red);
+    box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.1);
+    background-color: white;
+}
+
+.password-input-wrapper {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--hms-text-light);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Informational Text --- */
+.info-text {
+    color: var(--hms-blue);
+    font-size: 0.85rem;
+    margin: 15px 0;
+    line-height: 1.5;
+    padding: 12px;
+    background-color: rgba(0, 86, 179, 0.05);
+    border-radius: 6px;
+    border-left: 3px solid var(--hms-blue);
+}
+
+.case-sensitive {
+    font-size: 0.8rem;
+    color: var(--hms-text-light);
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* --- Buttons --- */
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.login-btn, .clear-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+    flex: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.login-btn {
+    background-color: var(--hms-red);
+    color: white;
+    box-shadow: 0 4px 6px rgba(128, 0, 0, 0.2);
+}
+
+.login-btn:hover {
+    background-color: var(--hms-red-light);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(128, 0, 0, 0.25);
+}
+
+.clear-btn {
+    background-color: #f0f0f0;
+    color: var(--hms-text-dark);
+    border: 1px solid var(--hms-border);
+}
+
+.clear-btn:hover {
+    background-color: #e5e5e5;
+    transform: translateY(-2px);
+}
+
+/* --- Footer Links --- */
+.login-footer {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--hms-text-light);
+}
+
+.login-footer a {
+    color: var(--hms-red);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+/* ------------------------------------- */
+/* --- Responsive Adjustments (Desktop to Mobile) --- */
+/* ------------------------------------- */
+
+/* Tablet/Mobile Landscape (max-width 900px) */
+@media (max-width: 900px) {
+     .nav-container {
+        padding: 0 20px; /* Reduce padding on smaller screens */
+    }
+    .nav-links {
+        gap: 15px; 
+    }
+    .nav-right {
+        gap: 15px;
+    }
+}
+
+/* Smaller Tablets/Large Phones (max-width 768px) */
+@media (max-width: 768px) {
+    
+    /* Enforce 'Logo Left, Nav Right' layout on tablet/mobile views */
+    .navbar {
+        flex-direction: row; 
+        height: auto;
+        min-height: 70px;
+        align-items: center;
+        padding: 15px 0;
+        flex-wrap: wrap; 
+        justify-content: space-between;
+    }
+    
+    .nav-right {
+        gap: 15px; 
+        flex-wrap: wrap; 
+        justify-content: flex-end;
+    }
+    
+    .nav-links {
+        flex-wrap: wrap; 
+        justify-content: flex-end;
+        gap: 10px; 
+    }
+    
+    .login-card {
+        padding: 25px 20px;
+    }
+    
+    .button-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* Mobile Portrait (max-width 480px) */
+@media (max-width: 480px) {
+    
+    /* Allow header elements to stack vertically on very small screens */
+    .navbar {
+        flex-direction: column; 
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .nav-right {
+        width: 100%; 
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    /* Navigation links go icon-only to save space */
+    .nav-links {
+        gap: 10px;
+        justify-content: center;
+        width: 100%; 
+    }
+    
+    .nav-links a span {
+        display: none; /* Hide text, keep only icon */
+    }
+    
+    .login-card {
+        padding: 20px 15px;
+    }
+}

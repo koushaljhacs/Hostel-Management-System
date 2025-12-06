@@ -1,0 +1,114 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-user-lock"></i> Permission Management</h2>
+    <div class="quick-actions">
+        <button class="btn" id="createPermissionGroup"><i class="fas fa-plus"></i> New Group</button>
+        <button class="btn" id="exportPermissions"><i class="fas fa-download"></i> Export</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Permission Groups</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <h3>Admin Users</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>Custom Permissions</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <!-- Permission Groups -->
+    <div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid var(--border-light);">
+        <h3 style="color: var(--primary-color); margin-bottom: 20px;">Permission Groups</h3>
+        
+        <div style="display: grid; gap: 10px;">
+            <!-- Hostel Management Permissions -->
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 10px;">
+                    <h4 style="color: var(--text-dark); margin: 0;">Hostel Management</h4>
+                    <span style="background: var(--primary-color); color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px;">12 users</span>
+                </div>
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Full access to hostel operations and student management</p>
+                <button class="btn" style="font-size: 11px; padding: 5px 10px;">
+                    <i class="fas fa-edit"></i> Edit Group
+                </button>
+            </div>
+            
+            <!-- Finance Permissions -->
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 10px;">
+                    <h4 style="color: var(--text-dark); margin: 0;">Finance Team</h4>
+                    <span style="background: var(--success-color); color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px;">8 users</span>
+                </div>
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Financial operations, fee collection, and reporting</p>
+                <button class="btn" style="font-size: 11px; padding: 5px 10px;">
+                    <i class="fas fa-edit"></i> Edit Group
+                </button>
+            </div>
+            
+            <!-- Security Permissions -->
+            <div style="padding: 15px; border: 1px solid var(--border-light); border-radius: 6px;">
+                <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 10px;">
+                    <h4 style="color: var(--text-dark); margin: 0;">Security Staff</h4>
+                    <span style="background: var(--warning-color); color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px;">15 users</span>
+                </div>
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Security systems and visitor management</p>
+                <button class="btn" style="font-size: 11px; padding: 5px 10px;">
+                    <i class="fas fa-edit"></i> Edit Group
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Permission Matrix -->
+    <div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid var(--border-light);">
+        <h3 style="color: var(--primary-color); margin-bottom: 20px;">Permission Matrix</h3>
+        
+        <div style="text-align: center; padding: 40px;">
+            <i class="fas fa-sync fa-spin fa-2x" style="color: var(--primary-color); margin-bottom: 15px;"></i>
+            <p style="color: var(--text-muted);">Loading permission matrix...</p>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Permission Management module loaded');
+    
+    // BACKEND INTEGRATION: Load permission groups and matrix
+    // TODO: Fetch permission data from backend
+    
+    document.getElementById('createPermissionGroup')?.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Creating...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-plus"></i> New Group';
+        }, 1500);
+    });
+});
+</script>

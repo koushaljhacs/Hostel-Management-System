@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostel Management System - New Student Registration</title>
+    <meta name="description" content="Register for a new student account with the Hostel Management System.">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <style>
+        /* --- Layout & Form Width Fixes --- */
+        .container {
+            max-width: 1200px !important;
+        }
+
+        .main-form-wrapper {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .main-form-wrapper .row {
+            flex-wrap: nowrap;
+        }
+
+        .main-form-wrapper .col {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        /* --- New Smart Sidebar Styles --- */
+        .form-sidebar {
+            background-color: #fdfdfd;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #e0e0e0;
+            height: fit-content;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            background-color: #f9f9f9;
+        }
+
+        .sidebar-icon-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            color: #777;
+            font-weight: 700;
+            margin-right: 0.75rem;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .sidebar-text {
+            line-height: 1.3;
+            flex-grow: 1;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-lock-icon {
+            color: #aaa;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .sidebar-step-check {
+            font-size: 0.9rem;
+            color: white;
+        }
+
+        /* State: Locked (Default) */
+        .sidebar-link.locked {
+            color: #999;
+            pointer-events: none;
+            background-color: #f9f9f9;
+        }
+
+        .sidebar-link.locked .sidebar-icon-container {
+            background-color: #e0e0e0;
+            color: #999;
+        }
+
+        .sidebar-link.locked .sidebar-lock-icon {
+            display: inline-block;
+        }
+
+        .sidebar-link.locked .sidebar-step-check,
+        .sidebar-link.locked .sidebar-step-number {
+            display: none;
+        }
+
+        /* Show number 1 on the first item (personal) even if "active" */
+        #sidebar-personal.active .sidebar-step-number {
+            display: inline-block;
+        }
+
+        #sidebar-personal.active .sidebar-lock-icon {
+            display: none;
+        }
+
+
+        /* State: Active (Current Step) */
+        /*
+           NOTE: The 'active' glow animation has been
+           MOVED to the main style.css file to keep
+           all styles in one place.
+        */
+
+
+        /* State: Completed (Previous Steps) */
+        .sidebar-link.completed {
+            color: #333;
+            background-color: #ffffff;
+            cursor: pointer;
+        }
+
+        .sidebar-link.completed:hover {
+            background-color: #f5f5ff;
+            border: 1px solid #e0e0e0;
+        }
+
+        .sidebar-link.completed .sidebar-icon-container {
+            background-color: var(--developer-color, #4CAF50);
+            /* Green */
+        }
+
+        .sidebar-link.completed .sidebar-step-check {
+            display: inline-block;
+        }
+
+        .sidebar-link.completed .sidebar-step-number,
+        .sidebar-link.completed .sidebar-lock-icon {
+            display: none;
+        }
+
+        .form-section {
+            scroll-margin-top: 20px;
+        }
+
+        /* NEW: Validation message styling */
+        .validation-message {
+            color: var(--error-dark, #c62828);
+            font-size: 0.85rem;
+            margin-top: 4px;
+            display: none;
+            /* Hidden by default */
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-form-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .main-form-wrapper .row {
+                flex-wrap: wrap;
+            }
+
+            .main-form-wrapper .col {
+                flex: 1 1 100%;
+                min-width: 200px;
+            }
+
+            .form-sidebar {
+                display: flex;
+                justify-content: space-around;
+                overflow-x: auto;
+                padding: 0.5rem;
+            }
+
+            .sidebar-link {
+                flex-direction: column;
+                padding: 0.75rem 0.5rem;
+                text-align: center;
+                font-size: 0.8rem;
+                min-width: 100px;
+            }
+
+            .sidebar-icon-container {
+                margin-right: 0;
+                margin-bottom: 0.5rem;
+            }
+
+            .sidebar-lock-icon {
+                display: none;
+            }
+        }
+
+        /* --- End New Styles --- */
+    </style>
+
+</head>
+
+<body>
+
+    <div class="header-wrapper">
+        <div class="header-top-row">
+            <div class="logo-box">
+                <i class="fas fa-home"></i>
+                <span data-en="HOSTEL MS" data-hi="छात्रावास एमएस" data-ta="விடுதி MS" data-bn="হোস্টেল MS">HOSTEL
+                    MS</span>
+            </div>
+            <div class="utility-nav-links">
+
+                <a href="/" aria-label="Home Page">
+                    <i class="fas fa-home"></i>
+                    <span data-en="Home" data-hi="होम" data-ta="முகப்பு" data-bn="হোম">Home</span>
+                </a>
+
+                <a href="#" onclick="showAlertModal('Utility', 'FAQs Link Activated', false)"
+                    aria-label="Frequently Asked Questions">
+                    <i class="fas fa-question-circle"></i>
+                    <span data-en="FAQs" data-hi="अक्सर पूछे जाने वाले प्रश्न" data-ta="அடிக்கடி கேட்கப்படும் கேள்விகள்"
+                        data-bn="সাধারণ প্রশ্নাবলী">FAQs</span>
+                </a>
+                <a href="#" onclick="showAlertModal('Utility', 'Contact Us Link Activated', false)"
+                    aria-label="Contact Us">
+                    <i class="fas fa-headset"></i>
+                    <span data-en="Contact Us" data-hi="हमसे संपर्क करें" data-ta="தொடர்பு கொள்ள"
+                        data-bn="যোগাযোগ করুন">Contact Us</span>
+                </a>
+                <div class="lang-dropdown-wrapper">
+                    <button class="lang-trigger-btn" aria-label="Select Language" aria-haspopup="true">
+                        <i class="fas fa-language"></i>
+                        <span id="lang-trigger-text">English</span>
+                        <i class="fas fa-caret-down" style="font-size: 0.8em; margin-left: 5px;"></i>
+                    </button>
+                    <div class="lang-dropdown-menu">
+                        <a href="#" class="lang-option-btn" onclick="setLanguage('en'); return false;">English</a>
+                        <a href="#" class="lang-option-btn" onclick="setLanguage('hi'); return false;">हिंदी</a>
+                        <a href="#" class="lang-option-btn" onclick="setLanguage('ta'); return false;">தமிழ்</a>
+                        <a href="#" class="lang-option-btn" onclick="setLanguage('bn'); return false;">বাংলা</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="announcement-bar" aria-live="polite">
+            <marquee behavior="scroll" direction="left" scrollamount="6">
+                <i class="fas fa-bullhorn"></i>
+                <span data-en="LATEST NEWS:" data-hi="नवीनतम समाचार:" data-ta="சமீபத்திய செய்திகள்:"
+                    data-bn="সর্বশেষ সংবাদ:">LATEST NEWS:</span>
+                <span data-en="Room Allocation Phase 2 is now open. Last date for fee payment is 30th November."
+                    data-hi="कमरा आवंटन चरण 2 अब खुला है। शुल्क भुगतान की अंतिम तिथि 30 नवंबर है।"
+                    data-ta="அறை ஒதுக்கீடு கட்டம் 2 இப்போது திறக்கப்பட்டுள்ளது. கட்டணம் செலுத்துவதற்கான கடைசி தேதி 30 நவம்பர்."
+                    data-bn="রুম বরাদ্দ পর্যায় 2 এখন খোলা। ফি প্রদানের শেষ তারিখ 30 নভেম্বর।">Room Allocation Phase 2
+                    is now open. Last date for fee payment is 30th November.</span>
+
+                | <i class="fas fa-wifi" style="color: #c62828;"></i>
+                <span data-en="NETWORK WARNING:" data-hi="नेटवर्क चेतावनी:" data-ta="நெட்வொர்க் எச்சரிக்கை:"
+                    data-bn="নেটওয়ার্ক সতর্কতা:">NETWORK WARNING:</span>
+                <span
+                    data-en="Do not use restricted networks (like college Wi-Fi). Use personal internet for full access."
+                    data-hi="प्रतिबंधित नेटवर्क (जैसे कॉलेज वाई-फाई) का उपयोग न करें। पूर्ण पहुंच के लिए व्यक्तिगत इंटरनेट का उपयोग करें।"
+                    data-ta="கட்டுப்படுத்தப்பட்ட நெட்வொர்க்குகளை (கல்லூரி Wi-Fi போன்றவை) பயன்படுத்த வேண்டாம். முழு அணுகலுக்கு தனிப்பட்ட இணையத்தைப் பயன்படுத்தவும்."
+                    data-bn="সীমাবদ্ধ নেটওয়ার্ক (যেমন কলেজ ওয়াই-ফাই) ব্যবহার করবেন না। সম্পূর্ণ অ্যাক্সেসের জন্য ব্যক্তিগত ইন্টারনেট ব্যবহার করুন।">
+                    Do not use restricted networks (like college Wi-Fi). Use personal internet for full access.
+                </span>
+            </marquee>
+        </div>
+    </div>
+
+    <div id="content-wrapper">
+
+        <div class="container">
+            <div class="header">
+                <div class="logo-container">
+                    <div class="logo-text">Hostel MS</div>
+                </div>
+            </div>
+
+            <p class="subtitle" id="subtitle">Complete each section in order. The next section will unlock once the
+                current one is completed.</p>
+            <div class="decorative-line"></div>
+
+            <div class="progress-text" id="progress-text">Progress: <span id="progress-percent">0%</span></div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+
+            <div class="main-form-wrapper">
+
+                <div class="form-sidebar" id="form-sidebar">
+                    <a href="#personal-section" id="sidebar-personal" class="sidebar-link active">
+                        <span class="sidebar-icon-container">
+                            <span class="sidebar-step-number">1</span>
+                            <i class="fas fa-check sidebar-step-check" style="display: none;"></i>
+                        </span>
+                        <span class="sidebar-text" id="sidebar-personal-text">Personal Information</span>
+                        <i class="fas fa-lock sidebar-lock-icon" style="display: none;"></i>
+                    </a>
+
+                    <a href="#academic-section" id="sidebar-academic" class="sidebar-link locked">
+                        <span class="sidebar-icon-container">
+                            <span class="sidebar-step-number" style="display: none;">2</span>
+                            <i class="fas fa-check sidebar-step-check" style="display: none;"></i>
+                        </span>
+                        <span class="sidebar-text" id="sidebar-academic-text">Academic Information</span>
+                        <i class="fas fa-lock sidebar-lock-icon"></i>
+                    </a>
+
+                    <a href="#address-section" id="sidebar-address" class="sidebar-link locked">
+                        <span class="sidebar-icon-container">
+                            <span class="sidebar-step-number" style="display: none;">3</span>
+                            <i class="fas fa-check sidebar-step-check" style="display: none;"></i>
+                        </span>
+                        <span class="sidebar-text" id="sidebar-address-text">Address &amp; Verification</span>
+                        <i class="fas fa-lock sidebar-lock-icon"></i>
+                    </a>
+                </div>
+
+
+                <form id="registrationForm">
+                    <div class="form-section active" id="personal-section">
+                        <div class="section-status" id="personal-status">Current</div>
+                        <h2 class="section-title" id="personal-title">Personal Information</h2>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="firstName" class="required" id="first-name-label">First Name</label>
+                                    <input type="text" id="firstName" name="firstName" placeholder="e.g. Koushal"
+                                        required>
+                                    <div class="validation-message" id="firstName-validation"></div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="middleName" id="middle-name-label">Middle Name</label>
+                                    <input type="text" id="middleName" name="middleName" placeholder="Optional">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="lastName" class="required" id="last-name-label">Last Name</label>
+                                    <input type="text" id="lastName" name="lastName" placeholder="e.g. Jha" required>
+                                    <div class="validation-message" id="lastName-validation"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="gender" class="required" id="gender-label">Gender</label>
+                                    <select id="gender" name="gender" required>
+                                        <option value="">Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                        <option value="prefer-not-to-say">Prefer not to say</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="dob" class="required" id="dob-label">Date of Birth</label>
+                                    <input type="date" id="dob" name="dob" required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="age" id="age-label">Age</label>
+                                    <input type="number" id="age" name="age" placeholder="Auto-calculated" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="navigation">
+                            <div></div>
+                            <button type="button" class="btn" id="next-to-academic" disabled>Continue to
+                                Academic</button>
+                        </div>
+                    </div>
+
+                    <div class="form-section locked" id="academic-section">
+                        <div class="section-status" id="academic-status">Locked</div>
+                        <h2 class="section-title" id="academic-title">Academic Information</h2>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="currentYear" class="required" id="current-year-label">Current
+                                        Year</label>
+                                    <select id="currentYear" name="currentYear" required>
+                                        <option value="">Select Year</option>
+                                        <option value="1">First Year</option>
+                                        <option value="2">Second Year</option>
+                                        <option value="3">Third Year</option>
+                                        <option value="4">Fourth Year</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="branch" class="required" id="branch-label">Branch</label>
+                                    <select id="branch" name="branch" required>
+                                        <option value="">Select Branch</option>
+                                        <option value="cse">Computer Science</option>
+                                        <option value="ece">Electronics</option>
+                                        <option value="me">Mechanical</option>
+                                        <option value="ce">Civil</option>
+                                        <option value="ee">Electrical</option>
+                                        <option value="it">IT</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="course" class="required" id="course-label">Course</label>
+                                    <select id="course" name="course" required>
+                                        <option value="">Select Course</option>
+                                        <option value="btech">B.Tech</option>
+                                        <option value="mtech">M.Tech</option>
+                                        <option value="bca">BCA</option>
+                                        <option value="mca">MCA</option>
+                                        <option value="bsc">B.Sc</option>
+                                        <option value="msc">M.Sc</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="section" class="required" id="section-label">Section</label>
+                                    <select id="section" name="section" required>
+                                        <option value="">Select Section</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="contactNumber" class="required" id="contact-label">Contact
+                                        Number</label>
+                                    <input type="tel" id="contactNumber" name="contactNumber"
+                                        placeholder="e.g. 9876543210" required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="rollNo" class="required" id="rollno-label">University Roll No</label>
+                                    <input type="text" id="rollNo" name="rollNo" placeholder="e.g. 1234567890" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cpi" class="required" id="cpi-label">CPI</label>
+                            <input type="text" id="cpi" name="cpi" required
+                                placeholder="e.g. 8.75 (from 0.00 to 10.00)">
+                        </div>
+
+
+                        <div class="navigation">
+                            <button type="button" class="btn btn-secondary" id="back-to-personal">Back</button>
+                            <button type="button" class="btn" id="next-to-address" disabled>Continue to Address</button>
+                        </div>
+                    </div>
+
+                    <div class="form-section locked" id="address-section">
+                        <div class="section-status" id="address-status">Locked</div>
+                        <h2 class="section-title" id="address-title">Address Information</h2>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="pincode" class="required" id="pincode-label">Pincode</label>
+                                    <input type="text" id="pincode" name="pincode" placeholder="e.g. 110001" required
+                                        maxlength="6">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="state" class="required" id="state-label">State</label>
+                                    <input type="text" id="state" name="state" list="state-list" required
+                                        autocomplete="off" placeholder="Auto-fills from Pincode">
+                                    <datalist id="state-list">
+                                        <option value="Andaman and Nicobar Islands"></option>
+                                        <option value="Andhra Pradesh"></option>
+                                        <option value="Arunachal Pradesh"></option>
+                                        <option value="Assam"></option>
+                                        <option value="Bihar"></option>
+                                        <option value="Chandigarh"></option>
+                                        <option value="Chhattisgarh"></option>
+                                        <option value="Dadra and Nagar Haveli and Daman and Diu"></option>
+                                        <option value="Delhi"></option>
+                                        <option value="Goa"></option>
+                                        <option value="Gujarat"></option>
+                                        <option value="Haryana"></option>
+                                        <option value="Himachal Pradesh"></option>
+                                        <option value="Jammu and Kashmir"></option>
+                                        <option value="Jharkhand"></option>
+                                        <option value="Karnataka"></option>
+                                        <option value="Kerala"></option>
+                                        <option value="Ladakh"></option>
+                                        <option value="Lakshadweep"></option>
+                                        <option value="Madhya Pradesh"></option>
+                                        <option value="Maharashtra"></option>
+                                        <option value="Manipur"></option>
+                                        <option value="Meghalaya"></option>
+                                        <option value="Mizoram"></option>
+                                        <option value="Nagaland"></option>
+                                        <option value="Odisha"></option>
+                                        <option value="Puducherry"></option>
+                                        <option value="Punjab"></option>
+                                        <option value="Rajasthan"></option>
+                                        <option value="Sikkim"></option>
+                                        <option value="Tamil Nadu"></option>
+                                        <option value="Telangana"></option>
+                                        <option value="Tripura"></option>
+                                        <option value="Uttar Pradesh"></option>
+                                        <option value="Uttarakhand"></option>
+                                        <option value="West Bengal"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="city" class="required" id="city-label">City</label>
+                                    <input type="text" id="city" name="city" list="city-list" required
+                                        placeholder="Auto-fills from Pincode" autocomplete="off">
+                                    <datalist id="city-list"></datalist>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="required" id="email-label">Email Address</label>
+                            <div class="email-input-container">
+                                <div class="email-field">
+                                    <input type="email" id="email" name="email" placeholder="e.g. user@gmail.com"
+                                        required>
+                                </div>
+                                <div class="otp-btn-container">
+                                    <button type="button" class="otp-btn" id="send-otp">Send OTP</button>
+                                </div>
+                            </div>
+                            <div id="email-hint" class="verification-status verification-pending"
+                                style="display: none;">
+                                Only @gmail.com and @outlook.com domains are allowed</div>
+
+                            <div class="otp-section" id="otp-section">
+                                <div class="otp-input-container">
+                                    <div class="otp-input">
+                                        <input type="text" id="verificationCode" name="verificationCode"
+                                            placeholder="Enter 6-digit OTP" maxlength="6">
+                                    </div>
+                                    <button type="button" class="verify-btn" id="verify-otp">Verify OTP</button>
+                                </div>
+                                <div id="verification-status" class="verification-status"></div>
+                            </div>
+                        </div>
+                        <div class="terms-container">
+                            <input type="checkbox" id="terms-checkbox">
+                            <label for="terms-checkbox" id="terms-label">
+                                I agree to the
+                                <a href="#" id="terms-link" class="terms-link">Terms and Conditions</a> and
+                                <a href="#" id="privacy-link" class="terms-link">Privacy Policy</a>.
+                            </label>
+                        </div>
+
+                        <div class="navigation">
+                            <button type="button" class="btn btn-secondary" id="back-to-academic">Back</button>
+                            <button class="g-recaptcha btn" data-sitekey="6LeTeA0sAAAAADN90ypuMkK6tTyJPmDLC1t8IDUk"
+                                data-callback="onSubmit" id="submit-form" disabled>
+                                Complete Registration
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-wrapper">
+        <div class="footer-content-grid">
+
+            <section class="footer-section footer-links">
+                <h3 data-en="Quick Links" data-hi="त्वरित लिंक्स" data-ta="விரைவு இணைப்புகள்" data-bn="দ্রুত লিঙ্ক">
+                    Quick Links</h3>
+                <ul>
+                    <li><a href="#" onclick="showAlertModal('Footer', 'Privacy Policy Page', false);"><i
+                                class="fas fa-chevron-right"></i><span data-en="Privacy Policy" data-hi="गोपनीयता नीति"
+                                data-ta="தனியுரிமைக் கொள்கை" data-bn="গোপনীয়তা নীতি">Privacy Policy</span></a></li>
+                    <li><a href="#" onclick="showAlertModal('Footer', 'Sitemap Page', false);"><i
+                                class="fas fa-chevron-right"></i><span data-en="Sitemap" data-hi="साइटमैप"
+                                data-ta="தளவரைபடம்" data-bn="সাইটম্যাপ">Sitemap</span></a></li>
+                    <li><a href="#" onclick="showAlertModal('Footer', 'Accessibility Options', false);"><i
+                                class="fas fa-chevron-right"></i><span data-en="Accessibility" data-hi="पहुँच-योग्यता"
+                                data-ta="அணுகல்தன்மை" data-bn="অ্যাক্সেসিবিলিটি">Accessibility</span></a></li>
+                    <li><a href="#" onclick="showAlertModal('Footer', 'Terms of Service Page', false);"><i
+                                class="fas fa-chevron-right"></i><span data-en="Terms of Service"
+                                data-hi="सेवा की शर्तें" data-ta="சேவை விதிமுறைகள்" data-bn="সেবার শর্তাবলী">Terms of
+                                Service</span></a></li>
+                </ul>
+            </section>
+
+            <section class="footer-section footer-developers">
+                <h3 data-en="DEVELOPER" data-hi="डेवलपर" data-ta="டெவலப்பர்" data-bn="ডেভেলপার">DEVELOPER</h3>
+                <div class="developer-team-grid">
+                    <div class="dev-card">
+                        <img src="images/team/Tushar_Satija.png" alt="Tushar Satija" class="dev-photo"
+                            onerror="this.style.display='none'">
+                        <div class="dev-info">
+                            <h4>Tushar Satija</h4>
+                            <p>Project Mentor<br>Computer Science Engineering</p>
+                        </div>
+                    </div>
+                    <div class="dev-card">
+                        <img src="images/team/koushalProfilePhoto.jpg" alt="Koushal Jha" class="dev-photo"
+                            onerror="this.style.display='none'">
+                        <div class="dev-info">
+                            <h4>Koushal Jha</h4>
+                            <p>Team Lead & Tester<br>Application Architecture, Database & Firewall Design<br>B.Tech CSE
+                            </p>
+                        </div>
+                    </div>
+                    <div class="dev-card">
+                        <img src="images/team/Hitanshu_Dhakrey.png" alt="Hitanshu Dhakrey" class="dev-photo"
+                            onerror="this.style.display='none'">
+                        <div class="dev-info">
+                            <h4>Hitanshu Dhakrey</h4>
+                            <p>User Dashboard Design<br>B.Tech CSE</p>
+                        </div>
+                    </div>
+                    <div class="dev-card">
+                        <img src="images/team/Divya_Mani_Tiwari.png" alt="Divya Mani Tiwari" class="dev-photo"
+                            onerror="this.style.display='none'">
+                        <div class="dev-info">
+                            <h4>Divya Mani Tiwari</h4>
+                            <p>User Dashboard Design<br>B.Tech CSE</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <div class="footer-bottom-bar">
+            <div class="footer-social-links-3d">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+
+            <div class="footer-team-name">
+                <p>Team Name: <strong>OctNov</strong></p>
+                <p>Designed & Maintained by OctNov</p>
+            </div>
+            <div class="copyright">
+                &copy; <span id="copyright-year">2025</span> <span
+                    data-en="Hostel Management System. All Rights Reserved."
+                    data-hi="छात्रावास प्रबंधन प्रणाली। सभी अधिकार सुरक्षित हैं।"
+                    data-ta="விடுதி மேலாண்மை அமைப்பு. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை."
+                    data-bn="হোস্টেল ম্যানেজমেন্ট সিস্টেম। সর্বস্বত্ব সংরক্ষিত।">Hostel Management System. All Rights
+                    Reserved.</span>
+            </div>
+
+            <div class="footer-compatibility">
+                <p data-en="Best viewed on modern browsers like Chrome, Firefox, Safari, and Edge."
+                    data-hi="क्रोम, फ़ायरफ़ॉक्स, सफारी और एज जैसे आधुनिक ब्राउज़र पर सबसे अच्छा देखा गया।"
+                    data-ta="குரோம், பயர்பாக்ஸ், சஃபாரி மற்றும் எட்ஜ் போன்ற நவீன உலாவிகளில் சிறப்பாகக் காணலாம்."
+                    data-bn="ক্রোম, ফায়ারফক্স, সাফারি এবং এজ-এর মতো আধুনিক ব্রাউজারগুলিতে সবচেয়ে ভাল দেখা যায়।">
+                    Best viewed on modern browsers like Chrome, Firefox, Safari, and Edge.
+                </p>
+            </div>
+        </div>
+    </footer>
+    <div id="customAlertModal" class="custom-alert-modal">
+        <div class="modal-content">
+            <h2 id="modal-title" class="modal-title"></h2>
+            <p id="modal-message" class="modal-message"></p>
+            <button id="modal-close-btn" class="modal-close-btn" data-en="Close" data-hi="बंद करें" data-ta="மூடு"
+                data-bn="বন্ধ করুন"></button>
+        </div>
+    </div>
+    <div id="terms-modal" class="terms-modal-overlay">
+        <div class="terms-modal-content">
+            <div class="terms-modal-header">
+                <h3>Terms and Conditions</h3>
+                <button class="close-modal-btn" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="terms-modal-body">
+                <h4>1. Introduction</h4>
+                <p>Welcome to the Hostel Management System. This is an educational project. By using this system, you
+                    agree to these terms.</p>
+
+                <h4>2. Educational Purpose</h4>
+                <p>This System is for demonstration and educational purposes only. It does not process real financial
+                    transactions or manage actual hostel operations. All data entered is fictional.</p>
+
+                <h4>3. User Responsibilities</h4>
+                <ul>
+                    <li>You agree to use this system solely for its intended educational purpose.</li>
+                    <li>You must not enter real personal, financial, or sensitive information.</li>
+                    <li>You agree not to attempt to exploit vulnerabilities, introduce malicious code, or disrupt the
+                        system.</li>
+                </ul>
+
+                <h4>4. Data Privacy</h4>
+                <p>No real personally identifiable information is collected or stored. All data is fictional and may be
+                    reset or deleted at any time without notice.</p>
+
+                <h4>5. Limitation of Liability</h4>
+                <p>This System is provided "as is" without any warranties. The project team is not liable for any
+                    damages, data loss, or system unavailability.</p>
+
+                <h4>6. Acceptance</h4>
+                <p>By clicking "I Agree", you acknowledge that you have read, understood, and agree to be bound by these
+                    Terms and Conditions.</p>
+            </div>
+            <div class="terms-modal-footer">
+                <button class="btn btn-secondary close-modal-btn">Close</button>
+                <button class="btn" id="agree-terms-btn">I Agree</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentLang = 'en';
+        function updateContent(lang) {
+            currentLang = lang;
+            document.getElementById('html-root').setAttribute('lang', lang);
+            const langKey = 'data-' + lang;
+            document.querySelectorAll(`[data-en]`).forEach(element => {
+                if (element.id.startsWith('sidebar-')) return; // Sidebar text is handled by app.js
+                // Validation messages are also handled by app.js
+                if (element.classList.contains('validation-message')) return;
+
+                const text = element.getAttribute(langKey);
+                const fallbackText = element.getAttribute('data-en');
+                if (text) element.textContent = text;
+                else if (fallbackText) element.textContent = fallbackText;
+            });
+        }
+        function setLanguage(lang) {
+            if (!lang) lang = 'en';
+            updateContent(lang);
+            const langTriggerText = document.getElementById('lang-trigger-text');
+            if (langTriggerText) {
+                let newText = 'English';
+                if (lang === 'hi') newText = 'हिंदी';
+                else if (lang === 'ta') newText = 'தமிழ்';
+                else if (lang === 'bn') newText = 'বাংলা';
+                langTriggerText.textContent = newText;
+            }
+            if (typeof setRegistrationLanguage === 'function') {
+                setRegistrationLanguage(lang);
+            }
+        }
+        function showAlertModal(title, message, isError = true) {
+            const modal = document.getElementById('customAlertModal');
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-message').textContent = message;
+            if (isError) document.getElementById('modal-title').style.color = 'var(--primary-color)';
+            else document.getElementById('modal-title').style.color = 'var(--accent-color)';
+            const closeBtn = document.getElementById('modal-close-btn');
+            const langKey = 'data-' + currentLang;
+            const closeText = closeBtn.getAttribute(langKey) || closeBtn.getAttribute('data-en');
+            closeBtn.textContent = closeText;
+            modal.classList.add('visible');
+        }
+        function hideAlertModal() {
+            document.getElementById('customAlertModal').classList.remove('visible');
+        }
+        document.getElementById('modal-close-btn')?.addEventListener('click', hideAlertModal);
+        document.getElementById('customAlertModal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'customAlertModal') hideAlertModal();
+        });
+
+        function sendTrackingData(locationData) {
+            locationData.page = window.location.pathname;
+            fetch('/api/log-visit', { method: 'POST', headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(locationData) })
+                .catch(err => console.warn('Visitor log failed to send.', err.message));
+        }
+        function handleGpsSuccess(position) {
+            const gpsData = { lat: position.coords.latitude, lon: position.coords.longitude, accuracy: position.coords.accuracy };
+            console.log('GPS Location Acquired:', gpsData);
+            sendTrackingData(gpsData);
+        }
+        function handleGpsError(error) {
+            console.warn(`GPS Error (${error.code}): ${error.message}`);
+            sendTrackingData({});
+        }
+        function initiateHybridTracking() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(handleGpsSuccess, handleGpsError, { enableHighAccuracy: false, timeout: 8000, maximumAge: 0 });
+            } else {
+                console.warn('Geolocation is not supported by this browser.');
+                sendTrackingData({});
+            }
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            setLanguage('en');
+            const copyrightYearEl = document.getElementById('copyright-year');
+            if (copyrightYearEl) copyrightYearEl.textContent = new Date().getFullYear();
+            initiateHybridTracking();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape" && document.getElementById('customAlertModal').classList.contains('visible')) hideAlertModal();
+            if (e.key === "Escape" && document.getElementById('terms-modal').style.display === 'flex') document.getElementById('terms-modal').style.display = 'none';
+        });
+    </script>
+
+    <script src="js/app.js"></script>
+    <script src="/common/public/js/security-loader.js"></script>
+</body>
+
+</html>

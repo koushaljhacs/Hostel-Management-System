@@ -1,0 +1,172 @@
+<!-- modules/expense-management.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-coins"></i> Expense Management</h2>
+    <div class="quick-actions">
+        <button class="btn" id="addExpenseBtn"><i class="fas fa-plus"></i> Add Expense</button>
+        <button class="btn" id="approveExpenseBtn"><i class="fas fa-check"></i> Approve Expenses</button>
+        <button class="btn" id="exportExpensesBtn"><i class="fas fa-file-export"></i> Export</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <h3>Total Expenses</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Pending Approval</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-chart-pie"></i>
+            </div>
+            <h3>This Month</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>Over Budget</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Expense Records -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Expense Records</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshExpenses" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <select class="btn" style="background: var(--bg-card); border: 1px solid var(--border-medium); font-size: 11px;">
+                    <option value="">All Categories</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="expenseRecords" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading expense records...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Expense -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Add Expense</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Expense Category
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select category...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Amount
+                </label>
+                <input type="number" class="form-input" placeholder="Enter amount" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Date
+                </label>
+                <input type="date" class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Description
+                </label>
+                <textarea class="form-input" placeholder="Enter expense description..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px; min-height: 60px; resize: vertical;"></textarea>
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-save"></i> Submit Expense
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Expense Analytics -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Expense Analytics</h3>
+        <button class="btn" id="viewDetailedAnalytics" style="font-size: 11px;">
+            <i class="fas fa-chart-bar"></i> Detailed View
+        </button>
+    </div>
+    
+    <div class="activity-list" id="expenseAnalytics" style="max-height: 190px;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading expense analytics...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Expense Management module loaded');
+    
+    // BACKEND INTEGRATION: Load expense management data
+    // TODO: Fetch expense records and analytics from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/expenses</code> - Fetch expense records</li>
+            <li><code>POST /api/expenses</code> - Add expense</li>
+            <li><code>PUT /api/expenses/{id}/approve</code> - Approve expense</li>
+            <li><code>GET /api/expense-analytics</code> - Expense analytics</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>financial:expense:write</code></p>
+    </div>
+</div>

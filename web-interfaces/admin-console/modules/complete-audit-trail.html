@@ -1,0 +1,139 @@
+<!-- modules/complete-audit-trail.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-history"></i> Complete Audit Trail</h2>
+    <div class="quick-actions">
+        <button class="btn"><i class="fas fa-filter"></i> Filter</button>
+        <button class="btn"><i class="fas fa-download"></i> Export</button>
+        <button class="btn"><i class="fas fa-cog"></i> Settings</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-database"></i></div>
+            <h3>Total Records</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-user-edit"></i></div>
+            <h3>User Actions</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
+            <h3>Security Events</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-clock"></i></div>
+            <h3>Last 24 Hours</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Audit Trail Logs</h3>
+            <button class="btn" style="font-size: 11px;">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </div>
+        <div class="activity-list">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading audit trail data...</div>
+                    <div class="activity-time">Please wait</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Search & Filter</h3>
+        </div>
+        <div style="padding: 15px;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Date Range
+                </label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <input type="datetime-local" class="form-input" placeholder="Start date" style="padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <input type="datetime-local" class="form-input" placeholder="End date" style="padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    User
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">All users</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Action Type
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">All actions</option>
+                    <option value="login">Login/Logout</option>
+                    <option value="create">Create</option>
+                    <option value="update">Update</option>
+                    <option value="delete">Delete</option>
+                    <option value="view">View</option>
+                    <option value="export">Export</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Module/Feature
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">All modules</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    IP Address
+                </label>
+                <input type="text" class="form-input" placeholder="Filter by IP address..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <button class="btn" style="background: var(--primary-color); color: white; width: 100%; margin-top: 15px;">
+                <i class="fas fa-search"></i> Search Audit Logs
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/audit/trail</code> - Get audit trail</li>
+            <li><code>GET /api/audit/trail/filter</code> - Filter audit trail</li>
+            <li><code>GET /api/audit/trail/export</code> - Export audit trail</li>
+            <li><code>GET /api/audit/trail/stats</code> - Get audit statistics</li>
+            <li><code>GET /api/audit/trail/user/{id}</code> - Get user-specific audit trail</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>audit:read_global</code></p>
+    </div>
+</div>

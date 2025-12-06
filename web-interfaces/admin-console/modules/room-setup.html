@@ -1,0 +1,289 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-bed"></i> Room Setup</h2>
+    <div class="quick-actions">
+        <button class="btn" id="addRoom" style="background: var(--success-color); color: white;">
+            <i class="fas fa-plus"></i> Add Room
+        </button>
+        <button class="btn" id="bulkSetup"><i class="fas fa-copy"></i> Bulk Setup</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-building"></i>
+            </div>
+            <h3>Selected Hostel</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-bed"></i>
+            </div>
+            <h3>Total Rooms</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Total Capacity</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-door-open"></i>
+            </div>
+            <h3>Available Rooms</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<!-- Hostel & Floor Selection -->
+<div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Select Location</h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Hostel</label>
+            <select class="btn" id="roomHostelSelect" style="width: 100%; padding: 8px;">
+                <option value="">Select Hostel</option>
+                <option value="bh-a">Boys Hostel A</option>
+                <option value="bh-b">Boys Hostel B</option>
+                <option value="gh-a">Girls Hostel A</option>
+                <option value="gh-b">Girls Hostel B</option>
+            </select>
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Floor</label>
+            <select class="btn" id="roomFloorSelect" style="width: 100%; padding: 8px;" disabled>
+                <option value="">Select Floor First</option>
+            </select>
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Room Type</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>All Rooms</option>
+                <option>Single Occupancy</option>
+                <option>Double Occupancy</option>
+                <option>Triple Occupancy</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Room Configuration -->
+<div id="roomConfig" style="display: none;">
+    <!-- Floor Overview -->
+    <div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+        <h3 style="color: var(--primary-color); margin-bottom: 15px;">Floor 1 - Room Overview</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px;">
+            <div style="text-align: center; padding: 15px; border: 2px solid var(--success-color); border-radius: 8px; background: rgba(76, 175, 80, 0.05);">
+                <div style="font-size: 20px; font-weight: bold; color: var(--success-color);">5</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Available</div>
+            </div>
+            
+            <div style="text-align: center; padding: 15px; border: 1px solid var(--border-medium); border-radius: 8px;">
+                <div style="font-size: 20px; font-weight: bold; color: var(--primary-color);">12</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Occupied</div>
+            </div>
+            
+            <div style="text-align: center; padding: 15px; border: 1px solid var(--border-medium); border-radius: 8px;">
+                <div style="font-size: 20px; font-weight: bold; color: var(--warning-color);">3</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Maintenance</div>
+            </div>
+            
+            <div style="text-align: center; padding: 15px; border: 1px solid var(--border-medium); border-radius: 8px;">
+                <div style="font-size: 20px; font-weight: bold; color: var(--text-dark);">20</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Total Rooms</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Room Form -->
+    <div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid var(--border-light);">
+        <h3 style="color: var(--primary-color); margin-bottom: 20px;">Add New Room</h3>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Room Number *</label>
+                    <input type="text" class="form-input" placeholder="e.g., 101, 102" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Room Type *</label>
+                    <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                        <option value="">Select Room Type</option>
+                        <option value="single">Single Occupancy</option>
+                        <option value="double" selected>Double Occupancy</option>
+                        <option value="triple">Triple Occupancy</option>
+                        <option value="quad">Quad Occupancy</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Room Category</label>
+                    <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                        <option value="standard">Standard</option>
+                        <option value="ac">AC Room</option>
+                        <option value="premium">Premium</option>
+                        <option value="deluxe">Deluxe</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Capacity *</label>
+                    <input type="number" class="form-input" value="2" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;" readonly>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Rent (Monthly) *</label>
+                    <input type="number" class="form-input" placeholder="Monthly rent amount" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Room Features</label>
+                    <div style="display: grid; gap: 8px;">
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                            <span>Attached Bathroom</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" style="accent-color: var(--primary-color);">
+                            <span>Balcony</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                            <span>Wi-Fi</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" style="accent-color: var(--primary-color);">
+                            <span>Air Conditioning</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; margin-top: 20px;">
+            <h4 style="color: var(--primary-color); margin-bottom: 10px;">Room Summary</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px;">
+                <div>
+                    <strong>Room Number:</strong> <span id="roomNumber">101</span>
+                </div>
+                <div>
+                    <strong>Capacity:</strong> <span id="roomCapacity">2 students</span>
+                </div>
+                <div>
+                    <strong>Category:</strong> <span id="roomCategory">Standard</span>
+                </div>
+                <div>
+                    <strong>Status:</strong> <span style="color: var(--success-color);">Ready for Allocation</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Empty State -->
+<div id="roomEmptyState" style="background: white; border-radius: 8px; padding: 60px; text-align: center; border: 1px solid var(--border-light);">
+    <i class="fas fa-bed fa-3x" style="color: var(--border-light); margin-bottom: 15px;"></i>
+    <p style="color: var(--text-muted); font-size: 16px;">Select a hostel and floor to setup rooms</p>
+    <p style="color: var(--text-muted); font-size: 12px; margin-top: 10px;">Add new rooms or modify existing room configurations</p>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Room Setup module loaded');
+    
+    // BACKEND INTEGRATION: Load hostel, floor, and room data
+    // TODO: Fetch room setup data from backend API
+    
+    const roomHostelSelect = document.getElementById('roomHostelSelect');
+    const roomFloorSelect = document.getElementById('roomFloorSelect');
+    const roomConfig = document.getElementById('roomConfig');
+    const roomEmptyState = document.getElementById('roomEmptyState');
+    
+    // Sample floor data
+    const floorData = {
+        'bh-a': ['Ground Floor', '1st Floor', '2nd Floor', '3rd Floor'],
+        'bh-b': ['Ground Floor', '1st Floor', '2nd Floor'],
+        'gh-a': ['Ground Floor', '1st Floor', '2nd Floor', '3rd Floor', '4th Floor'],
+        'gh-b': ['Ground Floor', '1st Floor', '2nd Floor']
+    };
+    
+    roomHostelSelect.addEventListener('change', function() {
+        const selectedHostel = this.value;
+        
+        if (selectedHostel) {
+            roomFloorSelect.disabled = false;
+            roomFloorSelect.innerHTML = '<option value="">Select Floor</option>';
+            
+            // Populate floors based on selected hostel
+            if (floorData[selectedHostel]) {
+                floorData[selectedHostel].forEach(floor => {
+                    const option = document.createElement('option');
+                    option.value = floor.toLowerCase().replace(' ', '-');
+                    option.textContent = floor;
+                    roomFloorSelect.appendChild(option);
+                });
+            }
+        } else {
+            roomFloorSelect.disabled = true;
+            roomFloorSelect.innerHTML = '<option value="">Select Floor First</option>';
+            roomConfig.style.display = 'none';
+            roomEmptyState.style.display = 'block';
+        }
+    });
+    
+    roomFloorSelect.addEventListener('change', function() {
+        if (this.value) {
+            roomConfig.style.display = 'block';
+            roomEmptyState.style.display = 'none';
+            
+            // BACKEND INTEGRATION: Load rooms for selected floor
+            // TODO: Fetch room data for selected floor
+            console.log('Loading rooms for floor:', this.value);
+        } else {
+            roomConfig.style.display = 'none';
+            roomEmptyState.style.display = 'block';
+        }
+    });
+    
+    document.getElementById('addRoom').addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Adding...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-plus"></i> Add Room';
+            alert('New room added successfully!');
+        }, 2000);
+    });
+    
+    document.getElementById('bulkSetup').addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Opening...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-copy"></i> Bulk Setup';
+            // TODO: Open bulk room setup interface
+        }, 1000);
+    });
+});
+</script>

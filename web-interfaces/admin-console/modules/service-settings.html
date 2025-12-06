@@ -1,0 +1,187 @@
+<!-- modules/service-settings.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-cog"></i> Service Settings</h2>
+    <div class="quick-actions">
+        <button class="btn" id="saveSettingsBtn"><i class="fas fa-save"></i> Save Settings</button>
+        <button class="btn" id="resetSettingsBtn"><i class="fas fa-undo"></i> Reset</button>
+        <button class="btn" id="backupSettingsBtn"><i class="fas fa-download"></i> Backup</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Service Hours</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <h3>Pricing Rules</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-bell"></i>
+            </div>
+            <h3>Notifications</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Security</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Service Configuration -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Service Configuration</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshSettings" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="serviceConfig" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading service configuration...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Settings Form -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Service Settings</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Service Hours
+                </label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <input type="time" class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <input type="time" class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Turnaround Time
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select turnaround time...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Quality Standards
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select quality standard...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Auto-Notifications
+                </label>
+                <div style="display: grid; gap: 8px;">
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" style="accent-color: var(--primary-color);">
+                        <span>Order Status Updates</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" style="accent-color: var(--primary-color);">
+                        <span>Payment Reminders</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" style="accent-color: var(--primary-color);">
+                        <span>Service Promotions</span>
+                    </label>
+                </div>
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-save"></i> Save Settings
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Settings History -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Settings Change History</h3>
+        <button class="btn" id="viewFullHistory" style="font-size: 11px;">
+            <i class="fas fa-history"></i> Full History
+        </button>
+    </div>
+    
+    <div class="activity-list" id="settingsHistory" style="max-height: 190px;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading settings history...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Service Settings module loaded');
+    
+    // BACKEND INTEGRATION: Load service settings data
+    // TODO: Fetch service configuration and settings history from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/service-settings</code> - Fetch service settings</li>
+            <li><code>PUT /api/service-settings</code> - Update service settings</li>
+            <li><code>GET /api/settings-history</code> - Settings change history</li>
+            <li><code>POST /api/settings-backup</code> - Backup settings</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>laundry:settings:write</code></p>
+    </div>
+</div>

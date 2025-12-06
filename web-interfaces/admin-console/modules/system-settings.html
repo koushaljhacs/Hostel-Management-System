@@ -1,0 +1,118 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-cog"></i> System Settings</h2>
+    <div class="quick-actions">
+        <button class="btn" id="saveSettings"><i class="fas fa-save"></i> Save Changes</button>
+        <button class="btn" id="resetSettings"><i class="fas fa-undo"></i> Reset to Default</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-database"></i>
+            </div>
+            <h3>Database</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Security</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-envelope"></i>
+            </div>
+            <h3>Email</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-bell"></i>
+            </div>
+            <h3>Notifications</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3><i class="fas fa-sliders-h"></i> Configuration Settings</h3>
+        </div>
+        <div style="padding: 20px;">
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 600;">System Theme</label>
+                <select class="btn" style="width: 100%; padding: 8px;">
+                    <option>Default</option>
+                    <option>Dark Mode</option>
+                    <option>High Contrast</option>
+                </select>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Language</label>
+                <select class="btn" style="width: 100%; padding: 8px;">
+                    <option>English</option>
+                    <option>Spanish</option>
+                    <option>French</option>
+                </select>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Time Zone</label>
+                <select class="btn" style="width: 100%; padding: 8px;">
+                    <option>UTC</option>
+                    <option>EST</option>
+                    <option>PST</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3><i class="fas fa-tools"></i> Maintenance</h3>
+        </div>
+        <div style="padding: 20px;">
+            <button class="btn" style="width: 100%; margin-bottom: 10px; background: var(--warning-color); color: white;">
+                <i class="fas fa-sync"></i> Clear Cache
+            </button>
+            <button class="btn" style="width: 100%; margin-bottom: 10px; background: var(--primary-color); color: white;">
+                <i class="fas fa-database"></i> Optimize Database
+            </button>
+            <button class="btn" style="width: 100%; background: var(--error-color); color: white;">
+                <i class="fas fa-trash"></i> Clear Logs
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('System Settings module loaded');
+    
+    document.getElementById('saveSettings')?.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Saving...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+        }, 2000);
+    });
+});
+</script>

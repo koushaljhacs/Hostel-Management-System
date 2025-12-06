@@ -1,0 +1,171 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-clock"></i> Shift Management</h2>
+    <div class="quick-actions">
+        <button class="btn" id="createShift"><i class="fas fa-plus"></i> Create Shift</button>
+        <button class="btn" id="copySchedule"><i class="fas fa-copy"></i> Copy Schedule</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Active Shifts</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Staff per Shift</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-exchange-alt"></i>
+            </div>
+            <h3>Shift Changes</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-calendar"></i>
+            </div>
+            <h3>Weekly Roster</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<!-- Shift Configuration -->
+<div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 20px;">Shift Configuration</h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        <!-- Morning Shift -->
+        <div style="padding: 20px; border: 2px solid var(--success-color); border-radius: 8px; background: rgba(76, 175, 80, 0.05);">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                <i class="fas fa-sun" style="color: var(--success-color); font-size: 20px;"></i>
+                <h4 style="color: var(--text-dark); margin: 0;">Morning Shift</h4>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <div style="display: flex; justify-content: between; margin-bottom: 5px;">
+                    <span style="font-weight: 600;">Timing:</span>
+                    <span>6:00 AM - 2:00 PM</span>
+                </div>
+                <div style="display: flex; justify-content: between; margin-bottom: 5px;">
+                    <span style="font-weight: 600;">Staff Count:</span>
+                    <span>15 employees</span>
+                </div>
+                <div style="display: flex; justify-content: between;">
+                    <span style="font-weight: 600;">Status:</span>
+                    <span style="color: var(--success-color); font-weight: 600;">Active</span>
+                </div>
+            </div>
+            <button class="btn" style="width: 100%; background: var(--success-color); color: white;">
+                <i class="fas fa-edit"></i> Edit Shift
+            </button>
+        </div>
+        
+        <!-- Evening Shift -->
+        <div style="padding: 20px; border: 2px solid var(--warning-color); border-radius: 8px; background: rgba(255, 152, 0, 0.05);">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                <i class="fas fa-cloud-sun" style="color: var(--warning-color); font-size: 20px;"></i>
+                <h4 style="color: var(--text-dark); margin: 0;">Evening Shift</h4>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <div style="display: flex; justify-content: between; margin-bottom: 5px;">
+                    <span style="font-weight: 600;">Timing:</span>
+                    <span>2:00 PM - 10:00 PM</span>
+                </div>
+                <div style="display: flex; justify-content: between; margin-bottom: 5px;">
+                    <span style="font-weight: 600;">Staff Count:</span>
+                    <span>12 employees</span>
+                </div>
+                <div style="display: flex; justify-content: between;">
+                    <span style="font-weight: 600;">Status:</span>
+                    <span style="color: var(--success-color); font-weight: 600;">Active</span>
+                </div>
+            </div>
+            <button class="btn" style="width: 100%; background: var(--warning-color); color: white;">
+                <i class="fas fa-edit"></i> Edit Shift
+            </button>
+        </div>
+        
+        <!-- Night Shift -->
+        <div style="padding: 20px; border: 2px solid var(--primary-color); border-radius: 8px; background: rgba(114, 0, 38, 0.05);">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                <i class="fas fa-moon" style="color: var(--primary-color); font-size: 20px;"></i>
+                <h4 style="color: var(--text-dark); margin: 0;">Night Shift</h4>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <div style="display: flex; justify-content: between; margin-bottom: 5px;">
+                    <span style="font-weight: 600;">Timing:</span>
+                    <span>10:00 PM - 6:00 AM</span>
+                </div>
+                <div style="display: flex; justify-content: between; margin-bottom: 5px;">
+                    <span style="font-weight: 600;">Staff Count:</span>
+                    <span>8 employees</span>
+                </div>
+                <div style="display: flex; justify-content: between;">
+                    <span style="font-weight: 600;">Status:</span>
+                    <span style="color: var(--success-color); font-weight: 600;">Active</span>
+                </div>
+            </div>
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white;">
+                <i class="fas fa-edit"></i> Edit Shift
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Shift Schedule -->
+<div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Weekly Shift Schedule</h3>
+    
+    <div style="text-align: center; padding: 40px;">
+        <i class="fas fa-sync fa-spin fa-2x" style="color: var(--primary-color); margin-bottom: 15px;"></i>
+        <p style="color: var(--text-muted);">Loading shift schedule...</p>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Shift Management module loaded');
+    
+    // BACKEND INTEGRATION: Load shift configurations and schedules
+    // TODO: Fetch shift data from backend API
+    
+    document.getElementById('createShift')?.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Opening...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-plus"></i> Create Shift';
+            // TODO: Open shift creation form
+        }, 1000);
+    });
+    
+    document.getElementById('copySchedule')?.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Copying...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-copy"></i> Copy Schedule';
+            alert('Schedule copied successfully!');
+        }, 1500);
+    });
+});
+</script>

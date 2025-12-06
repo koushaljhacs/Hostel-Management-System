@@ -1,0 +1,16 @@
+[
+  {
+    "name": "GatewayTimeoutRule",
+    "pattern": "gateway_timeout",
+    "reason": "AUTO_TIMEOUT_VERIFICATION",
+    "notes": "Verify with bank and hold booking in suspense"
+  },
+  {
+    "name": "MoneyDeductedRule",
+    "pattern": "money_deducted_no_confirmation",
+    "reason": "DEBIT_NO_BOOKING",
+    "notes": "Create suspense entry to avoid double-charging"
+  }
+]
+
+

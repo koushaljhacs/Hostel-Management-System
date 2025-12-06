@@ -1,0 +1,183 @@
+<!-- modules/leave-management.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-calendar-alt"></i> Leave Management</h2>
+    <div class="quick-actions">
+        <button class="btn" id="applyLeaveBtn"><i class="fas fa-plus"></i> Apply Leave</button>
+        <button class="btn" id="approveLeaveBtn"><i class="fas fa-check"></i> Approve Leaves</button>
+        <button class="btn" id="exportLeavesBtn"><i class="fas fa-file-export"></i> Export</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Pending Approvals</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Approved Leaves</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-times-circle"></i>
+            </div>
+            <h3>Rejected Leaves</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-user-clock"></i>
+            </div>
+            <h3>On Leave Today</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Leave Requests Panel -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Leave Requests</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshLeaves" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <select class="btn" style="background: var(--bg-card); border: 1px solid var(--border-medium); font-size: 11px;">
+                    <option value="">All Status</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="leaveRequests" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading leave requests...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leave Application Form -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Apply for Leave</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Student
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select student...</option>
+                </select>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+                <div>
+                    <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                        From Date
+                    </label>
+                    <input type="date" class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+                <div>
+                    <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                        To Date
+                    </label>
+                    <input type="date" class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                </div>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Leave Type
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select leave type...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Reason
+                </label>
+                <textarea class="form-input" placeholder="Enter leave reason..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px; min-height: 60px; resize: vertical;"></textarea>
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-paper-plane"></i> Submit Leave Application
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Leave Calendar Overview -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Leave Calendar</h3>
+        <button class="btn" id="viewCalendar" style="font-size: 11px;">
+            <i class="fas fa-calendar"></i> Full Calendar
+        </button>
+    </div>
+    
+    <div class="activity-list" id="leaveCalendar" style="max-height: 190px;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading leave calendar...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Leave Management module loaded');
+    
+    // BACKEND INTEGRATION: Load leave management data
+    // TODO: Fetch leave requests and calendar from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/leave-requests</code> - Fetch leave requests</li>
+            <li><code>POST /api/leave-requests</code> - Create leave request</li>
+            <li><code>PUT /api/leave-requests/{id}/approve</code> - Approve leave</li>
+            <li><code>PUT /api/leave-requests/{id}/reject</code> - Reject leave</li>
+            <li><code>GET /api/leave-calendar</code> - Leave calendar data</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>student:leave:manage</code></p>
+    </div>
+</div>

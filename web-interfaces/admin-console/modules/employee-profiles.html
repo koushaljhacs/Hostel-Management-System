@@ -1,0 +1,97 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-id-badge"></i> Employee Profiles</h2>
+    <div class="quick-actions">
+        <button class="btn" id="editProfile"><i class="fas fa-edit"></i> Edit Profile</button>
+        <button class="btn" id="printProfile"><i class="fas fa-print"></i> Print Profile</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <h3>Total Profiles</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <h3>Active Today</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-file-contract"></i>
+            </div>
+            <h3>Documents</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px;">
+    <!-- Employee List -->
+    <div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid var(--border-light);">
+        <h3 style="color: var(--primary-color); margin-bottom: 15px;">Employee List</h3>
+        
+        <div style="margin-bottom: 15px;">
+            <input type="text" placeholder="Search employees..." class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+        </div>
+        
+        <div style="max-height: 500px; overflow-y: auto;">
+            <div style="text-align: center; padding: 40px;">
+                <i class="fas fa-sync fa-spin fa-2x" style="color: var(--primary-color);"></i>
+                <p style="margin-top: 15px; color: var(--text-muted);">Loading employee list...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Details -->
+    <div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid var(--border-light);">
+        <h3 style="color: var(--primary-color); margin-bottom: 20px;">Employee Profile</h3>
+        
+        <div style="text-align: center; padding: 60px;">
+            <i class="fas fa-user-tie fa-3x" style="color: var(--border-light); margin-bottom: 15px;"></i>
+            <p style="color: var(--text-muted);">Select an employee to view their profile</p>
+            <p style="color: var(--text-muted); font-size: 12px; margin-top: 10px;">Personal details, employment information, and documents</p>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Employee Profiles module loaded');
+    
+    // BACKEND INTEGRATION: Load employee list and profile data
+    // TODO: Fetch employees and profile information from backend
+    
+    document.getElementById('editProfile')?.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Opening...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-edit"></i> Edit Profile';
+            alert('Please select an employee to edit');
+        }, 1000);
+    });
+    
+    document.getElementById('printProfile')?.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Preparing...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-print"></i> Print Profile';
+            alert('Profile print preview ready');
+        }, 1500);
+    });
+});
+</script>

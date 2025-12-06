@@ -1,0 +1,123 @@
+<!-- modules/visitor-policies.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-cog"></i> Visitor Policies</h2>
+    <div class="quick-actions">
+        <button class="btn"><i class="fas fa-plus"></i> New Policy</button>
+        <button class="btn"><i class="fas fa-save"></i> Save Changes</button>
+        <button class="btn"><i class="fas fa-history"></i> Version History</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-file-alt"></i></div>
+            <h3>Active Policies</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-calendar"></i></div>
+            <h3>Last Updated</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-user-edit"></i></div>
+            <h3>Policy Versions</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-bell"></i></div>
+            <h3>Pending Reviews</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Current Policies</h3>
+            <button class="btn" style="font-size: 11px;">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </div>
+        <div class="activity-list">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading visitor policies...</div>
+                    <div class="activity-time">Please wait</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Policy Configuration</h3>
+        </div>
+        <div style="padding: 15px;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Policy Category
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select category...</option>
+                    <option value="general">General Visitor Policy</option>
+                    <option value="security">Security Protocols</option>
+                    <option value="emergency">Emergency Procedures</option>
+                    <option value="access">Access Control</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Policy Title
+                </label>
+                <input type="text" class="form-input" placeholder="Enter policy title..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Policy Description
+                </label>
+                <textarea class="form-input" placeholder="Enter policy description..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px; height: 100px; resize: vertical;"></textarea>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Effective Date
+                </label>
+                <input type="date" class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <button class="btn" style="background: var(--primary-color); color: white; width: 100%; margin-top: 15px;">
+                <i class="fas fa-save"></i> Save Policy
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/policies/visitors</code> - Get visitor policies</li>
+            <li><code>POST /api/policies/visitors</code> - Create new policy</li>
+            <li><code>PUT /api/policies/visitors/{id}</code> - Update policy</li>
+            <li><code>DELETE /api/policies/visitors/{id}</code> - Delete policy</li>
+            <li><code>GET /api/policies/visitors/versions</code> - Get policy version history</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>visitor:policies:write</code></p>
+    </div>
+</div>

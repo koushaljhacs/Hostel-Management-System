@@ -1,0 +1,174 @@
+<!-- modules/route-planning.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-route"></i> Route Planning</h2>
+    <div class="quick-actions">
+        <button class="btn" id="addRouteBtn"><i class="fas fa-plus"></i> Add Route</button>
+        <button class="btn" id="optimizeRoutesBtn"><i class="fas fa-magic"></i> Optimize Routes</button>
+        <button class="btn" id="exportRoutesBtn"><i class="fas fa-file-export"></i> Export</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-route"></i>
+            </div>
+            <h3>Total Routes</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h3>Stops</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Students Covered</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Average Time</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Route List -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Transport Routes</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshRoutes" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <select class="btn" style="background: var(--bg-card); border: 1px solid var(--border-medium); font-size: 11px;">
+                    <option value="">All Routes</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="routeList" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading transport routes...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Route -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Plan New Route</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Route Name
+                </label>
+                <input type="text" class="form-input" placeholder="Enter route name" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Start Point
+                </label>
+                <input type="text" class="form-input" placeholder="Enter start location" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    End Point
+                </label>
+                <input type="text" class="form-input" placeholder="Enter end location" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Stops
+                </label>
+                <div style="border: 1px solid var(--border-medium); border-radius: 6px; padding: 10px;">
+                    <div style="text-align: center; color: var(--text-muted); font-size: 12px;">
+                        <i class="fas fa-sync fa-spin"></i> Loading stops configuration...
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-save"></i> Save Route
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Route Map Preview -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Route Map</h3>
+        <button class="btn" id="viewFullMap" style="font-size: 11px;">
+            <i class="fas fa-expand"></i> Full Map
+        </button>
+    </div>
+    
+    <div style="padding: 20px; text-align: center;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading route map...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Route Planning module loaded');
+    
+    // BACKEND INTEGRATION: Load route planning data
+    // TODO: Fetch routes and map data from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/transport-routes</code> - Fetch transport routes</li>
+            <li><code>POST /api/transport-routes</code> - Create new route</li>
+            <li><code>POST /api/routes/optimize</code> - Optimize routes</li>
+            <li><code>GET /api/route-map/{id}</code> - Route map data</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>transport:routes:write</code></p>
+    </div>
+</div>

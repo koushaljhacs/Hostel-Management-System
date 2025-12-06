@@ -1,0 +1,174 @@
+<!-- modules/billing-payments.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-receipt"></i> Billing & Payments</h2>
+    <div class="quick-actions">
+        <button class="btn" id="generateBillBtn"><i class="fas fa-file-invoice"></i> Generate Bill</button>
+        <button class="btn" id="processPaymentBtn"><i class="fas fa-credit-card"></i> Process Payment</button>
+        <button class="btn" id="exportBillingBtn"><i class="fas fa-file-export"></i> Export</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-file-invoice"></i>
+            </div>
+            <h3>Pending Bills</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Paid Bills</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <h3>Total Revenue</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Overdue</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <!-- Billing List -->
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Recent Bills</h3>
+            <div class="quick-actions">
+                <button class="btn" id="refreshBills" style="font-size: 11px;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <select class="btn" style="background: var(--bg-card); border: 1px solid var(--border-medium); font-size: 11px;">
+                    <option value="">All Status</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="activity-list" id="billingList" style="max-height: 220px;">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading billing records...</div>
+                    <div class="activity-time">Please wait while we fetch the data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generate Bill -->
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Generate Bill</h3>
+        </div>
+        
+        <div style="padding: 10px 0;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Student
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select student...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Service Type
+                </label>
+                <select class="btn" style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-medium);">
+                    <option value="">Select service...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Amount
+                </label>
+                <input type="number" class="form-input" placeholder="Enter bill amount" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Due Date
+                </label>
+                <input type="date" class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <button class="btn" style="width: 100%; background: var(--primary-color); color: white; justify-content: center;">
+                <i class="fas fa-file-invoice"></i> Generate Bill
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Payment Analytics -->
+<div class="activity-panel" style="margin-top: 15px; height: 280px;">
+    <div class="panel-header">
+        <h3>Payment Analytics</h3>
+        <button class="btn" id="viewDetailedAnalytics" style="font-size: 11px;">
+            <i class="fas fa-chart-bar"></i> Detailed Analytics
+        </button>
+    </div>
+    
+    <div class="activity-list" id="paymentAnalytics" style="max-height: 190px;">
+        <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+            <div class="activity-details">
+                <div class="activity-title">Loading payment analytics...</div>
+                <div class="activity-time">Please wait</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Billing & Payments module loaded');
+    
+    // BACKEND INTEGRATION: Load billing and payments data
+    // TODO: Fetch bills and payment analytics from backend API
+});
+</script>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/laundry-bills</code> - Fetch laundry bills</li>
+            <li><code>POST /api/laundry-bills</code> - Generate bill</li>
+            <li><code>POST /api/laundry-payments</code> - Process payment</li>
+            <li><code>GET /api/payment-analytics</code> - Payment analytics</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>laundry:billing:manage</code></p>
+    </div>
+</div>

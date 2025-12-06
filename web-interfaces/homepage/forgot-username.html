@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recover Username - Hostel Management System</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/forgot-password.css"> <link rel="stylesheet" href="/css/forgot-username.css"> <script src="/common/public/js/security-loader.js"></script>
+</head>
+<body>
+
+    <div class="security-grid-bg"></div>
+    <div class="bg-overlay"></div>
+
+    <div class="reset-container" id="mainContainer">
+        <div class="reset-header">
+            <div class="shield-icon" style="background: #FF9800;"><i class="fas fa-id-card"></i></div>
+            <h2>Recover Username</h2>
+            <p>Complete the security check to retrieve your identity.</p>
+        </div>
+
+        <form id="lookupForm" onsubmit="event.preventDefault(); initiateUsernameRecovery();" autocomplete="off">
+            
+            <div class="input-group">
+                <label>Registered Email</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" id="uid_email" required placeholder="student@college.edu">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Date of Birth</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-calendar-alt input-icon"></i>
+                        <input type="date" id="uid_dob" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Mobile Number</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-phone input-icon"></i>
+                        <input type="tel" id="uid_mobile" required placeholder="98765xxxxx" pattern="[0-9]{10}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group captcha-group">
+                <label>Security Check</label>
+                <div class="captcha-wrapper">
+                    <canvas id="captchaCanvas" width="140" height="45"></canvas>
+                    <button type="button" class="refresh-btn" onclick="generateCaptcha()"><i class="fas fa-sync-alt"></i></button>
+                    <input type="text" id="uid_captcha" required placeholder="Enter Code" maxlength="6">
+                </div>
+            </div>
+
+            <button type="submit" class="search-btn" id="lookupBtn">
+                <span class="btn-text">VERIFY & SEND OTP</span>
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+
+        <form id="otpForm" onsubmit="event.preventDefault(); verifyUsernameOTP();" autocomplete="off" style="display:none; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+            <div class="alert-box"><i class="fas fa-check-circle"></i> OTP sent to your email.</div>
+            
+            <div class="input-group">
+                <label>Enter Security Code (OTP)</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-key input-icon"></i>
+                    <input type="text" id="otp_input" required placeholder="X X X X X X" maxlength="6" style="letter-spacing: 5px; font-weight: bold; text-align: center;">
+                </div>
+            </div>
+
+            <button type="submit" class="search-btn" id="otpBtn" style="background: #28a745;">
+                <span class="btn-text">VALIDATE OTP</span>
+                <i class="fas fa-unlock-alt"></i>
+            </button>
+        </form>
+
+        <a href="/student-login" class="back-link"><i class="fas fa-arrow-left"></i> Return to Login</a>
+    </div>
+
+    <div class="auth-modal-overlay" id="authModal">
+        <div class="auth-modal-window">
+            <div class="panel profile-panel" style="width: 100%;">
+                <div class="profile-card">
+                    <div class="profile-icon-box">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <h3>Identity Verified</h3>
+                    <p class="audit-text">We have found a record matching your details.</p>
+                    
+                    <div class="profile-table-wrapper">
+                        <table class="profile-table">
+                            <tr>
+                                <td><i class="fas fa-signature"></i> Name</td>
+                                <td id="p_name">--</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-envelope"></i> Email</td>
+                                <td id="p_email">--</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-phone"></i> Mobile</td>
+                                <td id="p_mobile">--</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-code-branch"></i> Branch</td>
+                                <td id="p_branch">--</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="confirmation-box">
+                        <p class="highlight-msg">
+                            <i class="fas fa-info-circle"></i> Your username will be sent to your registered email within 24hrs.
+                        </p>
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="confirmRequest">
+                            <span class="checkmark"></span>
+                            I request to receive my username via email.
+                        </label>
+                    </div>
+
+                    <button class="verify-action-btn" id="finalRequestBtn" onclick="submitUsernameRequest()">
+                        <span class="btn-text">SUBMIT REQUEST</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/forgot-username.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-users-cog"></i> All User Accounts</h2>
+    <div class="quick-actions">
+        <button class="btn" id="addUser"><i class="fas fa-user-plus"></i> Add User</button>
+        <button class="btn" id="exportUsers"><i class="fas fa-download"></i> Export List</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Total Users</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-user-check"></i>
+            </div>
+            <h3>Active Users</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-user-clock"></i>
+            </div>
+            <h3>Pending</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-user-lock"></i>
+            </div>
+            <h3>Suspended</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">User Accounts Management</h3>
+    <div style="text-align: center; padding: 40px;">
+        <i class="fas fa-sync fa-spin fa-2x" style="color: var(--primary-color); margin-bottom: 15px;"></i>
+        <p style="color: var(--text-muted);">Loading user accounts data...</p>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('All User Accounts module loaded');
+    
+    document.getElementById('addUser')?.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Opening...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-user-plus"></i> Add User';
+        }, 1000);
+    });
+});
+</script>

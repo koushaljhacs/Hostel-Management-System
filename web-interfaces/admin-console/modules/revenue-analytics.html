@@ -1,0 +1,156 @@
+<!-- modules/revenue-analytics.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-chart-line"></i> Revenue Analytics</h2>
+    <div class="quick-actions">
+        <button class="btn"><i class="fas fa-filter"></i> Filter Data</button>
+        <button class="btn"><i class="fas fa-download"></i> Export</button>
+        <button class="btn"><i class="fas fa-cog"></i> Settings</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-money-bill-wave"></i></div>
+            <h3>Total Revenue</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-chart-bar"></i></div>
+            <h3>This Month</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-trending-up"></i></div>
+            <h3>Growth Rate</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-receipt"></i></div>
+            <h3>Avg Collection</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Revenue Trends</h3>
+            <button class="btn" style="font-size: 11px;">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </div>
+        <div style="padding: 20px; text-align: center; color: var(--text-muted);">
+            <i class="fas fa-chart-line fa-2x" style="margin-bottom: 10px;"></i>
+            <p>Revenue analytics charts will be displayed here</p>
+            <p style="font-size: 12px;">Loading data from backend...</p>
+        </div>
+    </div>
+
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Analytics Filters</h3>
+        </div>
+        <div style="padding: 15px;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Time Period
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select time period...</option>
+                    <option value="7">Last 7 days</option>
+                    <option value="30">Last 30 days</option>
+                    <option value="90">Last 90 days</option>
+                    <option value="365">Last 365 days</option>
+                    <option value="custom">Custom range</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Revenue Source
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">All sources</option>
+                    <option value="hostel_fees">Hostel Fees</option>
+                    <option value="mess_fees">Mess Fees</option>
+                    <option value="transport">Transport Fees</option>
+                    <option value="laundry">Laundry Services</option>
+                    <option value="other">Other Services</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Hostel/Building
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">All hostels</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    View Type
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select view...</option>
+                    <option value="daily">Daily View</option>
+                    <option value="weekly">Weekly View</option>
+                    <option value="monthly">Monthly View</option>
+                    <option value="quarterly">Quarterly View</option>
+                    <option value="yearly">Yearly View</option>
+                </select>
+            </div>
+
+            <button class="btn" style="background: var(--primary-color); color: white; width: 100%; margin-top: 15px;">
+                <i class="fas fa-chart-line"></i> Apply Filters
+            </button>
+        </div>
+    </div>
+</div>
+
+<div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-top: 20px;">
+    <h4 style="color: var(--primary-color); margin-bottom: 15px;">
+        <i class="fas fa-chart-pie"></i> Revenue Breakdown
+    </h4>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+        <div style="background: white; padding: 15px; border-radius: 6px; border: 1px solid var(--border-light);">
+            <h5 style="color: var(--text-muted); margin-bottom: 10px;">Source Distribution</h5>
+            <div style="text-align: center; color: var(--text-muted);">
+                <i class="fas fa-sync fa-spin"></i> Loading chart data...
+            </div>
+        </div>
+        <div style="background: white; padding: 15px; border-radius: 6px; border: 1px solid var(--border-light);">
+            <h5 style="color: var(--text-muted); margin-bottom: 10px;">Growth Analysis</h5>
+            <div style="text-align: center; color: var(--text-muted);">
+                <i class="fas fa-sync fa-spin"></i> Loading chart data...
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/reports/revenue/summary</code> - Get revenue summary</li>
+            <li><code>GET /api/reports/revenue/trends</code> - Get revenue trends</li>
+            <li><code>GET /api/reports/revenue/sources</code> - Get revenue by source</li>
+            <li><code>GET /api/reports/revenue/forecast</code> - Get revenue forecast</li>
+            <li><code>GET /api/reports/revenue/comparison</code> - Get comparative analysis</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>reports:revenue:read</code></p>
+    </div>
+</div>

@@ -1,0 +1,164 @@
+<div class="dashboard-header">
+    <h2><i class="fas fa-money-bill-wave"></i> Salary Management</h2>
+    <div class="quick-actions">
+        <button class="btn" id="processSalary"><i class="fas fa-calculator"></i> Process Salary</button>
+        <button class="btn" id="exportSalary"><i class="fas fa-file-export"></i> Export Data</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <h3>Total Salary</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Employees</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Pending</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Processed</h3>
+        </div>
+        <h2 class="card-loading">
+            <i class="fas fa-sync fa-spin"></i>
+        </h2>
+    </div>
+</div>
+
+<!-- Salary Period Selection -->
+<div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Salary Period</h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Month</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>January 2024</option>
+                <option>February 2024</option>
+                <option>March 2024</option>
+                <option>April 2024</option>
+                <option>May 2024</option>
+                <option>June 2024</option>
+            </select>
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Department</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>All Departments</option>
+                <option>Housekeeping</option>
+                <option>Security</option>
+                <option>Maintenance</option>
+                <option>Mess</option>
+                <option>Administration</option>
+            </select>
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 12px;">Payment Status</label>
+            <select class="btn" style="width: 100%; padding: 8px;">
+                <option>All Status</option>
+                <option>Pending</option>
+                <option>Processed</option>
+                <option>Paid</option>
+                <option>Hold</option>
+            </select>
+        </div>
+    </div>
+    
+    <button class="btn" style="background: var(--primary-color); color: white;">
+        <i class="fas fa-filter"></i> Load Salary Data
+    </button>
+</div>
+
+<!-- Salary Summary -->
+<div style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Salary Summary</h3>
+    
+    <div style="text-align: center; padding: 40px;">
+        <i class="fas fa-sync fa-spin fa-2x" style="color: var(--primary-color); margin-bottom: 15px;"></i>
+        <p style="color: var(--text-muted);">Loading salary summary...</p>
+    </div>
+</div>
+
+<!-- Salary Components -->
+<div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid var(--border-light);">
+    <h3 style="color: var(--primary-color); margin-bottom: 20px;">Salary Components</h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+        <div style="text-align: center; padding: 20px; border: 1px solid var(--border-light); border-radius: 8px;">
+            <i class="fas fa-money-bill-wave fa-2x" style="color: var(--success-color); margin-bottom: 10px;"></i>
+            <h4 style="color: var(--text-dark); margin-bottom: 5px;">Basic Salary</h4>
+            <p style="color: var(--text-muted); font-size: 12px;">Fixed monthly compensation</p>
+        </div>
+        
+        <div style="text-align: center; padding: 20px; border: 1px solid var(--border-light); border-radius: 8px;">
+            <i class="fas fa-plus-circle fa-2x" style="color: var(--primary-color); margin-bottom: 10px;"></i>
+            <h4 style="color: var(--text-dark); margin-bottom: 5px;">Allowances</h4>
+            <p style="color: var(--text-muted); font-size: 12px;">HRA, DA, and other allowances</p>
+        </div>
+        
+        <div style="text-align: center; padding: 20px; border: 1px solid var(--border-light); border-radius: 8px;">
+            <i class="fas fa-award fa-2x" style="color: var(--secondary-color); margin-bottom: 10px;"></i>
+            <h4 style="color: var(--text-dark); margin-bottom: 5px;">Incentives</h4>
+            <p style="color: var(--text-muted); font-size: 12px;">Performance-based bonuses</p>
+        </div>
+        
+        <div style="text-align: center; padding: 20px; border: 1px solid var(--border-light); border-radius: 8px;">
+            <i class="fas fa-minus-circle fa-2x" style="color: var(--error-color); margin-bottom: 10px;"></i>
+            <h4 style="color: var(--text-dark); margin-bottom: 5px;">Deductions</h4>
+            <p style="color: var(--text-muted); font-size: 12px;">Taxes, loans, and other deductions</p>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Salary Management module loaded');
+    
+    // BACKEND INTEGRATION: Load salary data and calculations
+    // TODO: Fetch salary data from backend API
+    
+    document.getElementById('processSalary')?.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Processing...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-calculator"></i> Process Salary';
+            alert('Salary processing completed successfully!');
+        }, 3000);
+    });
+    
+    document.getElementById('exportSalary')?.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-sync fa-spin"></i> Exporting...';
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-file-export"></i> Export Data';
+            alert('Salary data exported successfully!');
+        }, 2000);
+    });
+});
+</script>

@@ -1,0 +1,144 @@
+<!-- modules/visitor-management-security.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-user-clock"></i> Visitor Management (Security)</h2>
+    <div class="quick-actions">
+        <button class="btn"><i class="fas fa-user-plus"></i> New Visitor</button>
+        <button class="btn"><i class="fas fa-search"></i> Search</button>
+        <button class="btn"><i class="fas fa-cog"></i> Settings</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-users"></i></div>
+            <h3>Visitors Today</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-user-check"></i></div>
+            <h3>Checked In</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-user-times"></i></div>
+            <h3>Checked Out</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3>Pending Approval</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Current Visitors</h3>
+            <button class="btn" style="font-size: 11px;">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </div>
+        <div class="activity-list">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading visitor data...</div>
+                    <div class="activity-time">Please wait</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Visitor Check-in</h3>
+        </div>
+        <div style="padding: 15px;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Visitor Name
+                </label>
+                <input type="text" class="form-input" placeholder="Enter visitor name..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+            
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Contact Number
+                </label>
+                <input type="tel" class="form-input" placeholder="Enter contact number..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Visiting To
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select person/department...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Purpose of Visit
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select purpose...</option>
+                    <option value="meeting">Meeting</option>
+                    <option value="delivery">Delivery</option>
+                    <option value="maintenance">Maintenance</option>
+                    <option value="personal">Personal Visit</option>
+                    <option value="official">Official Business</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    ID Proof
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select ID type...</option>
+                    <option value="aadhaar">Aadhaar Card</option>
+                    <option value="driving">Driving License</option>
+                    <option value="voter">Voter ID</option>
+                    <option value="passport">Passport</option>
+                </select>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px;">
+                <button class="btn" style="background: var(--success-color); color: white;">
+                    <i class="fas fa-sign-in-alt"></i> Check In
+                </button>
+                <button class="btn" style="background: var(--error-color); color: white;">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/security/visitors/current</code> - Get current visitors</li>
+            <li><code>POST /api/security/visitors/checkin</code> - Visitor check-in</li>
+            <li><code>POST /api/security/visitors/checkout</code> - Visitor check-out</li>
+            <li><code>GET /api/security/visitors/history</code> - Get visitor history</li>
+            <li><code>POST /api/security/visitors/approve</code> - Approve visitor</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>security:visitor:manage</code></p>
+    </div>
+</div>

@@ -1,0 +1,157 @@
+<!-- modules/emergency-alerts-security.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-bell"></i> Emergency Alerts (Security)</h2>
+    <div class="quick-actions">
+        <button class="btn"><i class="fas fa-bullhorn"></i> Send Alert</button>
+        <button class="btn"><i class="fas fa-history"></i> Alert History</button>
+        <button class="btn"><i class="fas fa-cog"></i> Settings</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-bell"></i></div>
+            <h3>Active Alerts</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-users"></i></div>
+            <h3>Recipients</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-clock"></i></div>
+            <h3>Response Time</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-check-circle"></i></div>
+            <h3>Acknowledged</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Recent Alerts</h3>
+            <button class="btn" style="font-size: 11px;">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </div>
+        <div class="activity-list">
+            <div class="activity-item">
+                <div class="activity-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="activity-details">
+                    <div class="activity-title">Loading alert history...</div>
+                    <div class="activity-time">Please wait</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Send Emergency Alert</h3>
+        </div>
+        <div style="padding: 15px;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Alert Type
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select alert type...</option>
+                    <option value="security">Security Threat</option>
+                    <option value="fire">Fire Emergency</option>
+                    <option value="medical">Medical Emergency</option>
+                    <option value="evacuation">Evacuation</option>
+                    <option value="lockdown">Lockdown</option>
+                    <option value="weather">Weather Alert</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Priority Level
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select priority...</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                    <option value="critical">Critical</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Affected Areas
+                </label>
+                <select class="form-input" multiple style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px; height: 80px;">
+                    <option value="">Select affected areas...</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Alert Message
+                </label>
+                <textarea class="form-input" placeholder="Enter emergency alert message..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px; height: 100px; resize: vertical;"></textarea>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Delivery Channels
+                </label>
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox">
+                        <span>SMS</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox">
+                        <span>Email</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox">
+                        <span>Push Notification</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox">
+                        <span>Public Announcement</span>
+                    </label>
+                </div>
+            </div>
+
+            <button class="btn" style="background: var(--error-color); color: white; width: 100%; margin-top: 15px;">
+                <i class="fas fa-bullhorn"></i> Send Emergency Alert
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>POST /api/security/alerts/send</code> - Send emergency alert</li>
+            <li><code>GET /api/security/alerts/history</code> - Get alert history</li>
+            <li><code>GET /api/security/alerts/active</code> - Get active alerts</li>
+            <li><code>POST /api/security/alerts/{id}/cancel</code> - Cancel alert</li>
+            <li><code>GET /api/security/alerts/templates</code> - Get alert templates</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>security:alerts:send</code></p>
+    </div>
+</div>

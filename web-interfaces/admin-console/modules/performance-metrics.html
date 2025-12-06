@@ -1,0 +1,127 @@
+<!-- modules/performance-metrics.html -->
+<div class="dashboard-header">
+    <h2><i class="fas fa-chart-bar"></i> Performance Metrics</h2>
+    <div class="quick-actions">
+        <button class="btn"><i class="fas fa-plus"></i> New Metric</button>
+        <button class="btn"><i class="fas fa-download"></i> Export</button>
+        <button class="btn"><i class="fas fa-cog"></i> Settings</button>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-tachometer-alt"></i></div>
+            <h3>System Uptime</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-bolt"></i></div>
+            <h3>Response Time</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-users"></i></div>
+            <h3>User Satisfaction</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-tasks"></i></div>
+            <h3>Task Completion</h3>
+        </div>
+        <h2 class="card-loading"><i class="fas fa-sync fa-spin"></i></h2>
+    </div>
+</div>
+
+<div class="card-grid">
+    <div class="activity-panel">
+        <div class="panel-header">
+            <h3>Performance Dashboard</h3>
+            <button class="btn" style="font-size: 11px;">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </div>
+        <div style="padding: 20px; text-align: center; color: var(--text-muted);">
+            <i class="fas fa-chart-bar fa-2x" style="margin-bottom: 10px;"></i>
+            <p>Performance metrics dashboard will be displayed here</p>
+            <p style="font-size: 12px;">Loading data from backend...</p>
+        </div>
+    </div>
+
+    <div class="system-panel">
+        <div class="panel-header">
+            <h3>Configure Metrics</h3>
+        </div>
+        <div style="padding: 15px;">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Metric Category
+                </label>
+                <select class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+                    <option value="">Select category...</option>
+                    <option value="system">System Performance</option>
+                    <option value="user">User Performance</option>
+                    <option value="financial">Financial Performance</option>
+                    <option value="operational">Operational Efficiency</option>
+                    <option value="service">Service Quality</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Metric Name
+                </label>
+                <input type="text" class="form-input" placeholder="Enter metric name..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Measurement Unit
+                </label>
+                <input type="text" class="form-input" placeholder="Enter measurement unit..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Target Value
+                </label>
+                <input type="number" class="form-input" placeholder="Enter target value..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+                    Alert Threshold
+                </label>
+                <input type="number" class="form-input" placeholder="Enter alert threshold..." style="width: 100%; padding: 10px; border: 1px solid var(--border-medium); border-radius: 6px;">
+            </div>
+
+            <button class="btn" style="background: var(--primary-color); color: white; width: 100%; margin-top: 15px;">
+                <i class="fas fa-save"></i> Save Metric
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Backend Integration Comments -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary-color);">
+    <h4 style="color: var(--primary-color); margin-bottom: 10px;">
+        <i class="fas fa-code"></i> Backend Integration Ready
+    </h4>
+    <div style="font-size: 12px; color: var(--text-medium);">
+        <p><strong>API Endpoints Required:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px;">
+            <li><code>GET /api/reports/performance/metrics</code> - Get performance metrics</li>
+            <li><code>POST /api/reports/performance/metrics</code> - Create performance metric</li>
+            <li><code>PUT /api/reports/performance/metrics/{id}</code> - Update metric</li>
+            <li><code>GET /api/reports/performance/dashboard</code> - Get performance dashboard</li>
+            <li><code>GET /api/reports/performance/alerts</code> - Get performance alerts</li>
+        </ul>
+        <p><strong>Permissions Required:</strong> <code>reports:performance:read</code></p>
+    </div>
+</div>
